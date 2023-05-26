@@ -3,11 +3,14 @@ import ReactDOM from "react-dom/client";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import Router from "./Router";
 import AppLayout from "./styles/AppLayout";
+import Device from "./shared/Device";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AppLayout>
-    <Router />
+    <Device>
+      <Router />
+    </Device>
   </AppLayout>
 );
 
