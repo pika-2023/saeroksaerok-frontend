@@ -4,11 +4,12 @@
   "description": "추억을 떠올려요 새록새록",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "theme_color": "#000000",
   "background_color": "#ffffff",
   "categories": [],
   "lang": "ko-KR",
+  "prefer_related_applications": true,
   "icons": [
     {
       "src": "favicon.ico",
