@@ -4,18 +4,18 @@ import styled from "styled-components";
 const Device = ({ children }) => {
   return (
     <div>
-      <BackGround>
+      <Background>
         <PhoneFrame>
           <WebViewLayout>{children}</WebViewLayout>
         </PhoneFrame>
-      </BackGround>
+      </Background>
     </div>
   );
 };
 
 export default Device;
 
-const BackGround = styled.div`
+const Background = styled.div`
   width: 100%;
   height: 100vh;
 `;
@@ -23,6 +23,7 @@ const BackGround = styled.div`
 const PhoneFrame = styled.div`
   width: 100%;
   height: 100%;
+  /* TODO: background image 교체 필요 */
   background: url(images/web_phone.webp);
   @media (min-width: 769px) {
     width: 426px;
