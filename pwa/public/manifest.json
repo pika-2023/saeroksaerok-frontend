@@ -22,5 +22,22 @@
       "type": "image/png",
       "purpose": "any"
     }
+  ],
+  "screenshots": [
+    {
+      "src": "images/screenshot_1.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "images/screenshot_2.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    },
+    {
+      "src": "images/screenshot_3.png",
+      "sizes": "1280x720",
+      "type": "image/png"
+    }
   ]
 }
