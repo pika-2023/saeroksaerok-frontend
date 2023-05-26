@@ -39,5 +39,12 @@
       "sizes": "1280x720",
       "type": "image/png"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Home",
+      "url": "/",
+      "description": "Go to home page."
+    }
   ]
 }
