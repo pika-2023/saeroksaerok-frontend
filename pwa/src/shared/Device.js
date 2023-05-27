@@ -51,7 +51,7 @@ const WebViewLayout = styled.div`
   position: relative;
   border-radius: 40px;
   background-color: #ffffff;
-  overflow: hidden;
+  overflow: scroll;
   @media screen and (max-width: 768px) {
     width: 100%;
     height: 100%;
