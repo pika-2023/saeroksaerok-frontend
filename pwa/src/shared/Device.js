@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import variables from "../styles/variables";
 
 const Device = ({ children }) => {
   return (
@@ -16,47 +17,43 @@ const Device = ({ children }) => {
 export default Device;
 
 const Background = styled.div`
-  width: 100%;
-  height: 100vh;
+  ${variables.widthHeight("100%", "100vh")}
 `;
 
 const PhoneFrame = styled.div`
-  width: 100%;
-  height: 100%;
+  ${variables.widthHeight("100%", "100%")}
   /* TODO: background image 교체 필요 */
   background: url(images/web_phone.webp);
+
   @media (min-width: 769px) {
-    width: 426px;
-    height: 90%;
+    ${variables.widthHeight("426px", "90%")}
+    ${variables.position("relative", "50%", "null", "null", "70%")};
     background-size: 100% 100%;
-    position: relative;
-    top: 50%;
-    left: 70%;
     transform: translate(-50%, -50%);
+
     @media (min-width: 1000px) {
-      width: 426px;
-      height: 90%;
+      ${variables.widthHeight("426px", "90%")}
+      ${variables.position("relative", "50%", "null", "null", "75%")};
       background-size: 100% 100%;
-      position: relative;
-      top: 50%;
-      left: 75%;
       transform: translate(-50%, -50%);
     }
   }
 `;
 
 const WebViewLayout = styled.div`
+  position: relative;
+  padding: 20px;
   width: 375px;
   height: calc(100% - 43px);
-  position: relative;
   border-radius: 40px;
-  background-color: #ffffff;
+  background-color: ${(props) => props.theme.style.white};
   overflow: scroll;
+
   @media screen and (max-width: 768px) {
-    width: 100%;
-    height: 100%;
+    ${variables.widthHeight("100%", "100%")}
     border-radius: 0px;
   }
+
   @media (min-width: 769px) {
     width: 375px;
     top: 50%;
