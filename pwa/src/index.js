@@ -1,19 +1,25 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
-import Router from "./Router";
+
+import { ThemeProvider } from "styled-components";
+import theme from "./styles/theme";
+import variables from "./styles/varables";
+import GlobalStyle from "./styles/GlobalStyle";
 import AppLayout from "./styles/AppLayout";
 import Device from "./shared/Device";
+import Router from "./Router";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <AppLayout>
-    <Device>
-      <Router />
-    </Device>
-  </AppLayout>
+  <ThemeProvider theme={{ style: theme, variables }}>
+    <GlobalStyle />
+    <AppLayout>
+      <Device>
+        <Router />
+      </Device>
+    </AppLayout>
+  </ThemeProvider>
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
 serviceWorkerRegistration.register();

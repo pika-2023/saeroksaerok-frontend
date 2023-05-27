@@ -7,4 +7,6 @@ const AppLayout = ({ children }) => {
 
 export default AppLayout;
 
-const Container = styled.div``;
+const Container = styled.div`
+  color: ${(props) => props.theme.style.black};
+`;
