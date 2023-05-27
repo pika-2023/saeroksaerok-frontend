@@ -5,10 +5,10 @@ const Login = () => {
   return (
     <LoginContainer>
       <LoginContent>
-        <RegisterProfileImg>
-          <RegisterProfileImgBox />
-          <RegisterProfileImgText>프로필</RegisterProfileImgText>
-        </RegisterProfileImg>
+        <ProfileImg>
+          <ProfileImgBox />
+          <ProfileImgText>프로필</ProfileImgText>
+        </ProfileImg>
         <InfoContainer>
           <InputContainer>
             <LoginTitle>이름</LoginTitle>
@@ -35,13 +35,13 @@ const LoginContent = styled.div`
   padding: 30px;
 `;
 
-const RegisterProfileImg = styled.div`
+const ProfileImg = styled.div`
   margin-top: 80px;
   display: flex;
   justify-content: center;
 `;
 
-const RegisterProfileImgBox = styled.div`
+const ProfileImgBox = styled.div`
   position: relative;
   width: 140px;
   height: 140px;
@@ -49,7 +49,7 @@ const RegisterProfileImgBox = styled.div`
   border-radius: 50%;
 `;
 
-const RegisterProfileImgText = styled.div`
+const ProfileImgText = styled.div`
   position: absolute;
   top: 170px;
   font-size: 20px;
