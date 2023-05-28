@@ -68,7 +68,10 @@ const FinishRecordButton = styled.div`
   grid-row: 10;
   margin-top: -60px;
   padding: 20px 0;
+  background: ${({ theme }) => theme.style.white};
   border-top: 1px solid #e2e2e2;
+  border-bottom-left-radius: 24px;
+  border-bottom-right-radius: 24px;
   text-align: center;
   z-index: 100;
   cursor: pointer;
