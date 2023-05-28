@@ -1,13 +1,12 @@
 import React from "react";
-import styled from "styled-components";
 import * as S from "../Word.style";
+import * as W from "./VoiceRecord.style";
 import ListeningIconImg from "../../../assets/images/listeningIcon.png";
-import variables from "../../../styles/variables";
 
 const VoiceRecord = () => {
   return (
-    <VoiceRecordContainer>
-      {/* 오늘의 단어 */}
+    <W.VoiceRecordContainer>
+      {/* MARK: 오늘의 단어 */}
       <S.TodayWordContainer>
         <S.TodayWord>
           <S.TodayWordTitle>오늘의 단어</S.TodayWordTitle>
@@ -15,74 +14,22 @@ const VoiceRecord = () => {
         </S.TodayWord>
       </S.TodayWordContainer>
 
-      {/* 녹음중 화면 */}
-      <VoiceRecorder>
-        <ListeningText>
+      {/* MARK: 녹음중 화면 */}
+      <W.VoiceRecorder>
+        <W.ListeningText>
           ○○님의 말씀을 <br />
           듣고 있어요
-        </ListeningText>
-        <ListeningIconContainer>
-          <ListeningIcon src={ListeningIconImg} />
-        </ListeningIconContainer>
-        <FinishRecordButton>말 끝맺기</FinishRecordButton>
-      </VoiceRecorder>
+        </W.ListeningText>
+        <W.ListeningIconContainer>
+          <W.ListeningIcon src={ListeningIconImg} />
+        </W.ListeningIconContainer>
+        <W.FinishRecordButton>말 끝맺기</W.FinishRecordButton>
+      </W.VoiceRecorder>
 
-      {/* 취소하기 */}
-      <CancelButton>취소하기</CancelButton>
-    </VoiceRecordContainer>
+      {/* MARK: 취소하기 */}
+      <W.CancelButton>취소하기</W.CancelButton>
+    </W.VoiceRecordContainer>
   );
 };
 
 export default VoiceRecord;
-
-const VoiceRecordContainer = styled.div`
-  padding-top: 120px;
-`;
-
-const VoiceRecorder = styled.div`
-  ${variables.widthHeight("100%", "300px")}
-  display: grid;
-  grid-template-rows: repeat(8, 1fr);
-  border: 1px solid #e2e2e2;
-  border-radius: 24px;
-  box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.05);
-`;
-
-const ListeningText = styled.h2`
-  ${variables.fontStyle("24px", 600)}
-  grid-row: 2;
-  padding-left: 20px;
-  line-height: 33px;
-`;
-
-const ListeningIconContainer = styled.div`
-  ${variables.flex("row", "center", "center")}
-  ${variables.widthHeight("100%", "100%")}
-  grid-row: 4;
-`;
-
-const ListeningIcon = styled.img``;
-
-const FinishRecordButton = styled.div`
-  ${variables.fontStyle("22px", 600)}
-  grid-row: 10;
-  margin-top: -60px;
-  padding: 20px 0;
-  background: ${({ theme }) => theme.style.white};
-  border-top: 1px solid #e2e2e2;
-  border-bottom-left-radius: 24px;
-  border-bottom-right-radius: 24px;
-  text-align: center;
-  z-index: 100;
-  cursor: pointer;
-`;
-
-const CancelButton = styled.button`
-  ${variables.flex("row", "center", "center")}
-  ${variables.widthHeight("100%", "72px")}
-  ${variables.fontStyle("19px", 500)}
-  color: ${({ theme }) => theme.style.darkgray};
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
