@@ -6,9 +6,9 @@ import variables from "../../../styles/variables";
 
 const VoiceRecord = () => {
   return (
-    <>
+    <VoiceRecordContainer>
       {/* 오늘의 단어 */}
-      <S.TodayWordContainer style={{ marginTop: "150px" }}>
+      <S.TodayWordContainer>
         <S.TodayWord>
           <S.TodayWordTitle>오늘의 단어</S.TodayWordTitle>
           <S.TodayWordContent>기쁨</S.TodayWordContent>
@@ -28,22 +28,21 @@ const VoiceRecord = () => {
       </VoiceRecorder>
 
       {/* 취소하기 */}
-      <S.RecordModal style={{ zIndex: "-1" }}>
-        <S.ModalContents>
-          <S.ModalButtonBox>
-            <S.ModalCancelButton>취소하기</S.ModalCancelButton>
-          </S.ModalButtonBox>
-        </S.ModalContents>
-      </S.RecordModal>
-    </>
+      <CancelButton>취소하기</CancelButton>
+    </VoiceRecordContainer>
   );
 };
 
 export default VoiceRecord;
 
+const VoiceRecordContainer = styled.div`
+  padding-top: 120px;
+`;
+
 const VoiceRecorder = styled.div`
-  ${variables.widthHeight("100%", "298px")}
-  padding: 25px 20px;
+  ${variables.widthHeight("100%", "300px")}
+  display: grid;
+  grid-template-rows: repeat(8, 1fr);
   border: 1px solid #e2e2e2;
   border-radius: 24px;
   box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.05);
@@ -51,26 +50,36 @@ const VoiceRecorder = styled.div`
 
 const ListeningText = styled.h2`
   ${variables.fontStyle("24px", 600)}
+  grid-row: 2;
+  padding-left: 20px;
   line-height: 33px;
 `;
 
 const ListeningIconContainer = styled.div`
   ${variables.flex("row", "center", "center")}
   ${variables.widthHeight("100%", "100%")}
-  position: relative;
-  margin-top: -40px;
+  grid-row: 4;
 `;
 
 const ListeningIcon = styled.img``;
 
 const FinishRecordButton = styled.div`
-  ${variables.flex("row", "center", "center")}
-  ${variables.widthHeight("100%", "68px")}
   ${variables.fontStyle("22px", 600)}
-  background: ${({ theme }) => theme.style.white};
-  border: 1px solid #e2e2e2;
-  border-radius: 0 0 24px 24px;
-  /* position: absolute;
-  left: 0;
-  bottom: 90px; */
+  grid-row: 10;
+  margin-top: -60px;
+  padding: 20px 0;
+  border-top: 1px solid #e2e2e2;
+  text-align: center;
+  z-index: 100;
+  cursor: pointer;
+`;
+
+const CancelButton = styled.button`
+  ${variables.flex("row", "center", "center")}
+  ${variables.widthHeight("100%", "72px")}
+  ${variables.fontStyle("19px", 500)}
+  color: ${({ theme }) => theme.style.darkgray};
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
