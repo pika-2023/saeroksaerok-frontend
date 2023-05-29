@@ -1,12 +1,12 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useRef } from "react";
 import * as S from "./Word.style";
+import Modal from "../../components/Modal";
 
 const Word = () => {
-  const navigate = useNavigate();
+  const recordModal = useRef();
 
-  const goToVoiceRecord = () => {
-    navigate("/voiceRecord");
+  const showModal = () => {
+    recordModal.current.style = "display: block";
   };
 
   return (
@@ -25,29 +25,9 @@ const Word = () => {
           <S.TodayWordContent>기쁨</S.TodayWordContent>
         </S.TodayWord>
       </S.TodayWordContainer>
-      <S.MemoryButton>추억 남기기</S.MemoryButton>
+      <S.MemoryButton onClick={showModal}>추억 남기기</S.MemoryButton>
 
-      {/* MARK: modal */}
-      <S.RecordModal>
-        <S.ModalBackground />
-        <S.ModalContents>
-          <S.ModalTitle>
-            어떤 방식으로 <br /> 추억을 남길까요?
-          </S.ModalTitle>
-          <S.ModalOption onClick={goToVoiceRecord}>
-            <S.ModalOptionTitle>목소리로 남기기</S.ModalOptionTitle>
-            <S.ModalOptionIcon>{">"}</S.ModalOptionIcon>
-          </S.ModalOption>
-          <S.ModalOption>
-            <S.ModalOptionTitle>키보드로 남기기</S.ModalOptionTitle>
-            <S.ModalOptionIcon>{">"}</S.ModalOptionIcon>
-          </S.ModalOption>
-          {/* MARK: cancel modal */}
-          <S.ModalButtonBox>
-            <S.ModalCancelButton>취소하기</S.ModalCancelButton>
-          </S.ModalButtonBox>
-        </S.ModalContents>
-      </S.RecordModal>
+      <Modal recordModal={recordModal} />
     </S.WordContainer>
   );
 };

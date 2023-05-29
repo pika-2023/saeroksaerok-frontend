@@ -5,6 +5,7 @@ import variables from "../../styles/variables";
 
 export const WordContainer = styled.div`
   position: relative;
+  height: 80%;
 `;
 
 export const MyInfoContainer = styled.div`
@@ -49,10 +50,11 @@ export const TodayWordContent = styled.h2`
 `;
 
 export const MemoryButton = styled.button`
+  ${variables.position("absolute", "null", "null", "0", "null")}
   ${variables.widthHeight("100%", "72px")}
+  ${variables.fontStyle("22px", 600)}
   background: ${({ theme }) => theme.style.black};
   color: ${({ theme }) => theme.style.white};
-  ${variables.fontStyle("22px", 600)}
   border-radius: 24px;
   cursor: pointer;
 `;
@@ -62,7 +64,7 @@ export const MemoryButton = styled.button`
 export const RecordModal = styled.div`
   ${variables.position("fixed", "0", "0", "null", "null")}
   ${variables.flex("row", "center", "center")}
-  ${variables.widthHeight("100vw", "100vh")}
+  ${variables.widthHeight("100%", "100%")}
 `;
 
 export const ModalBackground = styled.div`
@@ -73,11 +75,10 @@ export const ModalBackground = styled.div`
 `;
 
 export const ModalContents = styled.div`
-  ${variables.widthHeight("90%", "259px")}
-  background: ${({ theme }) => theme.style.white};
-  position: fixed;
-  bottom: 85px;
+  ${variables.position("absolute", "null", "null", "85px", "null")}
+  ${variables.widthHeight("100%", "259px")}
   padding: 15px 40px;
+  background: ${({ theme }) => theme.style.white};
   border-radius: 24px;
 
   @media (min-width: 769px) {
