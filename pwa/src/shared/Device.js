@@ -23,17 +23,19 @@ const Background = styled.div`
 const PhoneFrame = styled.div`
   ${variables.widthHeight("100%", "100%")}
   /* TODO: background image 교체 필요 */
-  background: url(images/web_phone.webp);
+ 
 
   @media (min-width: 769px) {
     ${variables.widthHeight("426px", "90%")}
     ${variables.position("relative", "50%", "null", "null", "70%")};
+    background: url(images/web_phone.webp);
     background-size: 100% 100%;
     transform: translate(-50%, -50%);
 
     @media (min-width: 1000px) {
       ${variables.widthHeight("426px", "90%")}
       ${variables.position("relative", "50%", "null", "null", "75%")};
+      background: url(images/web_phone.webp);
       background-size: 100% 100%;
       transform: translate(-50%, -50%);
     }
