@@ -90,7 +90,6 @@ export default Feed;
 
 const FeedPageHeader = styled.div`
   ${variables.position("fixed", 0, "null", "null", 0)}
-  padding: 20px 0;
   background-color: white;
 
   @media (min-width: 769px) {
@@ -112,7 +111,7 @@ const UserInfo = styled.div`
 `;
 
 const FeedSection = styled.div`
-  ${variables.widthHeight("100vw", "60px")};
+  ${variables.widthHeight("100vw", "61px")};
   border-bottom: 1px solid #e2e2e2;
 
   @media (min-width: 769px) {
