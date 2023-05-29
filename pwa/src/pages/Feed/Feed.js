@@ -1,31 +1,55 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import variables from "../../styles/variables";
 import useStore from "../../state/store";
 
 const Feed = () => {
-  const ToDetail = () => {};
   const [myFeed, setMyFeed] = useState([]);
-  const { myFeedDate } = useStore((state) => state);
+  const [friendsFeed, setFriendsMyFeed] = useState([]);
+  const { myFeedData, friendsFeedData, feedDetailData, removeFeedDetailData } =
+    useStore((state) => state);
+  const [currentMemory, setCurrentMemory] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
-      const data = await myFeedDate();
+      const data = await myFeedData();
       setMyFeed(data.data);
+      removeFeedDetailData();
     })();
-  }, [myFeedDate]);
-  console.log(myFeed);
+  }, [myFeedData]);
+
+  useEffect(() => {
+    (async () => {
+      const data = await friendsFeedData();
+      setFriendsMyFeed(data.data);
+      removeFeedDetailData();
+    })();
+  }, [friendsFeedData]);
+
+  function MyMemory() {
+    setCurrentMemory(0);
+  }
+  function FriendsMemory() {
+    setCurrentMemory(1);
+  }
 
   return (
     <>
       <Info>
         <UserInfo>내정보</UserInfo>
         <FeedSection>
-          <FeedList>나의 추억</FeedList>
-          <FeedList>친구의 추억</FeedList>
+          <FeedList className="myMemory" onClick={MyMemory}>
+            나의 추억
+          </FeedList>
+          <FeedList className="FriendsMemory" onClick={FriendsMemory}>
+            친구의 추억
+          </FeedList>
         </FeedSection>
       </Info>
-      {myFeed.map((data) => {
+      {(currentMemory === 0 ? myFeed : friendsFeed).map((data) => {
         return (
           <FeedFrame key={data.id}>
             <FeedInfo>
@@ -42,7 +66,12 @@ const Feed = () => {
             <div>
               <FeedContent>
                 <FeedWord>{data.word}</FeedWord>
-                <FeedDetailButton onClick={ToDetail}>
+                <FeedDetailButton
+                  onClick={() => {
+                    navigate("/feedDetail");
+                    feedDetailData.push(data);
+                  }}
+                >
                   자세히 보기 {">"}
                 </FeedDetailButton>
               </FeedContent>

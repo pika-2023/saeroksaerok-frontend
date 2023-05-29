@@ -4,6 +4,7 @@ import Splash from "./pages/Splash/Splash";
 import Login from "./pages/Account/Login";
 import Signup from "./pages/Account/Signup";
 import Feed from "./pages/Feed/Feed";
+import FeedDetail from "./pages/Feed/FeedDetail";
 import Sample from "./state/Sample";
 
 const Router = () => {
@@ -13,7 +14,8 @@ const Router = () => {
         <Route path="/" element={<Splash />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/Feed" element={<Feed />} />
+        <Route path="/feed" element={<Feed />} />
+        <Route path="/feedDetail" element={<FeedDetail />} />
         <Route path="*" element={<h1>해당 주소는 없는 페이지입니다.</h1>} />
         {/* zustand sample page */}
         <Route path="/sample" element={<Sample />} />

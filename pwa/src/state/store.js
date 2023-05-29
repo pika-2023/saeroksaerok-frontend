@@ -9,10 +9,19 @@ const useStore = create((set) => ({
   removeAllBears: () => set({ bears: 0 }),
 
   myFeed: [],
-  myFeedDate: async () => {
-    const result = await axios("/data/myFeed.json");
+  myFeedData: async () => {
+    const result = await axios("/data/myFeedData.json");
     return result;
   },
+
+  friendsFeed: [],
+  friendsFeedData: async () => {
+    const result = await axios("/data/friendsFeedData.json");
+    return result;
+  },
+
+  feedDetailData: [],
+  removeFeedDetailData: () => set({ feedDetailData: [] }),
 }));
 
 export default useStore;
