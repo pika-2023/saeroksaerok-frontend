@@ -93,9 +93,11 @@ const FeedPageHeader = styled.div`
   background-color: white;
 
   @media (min-width: 769px) {
+    ${variables.widthHeight("375px", "81px")};
     position: sticky;
     top: 0px;
-    padding-bottom: 0;
+    margin: 0px 0px 0px calc(-40px);
+    padding: 20px 20px;
   }
 `;
 
@@ -105,6 +107,7 @@ const UserInfo = styled.div`
   text-align: right;
 
   @media (min-width: 769px) {
+    ${variables.widthHeight("375px", "null")};
     margin: calc(-40px) 0px 0px 0;
     background-color: white;
   }
@@ -115,9 +118,9 @@ const FeedSection = styled.div`
   border-bottom: 1px solid #e2e2e2;
 
   @media (min-width: 769px) {
-    ${variables.widthHeight("375px", "81px")};
-    margin: 9px 0px 1px calc(-20px);
-    padding: 20px 0px;
+    ${variables.widthHeight("375px", "61px")};
+    margin: 9px 0px 1px 0;
+    padding: 0px 0px;
   }
 `;
 
@@ -133,7 +136,7 @@ const FeedFrameContainer = styled.div`
   margin-top: 130px;
 
   @media (min-width: 769px) {
-    margin-top: 35px;
+    margin-top: 67px;
   }
 `;
 
