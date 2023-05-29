@@ -38,7 +38,7 @@ const Feed = () => {
 
   return (
     <>
-      <Info>
+      <FeedPageHeader>
         <UserInfo>내정보</UserInfo>
         <FeedSection>
           <FeedList className="myMemory" onClick={MyMemory}>
@@ -48,7 +48,7 @@ const Feed = () => {
             친구의 추억
           </FeedList>
         </FeedSection>
-      </Info>
+      </FeedPageHeader>
       <FeedFrameContainer>
         {(currentMemory === 0 ? myFeed : friendsFeed).map((data) => {
           return (
@@ -65,20 +65,19 @@ const Feed = () => {
                 </FeedUploadDate>
               </FeedInfo>
               <FeedImg></FeedImg>
-              <div>
-                <FeedContent>
-                  <FeedWord>{data.word}</FeedWord>
-                  <FeedDetailButton
-                    onClick={() => {
-                      navigate("/feedDetail");
-                      feedDetailData.push(data);
-                    }}
-                  >
-                    자세히 보기 {">"}
-                  </FeedDetailButton>
-                </FeedContent>
-                <FeedText>{data.text}</FeedText>
-              </div>
+
+              <FeedContent>
+                <FeedWord>{data.word}</FeedWord>
+                <FeedDetailButton
+                  onClick={() => {
+                    navigate("/feedDetail");
+                    feedDetailData.push(data);
+                  }}
+                >
+                  자세히 보기 {">"}
+                </FeedDetailButton>
+              </FeedContent>
+              <FeedText>{data.text}</FeedText>
             </FeedFrame>
           );
         })}
@@ -89,36 +88,35 @@ const Feed = () => {
 
 export default Feed;
 
-const Info = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 130px;
+const FeedPageHeader = styled.div`
+  ${variables.position("fixed", 0, "null", "null", 0)}
   padding: 20px 0;
   background-color: white;
 
   @media (min-width: 769px) {
     position: sticky;
     top: 0px;
-    padding-bottom: 3px;
+    padding-bottom: 0;
   }
 `;
 
 const UserInfo = styled.div`
   position: relative;
-  padding: 32px 20px 0 0;
+  padding: 52px 20px 0 0;
   text-align: right;
+
+  @media (min-width: 769px) {
+    margin: calc(-40px) 0px 0px 0;
+    background-color: white;
+  }
 `;
 
 const FeedSection = styled.div`
   ${variables.widthHeight("100vw", "60px")};
-  /* margin: 9px 0 31px calc(-50vw + 50%);
-  padding: 41px 0; */
   border-bottom: 1px solid #e2e2e2;
 
   @media (min-width: 769px) {
-    ${variables.widthHeight("375px", "80px")};
+    ${variables.widthHeight("375px", "81px")};
     margin: 9px 0px 1px calc(-20px);
     padding: 20px 0px;
   }
@@ -127,9 +125,9 @@ const FeedSection = styled.div`
 const FeedList = styled.button`
   ${variables.fontStyle("19px", 600)};
   width: 50%;
+  padding: 18.5px 0;
   background-color: ${(props) => props.theme.style.white};
   border: none;
-  padding: 18.5px 0;
 `;
 
 const FeedFrameContainer = styled.div`
@@ -157,8 +155,8 @@ const FeedOwnerInfo = styled.div`
 
 const FeedOwnerImg = styled.div`
   ${variables.widthHeight("32px", "32px")}
-  border-radius : 50%;
   background-color: ${(props) => props.theme.style.lightgray};
+  border-radius: 50%;
 `;
 
 const FeedOwnerName = styled.div`
@@ -191,7 +189,7 @@ const FeedDetailButton = styled.div`
 
 const FeedText = styled.div`
   ${variables.fontStyle("22px", 500)};
-  width: 100%;
-  height: 62px;
+  ${variables.widthHeight("100%", "62px")};
+
   line-height: 31px;
 `;
