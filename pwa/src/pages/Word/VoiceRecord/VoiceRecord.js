@@ -6,7 +6,7 @@ import * as W from "./VoiceRecord.style";
 import ListeningIconImg from "../../../assets/images/listeningIcon.png";
 import Modal from "../../../components/Modal/Modal";
 import { SAVE_AUDIO } from "./voiceRecordData";
-import { EDIT_MEMORY } from "../../../components/modalData";
+import { EDIT_MEMORY } from "../../../components/Modal/modalData";
 
 const VoiceRecord = () => {
   const navigate = useNavigate();
