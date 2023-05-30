@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import CommentType from "./CommentType";
 import styled from "styled-components";
 import variables from "../styles/variables";
+import useStore from "../state/store";
 
 const CommentModal = ({ setIsOpenModal }) => {
+  const { commentType, removeCommentType } = useStore((state) => state);
+
   const ColesModal = () => {
     setIsOpenModal(false);
+    removeCommentType();
   };
 
+  const [commentTypeModal, setCommentTypeModal] = useState(false);
+
   const ClickMethod = (e) => {
-    console.log(e.currentTarget.dataset.value);
+    commentType.push(e.currentTarget.dataset.value);
+    setCommentTypeModal(true);
   };
 
   return (
@@ -34,6 +42,9 @@ const CommentModal = ({ setIsOpenModal }) => {
           </ChooseCommentMethod>
         </CommentMethod>
       </CommentMethodContainer>
+      {commentTypeModal && (
+        <CommentType type={commentType} setIsOpenModal={setIsOpenModal} />
+      )}
       <CancelMakeComment onClick={ColesModal}>취소하기</CancelMakeComment>
     </>
   );
@@ -75,10 +86,6 @@ const ChooseCommentMethod = styled.li`
   color: ${(props) => props.theme.style.black};
 `;
 
-const MethodList = styled.li`
-  ${variables.flex("row", "space-between", "center")}
-`;
-
 const CommentMethodArrowRight = styled.div`
   color: #ababab;
 `;
@@ -90,5 +97,5 @@ const CancelMakeComment = styled.div`
   /* bottom : 32px */
   text-align: center;
   color: ${(props) => props.theme.style.white};
-  z-index: 10;
+  z-index: 9999;
 `;

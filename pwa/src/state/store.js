@@ -22,6 +22,9 @@ const useStore = create((set) => ({
 
   feedDetailData: [],
   removeFeedDetailData: () => set({ feedDetailData: [] }),
+
+  commentType: [],
+  removeCommentType: () => set({ commentType: [] }),
 }));
 
 export default useStore;

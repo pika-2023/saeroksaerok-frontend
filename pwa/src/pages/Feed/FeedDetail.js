@@ -24,35 +24,40 @@ const FeedDetail = () => {
         {"<"} 뒤로가기
       </FeedReturnButton>
 
-      {feedDetailData.map((data) => {
+      {feedDetailData.map(({ id, name, return_date, word, text }) => {
         return (
-          <FeedFrame key={data.id}>
+          <FeedFrame key={id}>
             <FeedInfo>
               <FeedOwnerInfo>
                 <FeedOwnerImg></FeedOwnerImg>
-                <FeedOwnerName>{data.name}</FeedOwnerName>
+                <FeedOwnerName>{name}</FeedOwnerName>
               </FeedOwnerInfo>
               <FeedUploadDate>
-                {data.return_date.slice(0, 4)}년 {data.return_date.slice(5, 7)}
-                월 {data.return_date.slice(8, 10)}일
+                {return_date.slice(0, 4)}년 {return_date.slice(5, 7)}월{" "}
+                {return_date.slice(8, 10)}일
               </FeedUploadDate>
             </FeedInfo>
             <FeedImg></FeedImg>
 
             <FeedContent>
-              <FeedWord>{data.word}</FeedWord>
+              <FeedWord>{word}</FeedWord>
               <ListenToVoice>
                 목소리 듣기 <VoiceButton></VoiceButton>
               </ListenToVoice>
             </FeedContent>
-            <FeedText>{data.text}</FeedText>
+            <FeedText>{text}</FeedText>
           </FeedFrame>
         );
       })}
       {!isOpenModal && (
         <MakeComment onClick={OpenCommentModal}>답글 남기기</MakeComment>
       )}
-      {isOpenModal && <CommentModal setIsOpenModal={setIsOpenModal} />}
+      {isOpenModal && (
+        <CommentModal
+          setIsOpenModal={setIsOpenModal}
+          feedDetailData={feedDetailData}
+        />
+      )}
     </>
   );
 };
