@@ -1,13 +1,10 @@
-import React, { useRef } from "react";
+import React from "react";
 import * as S from "./Word.style";
-import Modal from "../../components/Modal";
+import Modal from "../../components/Modal/Modal";
+import useStore from "../../state/store";
 
 const Word = () => {
-  const recordModal = useRef();
-
-  const showModal = () => {
-    recordModal.current.style = "display: block";
-  };
+  const { isOpen, setIsOpen, modalData } = useStore((state) => state);
 
   return (
     <S.WordContainer>
@@ -25,9 +22,15 @@ const Word = () => {
           <S.TodayWordContent>기쁨</S.TodayWordContent>
         </S.TodayWord>
       </S.TodayWordContainer>
-      <S.MemoryButton onClick={showModal}>추억 남기기</S.MemoryButton>
+      <S.MemoryButton
+        onClick={() => {
+          setIsOpen(true);
+        }}
+      >
+        추억 남기기
+      </S.MemoryButton>
 
-      <Modal recordModal={recordModal} />
+      {isOpen && <Modal setIsOpen={setIsOpen} modalData={modalData} />}
     </S.WordContainer>
   );
 };
