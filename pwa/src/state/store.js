@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
+import { RECORD_AUDIO } from "../pages/Word/VoiceRecord/voiceRecordData";
+import { RECORD_METHOD } from "../components/Modal/modalData";
 
 // MARK: 기본 사용법
 
@@ -22,6 +24,15 @@ const useStore = create((set) => ({
 
   feedDetailData: [],
   removeFeedDetailData: () => set({ feedDetailData: [] }),
+
+  isOpen: false,
+  setIsOpen: () => set((state) => ({ isOpen: !state.isOpen })),
+
+  voiceRecordData: RECORD_AUDIO,
+  setVoiceRecordData: (state) => set({ voiceRecordData: state }),
+
+  modalData: RECORD_METHOD,
+  setModalData: (state) => set({ modalData: state }),
 }));
 
 export default useStore;
