@@ -43,7 +43,11 @@ const CommentModal = ({ setIsOpenModal }) => {
         </CommentMethod>
       </CommentMethodContainer>
       {commentTypeModal && (
-        <CommentType type={commentType} setIsOpenModal={setIsOpenModal} />
+        <CommentType
+          type={commentType}
+          setCommentTypeModal={setCommentTypeModal}
+          setIsOpenModal={setIsOpenModal}
+        />
       )}
       <CancelMakeComment onClick={ColesModal}>취소하기</CancelMakeComment>
     </>

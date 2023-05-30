@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import variables from "../styles/variables";
 import useStore from "../state/store";
+import ListeningIconImg from "../assets/images/listeningIcon.png";
 
 const CommentType = ({ setIsOpenModal, type }) => {
   const { feedDetailData } = useStore((state) => state);
-
+  const [recoding, setRecoding] = useState(true);
   const ColesModal = () => {
     setIsOpenModal(false);
   };
@@ -24,11 +25,11 @@ const CommentType = ({ setIsOpenModal, type }) => {
             </Post>
             {type[0] === "card" && (
               <CommentModal>
-                <CardTitle>
+                <CommentModalTitle>
                   {name.slice(1)}님에게 전할
                   <br />
                   덕담을 골라주세요
-                </CardTitle>
+                </CommentModalTitle>
                 <BlessingComment>
                   <ChooseBlessingComment data-value="건강하세요">
                     건강하세요
@@ -47,16 +48,40 @@ const CommentType = ({ setIsOpenModal, type }) => {
             )}
             {type[0] === "voice" && (
               <CommentModal>
-                {name.slice(1)}님의 말씀을
-                <br />
-                듣고 있어요
+                {recoding && (
+                  <>
+                    <CommentModalTitle>
+                      {name.slice(1)}님의 말씀을
+                      <br />
+                      듣고 있어요
+                    </CommentModalTitle>
+                    <RecodingComment src={ListeningIconImg} />
+                  </>
+                )}
+                {recoding ? (
+                  <>
+                    <StopRecoding
+                      onClick={() => {
+                        setRecoding(false);
+                      }}
+                    >
+                      말 끝맺기
+                    </StopRecoding>
+                    <CancelMakeComment onClick={ColesModal}>
+                      취소하기
+                    </CancelMakeComment>
+                  </>
+                ) : (
+                  <>
+                    <MakeComment> 답글 남기기</MakeComment>
+                    <CorrectionComment>답글 수정하기</CorrectionComment>
+                  </>
+                )}
               </CommentModal>
             )}
           </div>
         );
       })}
-
-      <CancelMakeComment onClick={ColesModal}>취소하기</CancelMakeComment>
     </>
   );
 };
@@ -80,7 +105,7 @@ const OwnerInfo = styled.div`
 
 const PostOwnerProfileImg = styled.img`
   ${variables.widthHeight("32px", "32px")}
-  border-radius : 50%
+  border-radius : 50%;
 `;
 
 const PostOwner = styled.div`
@@ -104,12 +129,41 @@ const CommentModal = styled.ul`
   z-index: 10;
 `;
 
-const CardTitle = styled.div`
+const CommentModalTitle = styled.div`
   ${variables.fontStyle("24px", 600)};
   ${variables.widthHeight("fit-content", "66px")};
   margin: 4px 0 2px 0px;
   color : ${(props) => props.theme.style.black}
   line-height: 33px;
+`;
+
+const RecodingComment = styled.img`
+  ${variables.position("absolute", "50%", "null", "null", "50%")};
+  ${variables.widthHeight("96px", "96px")};
+  transform: translate(-50%, -50%);
+`;
+
+const StopRecoding = styled.div`
+  ${variables.position("fixed", "null", "0", "62px", "0")}
+  ${variables.widthHeight("335px", "68px")}
+  ${variables.fontStyle("22px", 600)}
+  padding : 16px;
+  margin: 0 20px;
+  border-top: 1px solid;
+  text-align: center;
+`;
+
+const MakeComment = styled.div`
+  ${variables.position("fixed", "null", "0", "62px", "0")}
+  ${variables.widthHeight("335px", "68px")}
+  ${variables.fontStyle("22px", 600)}
+  padding : 16px;
+  margin: 0 20px;
+  border-top: 1px solid;
+  color: white;
+  background-color: black;
+  border-radius: 0 0 24px 24px;
+  text-align: center;
 `;
 
 const BlessingComment = styled.div``;
@@ -133,5 +187,16 @@ const CancelMakeComment = styled.div`
   /* bottom : 32px */
   text-align: center;
   color: ${(props) => props.theme.style.white};
+  z-index: 10;
+`;
+
+const CorrectionComment = styled.div`
+  ${variables.widthHeight("99px", "29px")}
+  ${variables.position("fixed", "null", "50%", "12px", "50%")}
+  margin :  auto;
+  /* bottom : 32px */
+  text-align: center;
+  color: ${(props) => props.theme.style.white};
+  transform: translate(-50%, -50%);
   z-index: 10;
 `;
