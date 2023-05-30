@@ -41,7 +41,7 @@ const VoiceRecord = () => {
         <>
           <W.VoiceRecorder>
             <W.ListeningText>
-              {voiceRecordData[0].listeningText[0]} <br />{" "}
+              {voiceRecordData[0].listeningText[0]} <br />
               {voiceRecordData[0].listeningText[1]}
             </W.ListeningText>
             <W.ListeningIconContainer>
@@ -82,7 +82,13 @@ const VoiceRecord = () => {
         </>
       )}
 
-      {!isOpen && <Modal setIsOpen={setIsOpen} modalData={modalData} />}
+      {!isOpen && (
+        <Modal
+          setIsOpen={setIsOpen}
+          modalData={modalData}
+          setVoiceRecordData={setVoiceRecordData}
+        />
+      )}
     </W.VoiceRecordContainer>
   );
 };
