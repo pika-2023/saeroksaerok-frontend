@@ -17,8 +17,8 @@ const Signup = () => {
   };
 
   // MARK : 회원가입 API 테스트용 mockUrl
-  const ApiUrl = "https://64763b93e607ba4797dd7d29.mockapi.io/api/signup";
-  // const ApiUrl = "http://13.124.76.165:8080/signup";
+  // const ApiUrl = "https://64763b93e607ba4797dd7d29.mockapi.io/api/signup";
+  const ApiUrl = "http://13.124.76.165:8080/signup";
 
   const handleSignup = () => {
     fetch(ApiUrl, {
