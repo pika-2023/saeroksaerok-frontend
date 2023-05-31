@@ -1,8 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import variables from "../../styles/variables";
 
 const Signup = () => {
+  const [userInfo, setUserInfo] = useState({
+    email: "",
+    password: "",
+    checkPassword: "",
+  });
+
+  const { email, password, checkPassword } = userInfo;
+
+  const onChangeUserInfo = (e) => {
+    const { name, value } = e.target;
+    setUserInfo({ ...userInfo, [name]: value });
+  };
+
+  // MARK : 회원가입 API 테스트용 mockUrl
+  // const ApiUrl = "https://64763b93e607ba4797dd7d29.mockapi.io/api/signup";
+  const ApiUrl = "http://13.124.76.165:8080/signup";
+
+  const handleSignup = () => {
+    fetch(ApiUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+        checkPassword,
+      }),
+    })
+      .then((response) => response.json)
+      .then((data) => {
+        console.log(data);
+      });
+  };
+
   return (
     <SignupContainer>
       <UploadProfileImg>프로필</UploadProfileImg>
@@ -12,16 +47,37 @@ const Signup = () => {
       />
       <SignupForm>
         <FormContainer>
-          <FormTitle>이름</FormTitle>
-          <FormInput type="text" placeholder="이름 입력란" />
+          {/* 이름 대신 이메일로 테스트 진행 */}
+          {/* <FormTitle>이름</FormTitle> */}
+          {/* <FormInput type="text" placeholder="이름 입력란" /> */}
+          <FormTitle>이메일</FormTitle>
+          <FormInput
+            type="email"
+            value={email}
+            name="email"
+            placeholder="이메일 입력란"
+            onChange={onChangeUserInfo}
+          />
         </FormContainer>
         <FormContainer>
           <FormTitle>비밀번호</FormTitle>
-          <FormInput type="password" placeholder="비밀번호 입력란" />
-          <FormInput type="password" placeholder="비밀번호 확인란" />
+          <FormInput
+            type="password"
+            value={password}
+            name="password"
+            placeholder="비밀번호 입력란"
+            onChange={onChangeUserInfo}
+          />
+          <FormInput
+            type="password"
+            value={checkPassword}
+            name="checkPassword"
+            placeholder="비밀번호 확인란"
+            onChange={onChangeUserInfo}
+          />
         </FormContainer>
       </SignupForm>
-      <SignupButton>회원가입</SignupButton>
+      <SignupButton onClick={handleSignup}>회원가입</SignupButton>
     </SignupContainer>
   );
 };
