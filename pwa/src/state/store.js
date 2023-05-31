@@ -25,6 +25,8 @@ const useStore = create((set) => ({
   feedDetailData: [],
   removeFeedDetailData: () => set({ feedDetailData: [] }),
 
+  commentType: [],
+  removeCommentType: () => set({ commentType: [] }),
   isOpen: false,
   setIsOpen: () => set((state) => ({ isOpen: !state.isOpen })),
 
