@@ -19,7 +19,7 @@ const Feed = () => {
       setMyFeed(data.data);
       removeFeedDetailData();
     })();
-  }, [myFeedData]);
+  }, [myFeedData, removeFeedDetailData]);
 
   useEffect(() => {
     (async () => {
@@ -27,7 +27,7 @@ const Feed = () => {
       setFriendsMyFeed(data.data);
       removeFeedDetailData();
     })();
-  }, [friendsFeedData]);
+  }, [friendsFeedData, removeFeedDetailData]);
 
   function MyMemory() {
     setCurrentMemory(0);
@@ -59,9 +59,9 @@ const Feed = () => {
                   <FeedOwnerName>{data.name}</FeedOwnerName>
                 </FeedOwnerInfo>
                 <FeedUploadDate>
-                  {data.return_date.slice(0, 4)}년{" "}
-                  {data.return_date.slice(5, 7)}월{" "}
-                  {data.return_date.slice(8, 10)}일
+                  {data.upload_date.slice(0, 4)}년{" "}
+                  {data.upload_date.slice(5, 7)}월{" "}
+                  {data.upload_date.slice(8, 10)}일
                 </FeedUploadDate>
               </FeedInfo>
               <FeedImg></FeedImg>

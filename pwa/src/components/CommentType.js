@@ -44,6 +44,9 @@ const CommentType = ({ setIsOpenModal, type }) => {
                     <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
                   </ChooseBlessingComment>
                 </BlessingComment>
+                <CancelMakeComment onClick={ColesModal}>
+                  취소하기
+                </CancelMakeComment>
               </CommentModal>
             )}
             {type[0] === "voice" && (
@@ -74,7 +77,7 @@ const CommentType = ({ setIsOpenModal, type }) => {
                 ) : (
                   <>
                     <MakeComment> 답글 남기기</MakeComment>
-                    <CorrectionComment>답글 수정하기</CorrectionComment>
+                    <CorrectComment>답글 수정하기</CorrectComment>
                   </>
                 )}
               </CommentModal>
@@ -119,7 +122,7 @@ const PostText = styled.div`
 `;
 
 const CommentModal = styled.ul`
-  ${variables.widthHeight("335px", "322px")}
+  ${variables.widthHeight("335px", "288px")}
   ${variables.position("fixed", "405px", "20px", "105px", "20px")}
   margin : auto;
   padding: 20px;
@@ -144,35 +147,38 @@ const RecodingComment = styled.img`
 `;
 
 const StopRecoding = styled.div`
-  ${variables.position("fixed", "null", "0", "62px", "0")}
+  ${variables.flex("row", "center", "center")}
+  ${variables.position("fixed", "605px", "20px", "85px", "20px")}
   ${variables.widthHeight("335px", "68px")}
   ${variables.fontStyle("22px", 600)}
   padding : 16px;
-  margin: 0 20px;
-  border-top: 1px solid;
-  text-align: center;
+  margin: auto;
+  border-top: 1px solid #e2e2e2;
 `;
 
 const MakeComment = styled.div`
-  ${variables.position("fixed", "null", "0", "62px", "0")}
+  ${variables.flex("row", "center", "center")}
+  ${variables.position("fixed", "605px", "20px", "85px", "20px")}
   ${variables.widthHeight("335px", "68px")}
   ${variables.fontStyle("22px", 600)}
   padding : 16px;
-  margin: 0 20px;
-  border-top: 1px solid;
+  margin: auto;
+  border-top: 1px solid #e2e2e2;
   color: white;
   background-color: black;
   border-radius: 0 0 24px 24px;
-  text-align: center;
 `;
 
-const BlessingComment = styled.div``;
+const BlessingComment = styled.div`
+  ${variables.flex("column", "center", "center")}
+  gap: 32px;
+`;
 
 const ChooseBlessingComment = styled.li`
   ${variables.flex("row", "space-between", "center")}
   ${variables.widthHeight("295px", "31px")}
   ${variables.fontStyle("22px", 500)}
-  margin-top : 32px;
+ 
   color: ${(props) => props.theme.style.black};
 `;
 
@@ -181,22 +187,21 @@ const CommentMethodArrowRight = styled.div`
 `;
 
 const CancelMakeComment = styled.div`
-  ${variables.widthHeight("64px", "29px")}
-  ${variables.position("fixed", "null", "156px", "12px", "156px")}
-  margin :  auto;
-  /* bottom : 32px */
-  text-align: center;
-  color: ${(props) => props.theme.style.white};
-  z-index: 10;
-`;
-
-const CorrectionComment = styled.div`
   ${variables.widthHeight("99px", "29px")}
   ${variables.position("fixed", "null", "50%", "12px", "50%")}
   margin :  auto;
-  /* bottom : 32px */
   text-align: center;
   color: ${(props) => props.theme.style.white};
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, 0%);
+  z-index: 10;
+`;
+
+const CorrectComment = styled.div`
+  ${variables.widthHeight("99px", "29px")}
+  ${variables.position("fixed", "null", "50%", "12px", "50%")}
+  margin :  auto;
+  text-align: center;
+  color: ${(props) => props.theme.style.white};
+  transform: translate(-50%, 0%);
   z-index: 10;
 `;

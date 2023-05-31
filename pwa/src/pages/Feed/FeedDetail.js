@@ -24,7 +24,10 @@ const FeedDetail = () => {
         {"<"} 뒤로가기
       </FeedReturnButton>
 
-      {feedDetailData.map(({ id, name, return_date, word, text }) => {
+      {feedDetailData.map(({ id, name, upload_date, word, text }) => {
+        const sliceData = (a, b) => {
+          return upload_date?.slice(a, b);
+        };
         return (
           <FeedFrame key={id}>
             <FeedInfo>
@@ -33,8 +36,8 @@ const FeedDetail = () => {
                 <FeedOwnerName>{name}</FeedOwnerName>
               </FeedOwnerInfo>
               <FeedUploadDate>
-                {return_date.slice(0, 4)}년 {return_date.slice(5, 7)}월{" "}
-                {return_date.slice(8, 10)}일
+                {`${sliceData(0, 4)}년 ${sliceData(5, 7)}월
+                ${sliceData(8, 10)}일`}
               </FeedUploadDate>
             </FeedInfo>
             <FeedImg></FeedImg>
@@ -81,6 +84,13 @@ const FeedFrame = styled.div`
   margin: 20px auto 25px;
   padding-bottom: 28px;
   border-bottom: solid 1px #e2e2e2;
+
+  @media (min-width: 769px) {
+    ${variables.widthHeight("375px", "null")}
+    margin: 20px calc(-20px) 25px;
+    padding: 0 20px 28px 20px;
+    border-bottom: solid 1px #e2e2e2;
+  }
 `;
 
 const FeedInfo = styled.div`

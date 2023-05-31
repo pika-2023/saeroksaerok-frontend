@@ -22,26 +22,28 @@ const CommentModal = ({ setIsOpenModal }) => {
   return (
     <>
       <CommentModalBackground onClick={ColesModal}></CommentModalBackground>
-      <CommentMethodContainer>
-        <Title>
-          어떤 방식으로
-          <br /> 답글을 남길까요?
-        </Title>
-        <CommentMethod>
-          <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
-            덕담 카드 보내기
-            <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-          </ChooseCommentMethod>
-          <ChooseCommentMethod data-value="voice" onClick={ClickMethod}>
-            목소리로 답글 달기
-            <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-          </ChooseCommentMethod>
-          <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
-            키보드로 답글 달기
-            <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-          </ChooseCommentMethod>
-        </CommentMethod>
-      </CommentMethodContainer>
+      {!commentTypeModal && (
+        <CommentMethodContainer>
+          <Title>
+            어떤 방식으로
+            <br /> 답글을 남길까요?
+          </Title>
+          <CommentMethod>
+            <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
+              덕담 카드 보내기
+              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+            </ChooseCommentMethod>
+            <ChooseCommentMethod data-value="voice" onClick={ClickMethod}>
+              목소리로 답글 달기
+              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+            </ChooseCommentMethod>
+            <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
+              키보드로 답글 달기
+              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+            </ChooseCommentMethod>
+          </CommentMethod>
+        </CommentMethodContainer>
+      )}
       {commentTypeModal && (
         <CommentType
           type={commentType}
@@ -49,7 +51,9 @@ const CommentModal = ({ setIsOpenModal }) => {
           setIsOpenModal={setIsOpenModal}
         />
       )}
-      <CancelMakeComment onClick={ColesModal}>취소하기</CancelMakeComment>
+      {!commentTypeModal && (
+        <CancelMakeComment onClick={ColesModal}>취소하기</CancelMakeComment>
+      )}
     </>
   );
 };
@@ -62,7 +66,7 @@ const CommentModalBackground = styled.div`
 `;
 
 const CommentMethodContainer = styled.ul`
-  ${variables.widthHeight("335px", "322px")}
+  ${variables.widthHeight("335px", "288px")}
   ${variables.position("fixed", "405px", "20px", "105px", "20px")}
   margin : auto;
   padding: 20px;
@@ -80,13 +84,15 @@ const Title = styled.div`
   line-height: 33px;
 `;
 
-const CommentMethod = styled.div``;
+const CommentMethod = styled.div`
+  ${variables.flex("column", "center", "center")}
+  gap: 32px;
+`;
 
 const ChooseCommentMethod = styled.li`
   ${variables.flex("row", "space-between", "center")}
   ${variables.widthHeight("295px", "31px")}
   ${variables.fontStyle("22px", 500)}
-  margin-top : 32px;
   color: ${(props) => props.theme.style.black};
 `;
 
