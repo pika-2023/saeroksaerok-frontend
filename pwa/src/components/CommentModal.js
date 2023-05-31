@@ -7,7 +7,7 @@ import useStore from "../state/store";
 const CommentModal = ({ setIsOpenModal }) => {
   const { commentType, removeCommentType } = useStore((state) => state);
 
-  const ColesModal = () => {
+  const CloseCommentModal = () => {
     setIsOpenModal(false);
     removeCommentType();
   };
@@ -21,13 +21,15 @@ const CommentModal = ({ setIsOpenModal }) => {
 
   return (
     <>
-      <CommentModalBackground onClick={ColesModal}></CommentModalBackground>
+      <CommentModalBackground
+        onClick={CloseCommentModal}
+      ></CommentModalBackground>
       {!commentTypeModal && (
         <CommentMethodContainer>
-          <Title>
+          <CommentMethodTitle>
             어떤 방식으로
             <br /> 답글을 남길까요?
-          </Title>
+          </CommentMethodTitle>
           <CommentMethod>
             <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
               덕담 카드 보내기
@@ -52,7 +54,9 @@ const CommentModal = ({ setIsOpenModal }) => {
         />
       )}
       {!commentTypeModal && (
-        <CancelMakeComment onClick={ColesModal}>취소하기</CancelMakeComment>
+        <CancelMakeComment onClick={CloseCommentModal}>
+          취소하기
+        </CancelMakeComment>
       )}
     </>
   );
@@ -76,7 +80,7 @@ const CommentMethodContainer = styled.ul`
   z-index: 10;
 `;
 
-const Title = styled.div`
+const CommentMethodTitle = styled.div`
   ${variables.fontStyle("24px", 600)};
   ${variables.widthHeight("fit-content", "66px")};
   margin: 4px 0 2px 0px;
@@ -104,7 +108,6 @@ const CancelMakeComment = styled.div`
   ${variables.widthHeight("64px", "29px")}
   ${variables.position("fixed", "null", "156px", "12px", "156px")}
   margin :  auto;
-  /* bottom : 32px */
   text-align: center;
   color: ${(props) => props.theme.style.white};
   z-index: 9999;

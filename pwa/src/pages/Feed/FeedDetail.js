@@ -70,9 +70,7 @@ export default FeedDetail;
 const FeedReturnButton = styled.div`
   ${variables.widthHeight("335px", "29px")}
   margin : 52px auto;
-  :hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 
   @media (min-width: 769px) {
     margin: 32px 0 0 0;
@@ -80,13 +78,13 @@ const FeedReturnButton = styled.div`
 `;
 
 const FeedFrame = styled.div`
-  ${variables.widthHeight("335px", "null")}
+  width: 335px;
   margin: 20px auto 25px;
   padding-bottom: 28px;
   border-bottom: solid 1px #e2e2e2;
 
   @media (min-width: 769px) {
-    ${variables.widthHeight("375px", "null")}
+    width: 375px;
     margin: 20px calc(-20px) 25px;
     padding: 0 20px 28px 20px;
     border-bottom: solid 1px #e2e2e2;
@@ -155,6 +153,7 @@ const FeedText = styled.div`
 const MakeComment = styled.button`
   ${variables.position("fixed", "null", 0, 0, 0)}
   ${variables.widthHeight("375px", "82px")};
+  ${variables.fontStyle("22px", 600)}
   margin: auto;
   color: white;
   background-color: black;

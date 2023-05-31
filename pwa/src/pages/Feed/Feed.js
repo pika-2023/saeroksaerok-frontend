@@ -51,6 +51,9 @@ const Feed = () => {
       </FeedPageHeader>
       <FeedFrameContainer>
         {(currentMemory === 0 ? myFeed : friendsFeed).map((data) => {
+          const sliceData = (a, b) => {
+            return data.upload_date?.slice(a, b);
+          };
           return (
             <FeedFrame key={data.id}>
               <FeedInfo>
@@ -59,9 +62,8 @@ const Feed = () => {
                   <FeedOwnerName>{data.name}</FeedOwnerName>
                 </FeedOwnerInfo>
                 <FeedUploadDate>
-                  {data.upload_date.slice(0, 4)}년{" "}
-                  {data.upload_date.slice(5, 7)}월{" "}
-                  {data.upload_date.slice(8, 10)}일
+                  {`${sliceData(0, 4)}년 ${sliceData(5, 7)}월
+                ${sliceData(8, 10)}일`}
                 </FeedUploadDate>
               </FeedInfo>
               <FeedImg></FeedImg>
