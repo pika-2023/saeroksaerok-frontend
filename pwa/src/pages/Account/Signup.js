@@ -16,8 +16,6 @@ const Signup = () => {
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  // MARK : 회원가입 API 테스트용 mockUrl
-  // const ApiUrl = "https://64763b93e607ba4797dd7d29.mockapi.io/api/signup";
   const ApiUrl = "http://13.124.76.165:8080/signup";
 
   const handleSignup = () => {
@@ -47,9 +45,6 @@ const Signup = () => {
       />
       <SignupForm>
         <FormContainer>
-          {/* 이름 대신 이메일로 테스트 진행 */}
-          {/* <FormTitle>이름</FormTitle> */}
-          {/* <FormInput type="text" placeholder="이름 입력란" /> */}
           <FormTitle>이메일</FormTitle>
           <FormInput
             type="email"

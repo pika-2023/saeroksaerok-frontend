@@ -47,6 +47,7 @@ export const TodayWordTitle = styled.h4`
 
 export const TodayWordContent = styled.h2`
   ${variables.fontStyle("52px", 700)}
+  font-family: MBC1961GulimOTF;
 `;
 
 export const MemoryButton = styled.button`

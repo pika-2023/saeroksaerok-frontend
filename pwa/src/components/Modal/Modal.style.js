@@ -5,7 +5,6 @@ export const RecordModal = styled.div`
   ${variables.position("fixed", "0", "0", "null", "null")}
   ${variables.flex("row", "center", "center")}
   ${variables.widthHeight("100%", "100%")}
-  /* display: none; */
   z-index: 100;
 `;
 
