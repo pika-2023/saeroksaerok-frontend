@@ -17,15 +17,18 @@ const Modal = ({ setIsOpen, modalData, setVoiceRecordData }) => {
         <S.ModalTitle>
           {modalData[0].title[0]} <br /> {modalData[0].title[1]}
         </S.ModalTitle>
-        {modalData[0].options[0] === "목소리로 남기기" ? (
+        {modalData[0].options[0] === "키보드" ? (
           <>
-            <S.ModalOption onClick={goToVoiceRecord}>
-              <S.ModalOptionTitle>{modalData[0].options[0]}</S.ModalOptionTitle>
-              <S.ModalOptionIcon>{">"}</S.ModalOptionIcon>
-            </S.ModalOption>
             <S.ModalOption>
-              <S.ModalOptionTitle>{modalData[0].options[1]}</S.ModalOptionTitle>
               <S.ModalOptionIcon>{">"}</S.ModalOptionIcon>
+              <S.ModalOptionTitle>{modalData[0].options[0]}</S.ModalOptionTitle>
+            </S.ModalOption>
+            <S.ModalOption
+              onClick={goToVoiceRecord}
+              style={{ background: "#fff4cc" }}
+            >
+              <S.ModalOptionIcon>{">"}</S.ModalOptionIcon>
+              <S.ModalOptionTitle>{modalData[0].options[1]}</S.ModalOptionTitle>
             </S.ModalOption>
           </>
         ) : (

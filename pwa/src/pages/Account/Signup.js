@@ -6,10 +6,6 @@ const Signup = () => {
   return (
     <SignupContainer>
       <UploadProfileImg>프로필</UploadProfileImg>
-      <EditImgIcon
-        src="/icons/profileImgIcon.png"
-        alt="프로필 사진 등록하기 버튼"
-      />
       <SignupForm>
         <FormContainer>
           <FormTitle>이름</FormTitle>
