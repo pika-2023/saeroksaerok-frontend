@@ -48,7 +48,7 @@ export const ModalOptionTitle = styled.h2`
 
 export const ModalOptionIcon = styled.button`
   ${variables.fontStyle("24px", 500)}
-  color: ${({ theme }) => theme.style.gray};
+  color: ${({ theme }) => theme.style.gray3};
   background: none;
   border: none;
   cursor: pointer;

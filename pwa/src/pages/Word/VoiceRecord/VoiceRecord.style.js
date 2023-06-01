@@ -49,7 +49,7 @@ export const CancelButton = styled.button`
   ${variables.flex("row", "center", "center")}
   ${variables.widthHeight("100%", "72px")}
   ${variables.fontStyle("19px", 500)}
-  color: ${({ theme }) => theme.style.darkgray};
+  color: ${({ theme }) => theme.style.gray3};
   background: none;
   border: none;
   cursor: pointer;

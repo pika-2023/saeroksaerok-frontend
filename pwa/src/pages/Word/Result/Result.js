@@ -40,8 +40,8 @@ const ResultImage = styled.div`
   ${variables.widthHeight("100%", "242px")}
   ${variables.fontStyle("22px", 500)}
   grid-row: 6;
-  background: ${({ theme }) => theme.style.lightgray};
-  color: ${({ theme }) => theme.style.gray};
+  background: ${({ theme }) => theme.style.gray1};
+  color: ${({ theme }) => theme.style.gray3};
 `;
 
 const ResultContent = styled.div`

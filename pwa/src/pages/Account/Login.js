@@ -37,8 +37,8 @@ const UploadProfileImg = styled.div`
   ${variables.widthHeight("147px", "147px")}
   ${variables.fontStyle("22px", 500)}
   margin-bottom: 50px;
-  background: ${({ theme }) => theme.style.lightgray};
-  color: ${({ theme }) => theme.style.gray};
+  background: ${({ theme }) => theme.style.gray1};
+  color: ${({ theme }) => theme.style.gray3};
   border-radius: 50%;
 `;
 
@@ -65,12 +65,12 @@ const FormInput = styled.input`
   margin-bottom: 20px;
   padding: 13px 16px;
   width: 100%;
-  background: ${({ theme }) => theme.style.lightgray};
+  background: ${({ theme }) => theme.style.gray1};
   border: none;
   border-radius: 6px;
 
   &::placeholder {
-    color: ${({ theme }) => theme.style.gray};
+    color: ${({ theme }) => theme.style.gray3};
   }
 `;
 
