@@ -23,7 +23,6 @@ const Background = styled.div`
 const PhoneFrame = styled.div`
   ${variables.widthHeight("100%", "100%")}
   /* TODO: background image 교체 필요 */
- 
 
   @media (min-width: 769px) {
     ${variables.widthHeight("426px", "90%")}

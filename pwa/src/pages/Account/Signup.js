@@ -16,8 +16,6 @@ const Signup = () => {
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  // MARK : 회원가입 API 테스트용 mockUrl
-  // const ApiUrl = "https://64763b93e607ba4797dd7d29.mockapi.io/api/signup";
   const ApiUrl = "http://13.124.76.165:8080/signup";
 
   const handleSignup = () => {
@@ -47,9 +45,6 @@ const Signup = () => {
       />
       <SignupForm>
         <FormContainer>
-          {/* 이름 대신 이메일로 테스트 진행 */}
-          {/* <FormTitle>이름</FormTitle> */}
-          {/* <FormInput type="text" placeholder="이름 입력란" /> */}
           <FormTitle>이메일</FormTitle>
           <FormInput
             type="email"
@@ -94,8 +89,8 @@ const UploadProfileImg = styled.div`
   ${variables.widthHeight("147px", "147px")}
   ${variables.fontStyle("22px", 500)}
   margin-bottom: 50px;
-  background: ${({ theme }) => theme.style.lightgray};
-  color: ${({ theme }) => theme.style.gray};
+  background: ${({ theme }) => theme.style.gray1};
+  color: ${({ theme }) => theme.style.gray3};
   border-radius: 50%;
 `;
 
@@ -122,12 +117,12 @@ const FormInput = styled.input`
   margin-bottom: 20px;
   padding: 13px 16px;
   width: 100%;
-  background: ${({ theme }) => theme.style.lightgray};
+  background: ${({ theme }) => theme.style.gray1};
   border: none;
   border-radius: 6px;
 
   &::placeholder {
-    color: ${({ theme }) => theme.style.gray};
+    color: ${({ theme }) => theme.style.gray3};
   }
 `;
 

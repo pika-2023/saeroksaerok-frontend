@@ -84,7 +84,7 @@ const CommentMethodTitle = styled.div`
   ${variables.fontStyle("24px", 600)};
   ${variables.widthHeight("fit-content", "66px")};
   margin: 4px 0 2px 0px;
-  color : ${(props) => props.theme.style.black}
+  color: ${(props) => props.theme.style.black};
   line-height: 33px;
 `;
 

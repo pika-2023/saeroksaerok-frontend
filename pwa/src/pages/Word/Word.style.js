@@ -35,18 +35,19 @@ export const TodayWord = styled.div`
   ${variables.flex("column", "center", "center")}
   ${variables.widthHeight("190px", "190px")}
   margin-bottom: 60px;
-  background: ${({ theme }) => theme.style.lightgray};
+  background: ${({ theme }) => theme.style.gray1};
   border-radius: 50%;
   gap: 15px;
 `;
 
 export const TodayWordTitle = styled.h4`
   ${variables.fontStyle("24px", 500)}
-  color: ${({ theme }) => theme.style.darkgray};
+  color: ${({ theme }) => theme.style.gray3};
 `;
 
 export const TodayWordContent = styled.h2`
   ${variables.fontStyle("52px", 700)}
+  font-family: MBC1961GulimOTF;
 `;
 
 export const MemoryButton = styled.button`

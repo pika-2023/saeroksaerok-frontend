@@ -5,7 +5,6 @@ export const RecordModal = styled.div`
   ${variables.position("fixed", "0", "0", "null", "null")}
   ${variables.flex("row", "center", "center")}
   ${variables.widthHeight("100%", "100%")}
-  /* display: none; */
   z-index: 100;
 `;
 
@@ -48,7 +47,7 @@ export const ModalOptionTitle = styled.h2`
 
 export const ModalOptionIcon = styled.button`
   ${variables.fontStyle("24px", 500)}
-  color: ${({ theme }) => theme.style.gray};
+  color: ${({ theme }) => theme.style.gray3};
   background: none;
   border: none;
   cursor: pointer;
