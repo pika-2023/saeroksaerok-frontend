@@ -5,12 +5,14 @@ import useStore from "../state/store";
 import ListeningIconImg from "../assets/images/listeningIcon.png";
 
 const CommentType = ({ setIsOpenModal, type }) => {
-  const { feedDetailData } = useStore((state) => state);
+  const { feedDetailData, removeCommentType } = useStore((state) => state);
   const [recoding, setRecoding] = useState(true);
+  const [textComment, setTextComment] = useState("");
   const ColesModal = () => {
     setIsOpenModal(false);
+    removeCommentType();
   };
-  console.log(type);
+  console.log(textComment);
   return (
     <>
       {feedDetailData.map(({ id, name, text, profile }) => {
@@ -80,6 +82,21 @@ const CommentType = ({ setIsOpenModal, type }) => {
                     <CorrectComment>답글 수정하기</CorrectComment>
                   </>
                 )}
+              </CommentModal>
+            )}
+            {type[0] === "text" && (
+              <CommentModal>
+                <TextCommentInput
+                  type="textarea"
+                  onChange={(e) => {
+                    setTextComment(e.target.value);
+                  }}
+                />
+
+                <MakeComment> 답글 남기기</MakeComment>
+                <CancelMakeComment onClick={ColesModal}>
+                  취소하기
+                </CancelMakeComment>
               </CommentModal>
             )}
           </div>
@@ -172,6 +189,13 @@ const MakeComment = styled.div`
 const BlessingComment = styled.div`
   ${variables.flex("column", "center", "center")}
   gap: 32px;
+`;
+
+const TextCommentInput = styled.textarea`
+  ${variables.widthHeight("100%", "75%")}
+  ${variables.fontStyle("24px", 500)}
+  border: none;
+  white-space: pre-wrap;
 `;
 
 const ChooseBlessingComment = styled.li`
