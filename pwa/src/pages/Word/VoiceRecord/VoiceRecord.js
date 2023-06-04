@@ -197,17 +197,17 @@ const VoiceRecord = (e) => {
       <button onClick={play}>녹음본 듣기</button>
 
       <W.VoiceRecordTitle>언제 있었던 일인가요?</W.VoiceRecordTitle>
-      <W.ListeningText>귀기울여 듣고 있어요</W.ListeningText>
 
       {onRec ? (
         <>
-          <W.StartRecordButton onClick={onRecAudio}>
+          <W.StartRecordButton onClick={onRecAudio} value={0}>
             말 시작하기
           </W.StartRecordButton>
         </>
       ) : (
         <>
-          <W.StartRecordButton onClick={showRecordResult}>
+          <W.ListeningText>귀기울여 듣고 있어요</W.ListeningText>
+          <W.StartRecordButton onClick={showRecordResult} value={1}>
             말 끝내기
           </W.StartRecordButton>
         </>
