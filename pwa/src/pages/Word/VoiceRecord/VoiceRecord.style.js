@@ -29,10 +29,6 @@ export const ListeningIconContainer = styled.div`
   grid-row: 4;
 `;
 
-export const ListeningIcon = styled.img`
-  cursor: pointer;
-`;
-
 export const FinishRecordButton = styled.div`
   ${variables.fontStyle("22px", 600)}
   grid-row: 10;

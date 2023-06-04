@@ -50,6 +50,7 @@ export const TodayWordTitle = styled.h4`
   ${variables.fontStyle("24px", 500)};
   margin-bottom: 20px;
   color: #7d7d7d;
+  line-height: 32px;
 `;
 
 export const TodayWordContent = styled.img`

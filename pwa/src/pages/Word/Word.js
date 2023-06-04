@@ -1,12 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import * as S from "./Word.style";
 import Modal from "../../components/Modal/Modal";
 import useStore from "../../state/store";
 
 const Word = () => {
-  const { isOpen, setIsOpen, modalData } = useStore((state) => state);
+  const { isOpen, setIsOpen, modalData, keyword, setKeyword } = useStore(
+    (state) => state
+  );
   const navigate = useNavigate();
+
+  const accessToken = localStorage.getItem("accessToken");
+  const randomWordUrl = "http://13.124.76.165:8080/diaries/keyword/draw";
+
+  useEffect(() => {
+    if (accessToken) {
+      axios
+        .get(randomWordUrl, {
+          headers: {
+            contentType: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log("success", response.data);
+          setKeyword(response.data.keyword);
+        })
+        .catch((error) => {
+          console.log("error occured!", error);
+        });
+    }
+  }, []);
 
   return (
     <S.WordContainer>
@@ -16,7 +41,9 @@ const Word = () => {
 
       <S.TodayWordContainer>
         <S.TodayWord>
-          <S.TodayWordTitle>오늘의 단어</S.TodayWordTitle>
+          <S.TodayWordTitle>
+            오늘의 단어 <br /> 🌼 {keyword}
+          </S.TodayWordTitle>
           <S.TodayWordContent src="/icons/text_family.png" />
         </S.TodayWord>
       </S.TodayWordContainer>

@@ -35,6 +35,9 @@ const useStore = create((set) => ({
 
   modalData: RECORD_METHOD,
   setModalData: (state) => set({ modalData: state }),
+
+  keyword: "",
+  setKeyword: (state) => set({ keyword: state }),
 }));
 
 export default useStore;

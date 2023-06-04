@@ -32,33 +32,13 @@ const VoiceRecord = () => {
     <W.VoiceRecordContainer>
       <S.TodayWordContainer>
         <S.TodayWord>
-          <S.TodayWordTitle>오늘의 단어</S.TodayWordTitle>
           <S.TodayWordContent>기쁨</S.TodayWordContent>
         </S.TodayWord>
       </S.TodayWordContainer>
 
-      {voiceRecordData[0].buttonText === "말 끝맺기" ? (
+      {voiceRecordData[0].buttonText === "언제 있었던 일인가요?" ? (
         <>
-          <W.VoiceRecorder>
-            <W.ListeningText>
-              {voiceRecordData[0].listeningText[0]} <br />
-              {voiceRecordData[0].listeningText[1]}
-            </W.ListeningText>
-            <W.ListeningIconContainer>
-              <W.ListeningIcon src={ListeningIconImg} />
-            </W.ListeningIconContainer>
-            <W.FinishRecordButton onClick={showRecordResult}>
-              {voiceRecordData[0].buttonText}
-            </W.FinishRecordButton>
-          </W.VoiceRecorder>
-
-          <W.CancelButton
-            onClick={() => {
-              navigate("/word");
-            }}
-          >
-            {voiceRecordData[0].subButtonText}
-          </W.CancelButton>
+          <h1>hi!</h1>
         </>
       ) : (
         <>
