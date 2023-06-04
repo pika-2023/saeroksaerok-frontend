@@ -13,6 +13,25 @@ const Feed = () => {
 
   const navigate = useNavigate();
 
+  //MARK : 헤더에 액세스토큰 추가 후 통신 연습 중
+  // const accessToken = localStorage.getItem("accessToken");
+
+  // useEffect(() => {
+  //   if (accessToken) {
+  //     fetch("http://13.124.76.165:8080/diaries?searchType=ALL", {
+  //       method: "GET",
+  //       headers: {
+  //         "Content-Type": "application/json;charset=utf-8",
+  //         Authorization: ` Bearer ${accessToken}`,
+  //       },
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log(data);
+  //       });
+  //   }
+  // }, []);
+
   useEffect(() => {
     (async () => {
       const data = await myFeedData();
