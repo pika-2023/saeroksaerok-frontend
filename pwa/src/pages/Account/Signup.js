@@ -1,24 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import variables from "../../styles/variables";
 
 const Signup = () => {
   const navigate = useNavigate();
-
+  const [basicProfileImg, setBasicProfileImg] = useState(
+    "./images/saeroksaerok_profile.png"
+  );
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
     checkPassword: "",
+    nickname: "",
   });
-
+  console.log(userInfo);
+  console.log(basicProfileImg);
   const [signup, setSignup] = useState(false);
 
-  const { email, password, checkPassword } = userInfo;
+  const { email, password, checkPassword, nickname } = userInfo;
 
   const onChangeUserInfo = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
+  };
+
+  const fileInput = useRef(null);
+
+  const onChange = (e) => {
+    if (e.target.files[0]) {
+      setBasicProfileImg(URL.createObjectURL(e.target.files[0]));
+    } else {
+      //MARK : 업로드 취소할 시
+      setBasicProfileImg("./images/saeroksaerok_profile.png");
+      return;
+    }
+    // MARK : 화면에 프로필 사진 표시
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setBasicProfileImg(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
 
   const ApiUrl = "http://13.124.76.165:8080/signup";
@@ -43,11 +67,32 @@ const Signup = () => {
       });
   };
 
+  const createProfile = () => {
+    console.log(userInfo, basicProfileImg);
+    const formData = new FormData();
+    formData.append("file", basicProfileImg); // FormData에 파일 추가
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("checkPassword", checkPassword);
+    formData.append("nickname", nickname);
+
+    fetch("http://13.124.76.165:8080/profiles", {
+      method: "POST",
+      body: formData, // FormData를 요청의 body로 전달
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.nickname === nickname) {
+          navigate("/login");
+        }
+      });
+  };
+
   return (
     <>
       {!signup && (
         <SignupContainer>
-          <SymbolMark src="./images/saeroksaerok_logo_inapp.png" alt="none" />
+          <SymbolMark src="./images/saeroksaerok_symbolmark.png" alt="none" />
           <SignupForm>
             <FormContainer>
               <FormTitle>이메일</FormTitle>
@@ -83,7 +128,20 @@ const Signup = () => {
       {signup && (
         <SignupContainer>
           <UploadProfileImg>
-            <BasicProfileImg src="./images/saeroksaerok_profile.png" />
+            <BasicProfileImg
+              src={basicProfileImg}
+              onClick={() => {
+                fileInput.current.click();
+              }}
+            />
+            <input
+              type="file"
+              style={{ display: "none" }}
+              accept="image/jpg,image/png,image/jpeg, image/webp, image/git, image/bmp, image/svg"
+              name="profileimage"
+              onChange={onChange}
+              ref={fileInput}
+            />
             <UploadMyProfileImg>
               나를 나타내는 사진을 올려보세요
             </UploadMyProfileImg>
@@ -95,19 +153,15 @@ const Signup = () => {
               <FormTitle>이름</FormTitle>
               <FormInput
                 type="text"
-                name="name"
+                name="nickname"
                 placeholder="이름을 입력해주세요"
+                value={nickname}
+                onChange={onChangeUserInfo}
               />
             </FormContainer>
           </SignupForm>
 
-          <SignupButton
-            onClick={() => {
-              navigate("/word");
-            }}
-          >
-            새록새록 시작하기
-          </SignupButton>
+          <SignupButton onClick={createProfile}>로그인 하기</SignupButton>
         </SignupContainer>
       )}
     </>
@@ -128,17 +182,16 @@ const SymbolMark = styled.img`
 
 const UploadProfileImg = styled.div`
   ${variables.flex("column", "flex-start", "center")}
-  ${variables.widthHeight("147px", "147px")}
+  ${variables.widthHeight("147px", "auto")}
   ${variables.fontStyle("19px", 500)}
-  margin-bottom: 85px;
-  background: ${({ theme }) => theme.style.gray1};
+  margin-bottom: 40px;
   color: ${({ theme }) => theme.style.gray3};
-  border-radius: 50%;
 `;
 
 const BasicProfileImg = styled.img`
-  width: 100%;
+  ${variables.widthHeight("147px", "147px")}
   margin-bottom: 16px;
+  border-radius: 50%;
 `;
 
 // const EditImgIcon = styled.img`
