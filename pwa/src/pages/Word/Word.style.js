@@ -6,6 +6,8 @@ import variables from "../../styles/variables";
 export const WordContainer = styled.div`
   position: relative;
   height: 100%;
+  background: url("./images/bg_reminisce_home.png") no-repeat center;
+  background-size: cover;
 `;
 
 export const MyInfoContainer = styled.div`
