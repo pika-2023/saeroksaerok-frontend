@@ -3,6 +3,12 @@ import variables from "../../../styles/variables";
 
 export const VoiceRecordContainer = styled.div`
   ${variables.widthHeight("100vw", "100vh")}
+  margin: calc(-20px);
+  padding-top: 120px;
+`;
+
+export const VoiceRecorder = styled.div`
+  ${variables.widthHeight("100%", "300px")}
   display: grid;
   grid-template-rows: repeat(8, 1fr);
   margin: calc(-20px);

@@ -92,7 +92,13 @@ const Signup = () => {
     <>
       {!signup && (
         <SignupContainer>
-          <SymbolMark src="./images/saeroksaerok_symbolmark.png" alt="none" />
+          <WelcomeContainer>
+            <SymbolMark src="./images/saeroksaerok_symbolmark.png" alt="none" />
+            <WelcomeTitle>
+              새록새록에 오신 것을 <br />
+              환영해요
+            </WelcomeTitle>
+          </WelcomeContainer>
           <SignupForm>
             <FormContainer>
               <FormTitle>이메일</FormTitle>
@@ -100,7 +106,7 @@ const Signup = () => {
                 type="email"
                 value={email}
                 name="email"
-                placeholder="이메일 입력란"
+                placeholder="이메일을 입력해주세요"
                 onChange={onChangeUserInfo}
               />
             </FormContainer>
@@ -110,19 +116,21 @@ const Signup = () => {
                 type="password"
                 value={password}
                 name="password"
-                placeholder="비밀번호 입력란"
+                placeholder="비밀번호를 입력해주세요"
                 onChange={onChangeUserInfo}
               />
               <FormInput
                 type="password"
                 value={checkPassword}
                 name="checkPassword"
-                placeholder="비밀번호 확인란"
+                placeholder="비밀번호를 다시 한 번 입력해주세요"
                 onChange={onChangeUserInfo}
               />
             </FormContainer>
           </SignupForm>
-          <SignupButton onClick={handleSignup}>다음으로</SignupButton>
+          <SignupButton onClick={handleSignup} value={0}>
+            다음으로
+          </SignupButton>
         </SignupContainer>
       )}
       {signup && (
@@ -146,8 +154,6 @@ const Signup = () => {
               나를 나타내는 사진을 올려보세요
             </UploadMyProfileImg>
           </UploadProfileImg>
-          {/* MARK : 와이어프레임에 없어서 일단 지우겠습니다.
-          <EditImgIcon src="./images/profileImgIcon.png" /> */}
           <SignupForm>
             <FormContainer>
               <FormTitle>이름</FormTitle>
@@ -161,7 +167,9 @@ const Signup = () => {
             </FormContainer>
           </SignupForm>
 
-          <SignupButton onClick={createProfile}>로그인 하기</SignupButton>
+          <SignupButton onClick={createProfile} value={1}>
+            회원가입하기
+          </SignupButton>
         </SignupContainer>
       )}
     </>
@@ -175,9 +183,22 @@ const SignupContainer = styled.div`
   padding-top: 25%;
 `;
 
+const WelcomeContainer = styled.div`
+  width: 100%;
+  margin: -40px 0 40px 0;
+`;
+
 const SymbolMark = styled.img`
-  width: 187px;
+  width: 86px;
   margin-bottom: 28px;
+`;
+
+const WelcomeTitle = styled.h1`
+  ${variables.fontStyle("32px", 600)}
+  margin: -10px 0 10px 0;
+  line-height: 45px;
+  letter-spacing: -0.03em;
+  color: #212121;
 `;
 
 const UploadProfileImg = styled.div`
@@ -194,15 +215,9 @@ const BasicProfileImg = styled.img`
   border-radius: 50%;
 `;
 
-// const EditImgIcon = styled.img`
-//   ${variables.widthHeight("50px", "50px")}
-//   margin: -100px -100px 60px 0;
-// `;
-
 const UploadMyProfileImg = styled.div`
+  ${variables.fontStyle("19px", 500)}
   width: 235px;
-  font-weight: 500;
-  font-size: 19px;
   line-height: 150%;
   text-align: center;
   letter-spacing: -0.03em;
@@ -218,21 +233,34 @@ const FormContainer = styled.div`
 `;
 
 const FormTitle = styled.div`
-  ${variables.fontStyle("22px", 600)}
+  ${variables.fontStyle("22px", 500)}
   margin-bottom: 15px;
+  color: ${({ theme }) => theme.style.gray5};
+  letter-spacing: -0.03em;
 `;
 
 const FormInput = styled.input`
-  ${variables.fontStyle("22px", 500)}
-  margin-bottom: 20px;
+  ${variables.fontStyle("19px", 500)}
+  margin-bottom: 10px;
   padding: 13px 16px;
   width: 100%;
   background: ${({ theme }) => theme.style.gray1};
-  border: none;
-  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
 
   &::placeholder {
     color: ${({ theme }) => theme.style.gray3};
+    letter-spacing: -0.03em;
+  }
+
+  &:focus {
+    border: 1.5px solid #ffc700;
+    outline: none;
+  }
+
+  &:focus {
+    border: 1.5px solid #ffc700;
+    outline: none;
   }
 `;
 
@@ -240,7 +268,7 @@ const SignupButton = styled.button`
   ${variables.position("fixed", "null", "null", "0", "0")}
   ${variables.widthHeight("100%", "82px")}
   ${variables.fontStyle("22px", 600)}
-  background: ${({ theme }) => theme.style.yellow2};
+  background: ${(props) => (props.value === 0 ? "#FFF4CC" : "#FFE380")};
   color: ${({ theme }) => theme.style.black};
   border: none;
   cursor: pointer;
