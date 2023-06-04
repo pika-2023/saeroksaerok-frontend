@@ -42,8 +42,8 @@ const Login = () => {
 
   return (
     <LoginContainer>
-      <UploadProfileImg
-        src="./images/saeroksaerok_logo_inapp_2.png"
+      <SaerokSaerokLogo
+        src="./images/saeroksaerok_logo_inapp.png"
         alt="새록새록"
       />
       <LoginForm>
@@ -80,7 +80,7 @@ const LoginContainer = styled.div`
   padding-top: 25%;
 `;
 
-const UploadProfileImg = styled.img`
+const SaerokSaerokLogo = styled.img`
   ${variables.widthHeight("187px", "auto")}
   margin-bottom: 50px;
 `;
