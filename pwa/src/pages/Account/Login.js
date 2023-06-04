@@ -68,7 +68,7 @@ const Login = () => {
           />
         </FormContainer>
       </LoginForm>
-      <LoginButton onClick={handleLogin}>로그인</LoginButton>
+      <LoginButton onClick={handleLogin}>로그인하기</LoginButton>
     </LoginContainer>
   );
 };
@@ -82,7 +82,7 @@ const LoginContainer = styled.div`
 
 const SaerokSaerokLogo = styled.img`
   ${variables.widthHeight("187px", "auto")}
-  margin-bottom: 50px;
+  margin-bottom: 70px;
 `;
 
 const LoginForm = styled.div`
@@ -94,21 +94,24 @@ const FormContainer = styled.div`
 `;
 
 const FormTitle = styled.div`
-  ${variables.fontStyle("24px", 500)}
+  ${variables.fontStyle("22px", 500)}
   margin-bottom: 15px;
+  color: ${({ theme }) => theme.style.gray5};
+  letter-spacing: -0.03em;
 `;
 
 const FormInput = styled.input`
-  ${variables.fontStyle("22px", 500)}
+  ${variables.fontStyle("19px", 500)}
   margin-bottom: 20px;
   padding: 13px 16px;
   width: 100%;
   background: ${({ theme }) => theme.style.gray1};
-  border: none;
-  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
 
   &::placeholder {
     color: ${({ theme }) => theme.style.gray3};
+    letter-spacing: -0.03em;
   }
 `;
 
