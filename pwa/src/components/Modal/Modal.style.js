@@ -6,7 +6,6 @@ export const RecordModal = styled.div`
   ${variables.flex("row", "center", "center")}
   ${variables.widthHeight("100%", "100%")}
   white-space: nowrap;
-  z-index: 100;
 `;
 
 export const ModalBackground = styled.div`

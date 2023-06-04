@@ -30,7 +30,6 @@ export const TodayWordContainer = styled.div`
 
 export const TodayWord = styled.div`
   ${variables.flex("column", "center", "center")}
-  gap: 15px;
 `;
 
 export const TodayWordTitle = styled.h4`
