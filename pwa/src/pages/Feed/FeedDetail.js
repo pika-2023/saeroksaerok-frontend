@@ -102,7 +102,7 @@ const FeedOwnerInfo = styled.div`
 
 const FeedOwnerImg = styled.div`
   ${variables.widthHeight("32px", "32px")}
-  background-color: ${(props) => props.theme.style.lightgray};
+  background-color: ${(props) => props.theme.style.gray1};
   border-radius: 50%;
 `;
 
@@ -117,7 +117,7 @@ const FeedUploadDate = styled.div`
 const FeedImg = styled.div`
   ${variables.widthHeight("335px", "242px")}
   margin-top : 20px;
-  background-color: ${(props) => props.theme.style.lightgray};
+  background-color: ${(props) => props.theme.style.gray1};
 `;
 
 const FeedContent = styled.div`
