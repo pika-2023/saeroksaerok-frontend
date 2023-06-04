@@ -4,16 +4,28 @@ import variables from "../../styles/variables";
 // ---------- MARK: Word.js 첫 화면 ----------
 
 export const WordContainer = styled.div`
+  ${variables.widthHeight("null", "100vh")}
   position: relative;
-  height: 100%;
+  margin: calc(-20px);
   background: url("./images/bg_reminisce_home.png") no-repeat center;
   background-size: cover;
+  overflow: hidden;
+
+  @media (min-width: 769px) {
+    ${variables.widthHeight("375px", "685px")}
+    margin: calc(-20px);
+    background: url("./images/bg_reminisce_home.png");
+    background-size: cover;
+    overflow: hidden;
+  }
 `;
 
 export const MyInfoContainer = styled.div`
   ${variables.flex("row", "flex-end", "null")}
   ${variables.widthHeight("100%", "50px")}
   margin-top: 20px;
+  padding-right: 20px;
+  opacity: 85%;
 `;
 
 export const MyInfo = styled.button`
@@ -55,14 +67,15 @@ export const MemoryGuideText = styled.h3`
 `;
 
 export const MemoryButton = styled.button`
-  ${variables.position("absolute", "null", "null", "140px", "null")}
-  ${variables.widthHeight("100%", "72px")}
+  ${variables.position("absolute", "null", "null", "100px", "50%")}
+  ${variables.flex("row", "center", "center")}
+  ${variables.widthHeight("90%", "72px")}
   ${variables.fontStyle("22px", 600)}
-  padding: 0px 113px;
   background: #ffe380;
   color: ${({ theme }) => theme.style.black};
   border: none;
   border-radius: 24px;
+  transform: translate(-50%, -50%);
   white-space: nowrap;
   cursor: pointer;
 `;

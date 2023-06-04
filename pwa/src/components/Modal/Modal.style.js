@@ -2,9 +2,8 @@ import styled from "styled-components";
 import variables from "../../styles/variables";
 
 export const RecordModal = styled.div`
-  ${variables.position("fixed", "0", "0", "null", "null")}
   ${variables.flex("row", "center", "center")}
-  ${variables.widthHeight("100%", "100%")}
+  ${variables.widthHeight("90%", "100%")}
   ${variables.absoluteCenter}
   white-space: nowrap;
   z-index: 100;
@@ -13,8 +12,10 @@ export const RecordModal = styled.div`
 export const ModalBackground = styled.div`
   ${variables.position("absolute", "0", "null", "null", "0")}
   ${variables.widthHeight("100vw", "100vh")}
+  margin: calc(-20px);
   background: rgba(255, 255, 255, 0.6);
   backdrop-filter: blur(45px);
+  overflow: hidden;
   z-index: -1;
 `;
 
