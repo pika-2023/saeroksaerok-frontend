@@ -128,7 +128,9 @@ const Signup = () => {
               />
             </FormContainer>
           </SignupForm>
-          <SignupButton onClick={handleSignup}>다음으로</SignupButton>
+          <SignupButton onClick={handleSignup} value={0}>
+            다음으로
+          </SignupButton>
         </SignupContainer>
       )}
       {signup && (
@@ -152,8 +154,6 @@ const Signup = () => {
               나를 나타내는 사진을 올려보세요
             </UploadMyProfileImg>
           </UploadProfileImg>
-          {/* MARK : 와이어프레임에 없어서 일단 지우겠습니다.
-          <EditImgIcon src="./images/profileImgIcon.png" /> */}
           <SignupForm>
             <FormContainer>
               <FormTitle>이름</FormTitle>
@@ -167,7 +167,9 @@ const Signup = () => {
             </FormContainer>
           </SignupForm>
 
-          <SignupButton onClick={createProfile}>로그인 하기</SignupButton>
+          <SignupButton onClick={createProfile} value={1}>
+            회원가입하기
+          </SignupButton>
         </SignupContainer>
       )}
     </>
@@ -201,22 +203,17 @@ const WelcomeTitle = styled.h1`
 
 const UploadProfileImg = styled.div`
   ${variables.flex("column", "flex-start", "center")}
-  ${variables.widthHeight("86px", "auto")}
+  ${variables.widthHeight("147px", "auto")}
   ${variables.fontStyle("19px", 500)}
   margin-bottom: 40px;
   color: ${({ theme }) => theme.style.gray3};
 `;
 
 const BasicProfileImg = styled.img`
-  ${variables.widthHeight("86px", "86px")}
+  ${variables.widthHeight("147px", "147px")}
   margin-bottom: 16px;
   border-radius: 50%;
 `;
-
-// const EditImgIcon = styled.img`
-//   ${variables.widthHeight("50px", "50px")}
-//   margin: -100px -100px 60px 0;
-// `;
 
 const UploadMyProfileImg = styled.div`
   ${variables.fontStyle("19px", 500)}
@@ -255,13 +252,18 @@ const FormInput = styled.input`
     color: ${({ theme }) => theme.style.gray3};
     letter-spacing: -0.03em;
   }
+
+  &:focus {
+    border: 1.5px solid #ffc700;
+    outline: none;
+  }
 `;
 
 const SignupButton = styled.button`
   ${variables.position("fixed", "null", "null", "0", "0")}
   ${variables.widthHeight("100%", "82px")}
   ${variables.fontStyle("22px", 600)}
-  background: ${({ theme }) => theme.style.yellow1};
+  background: ${(props) => (props.value === 0 ? "#FFF4CC" : "#FFE380")};
   color: ${({ theme }) => theme.style.black};
   border: none;
   cursor: pointer;
