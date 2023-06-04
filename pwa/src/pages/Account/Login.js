@@ -1,8 +1,11 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import variables from "../../styles/variables";
 
 const Login = () => {
+  const navigate = useNavigate();
+
   const [loginInfo, setLoginInfo] = useState({
     email: "",
     password: "",
@@ -28,7 +31,10 @@ const Login = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        if (data.accessToken) {
+          localStorage.setItem("accessToken", data.accessToken);
+          navigate("/word");
+        }
       });
   };
 
@@ -38,7 +44,7 @@ const Login = () => {
     <LoginContainer>
       <UploadProfileImg
         src="./images/saeroksaerok_logo_inapp_2.png"
-        alt="프로필 사진 수정하기 버튼"
+        alt="새록새록"
       />
       <LoginForm>
         <FormContainer>
