@@ -4,25 +4,8 @@ import variables from "../../../styles/variables";
 export const VoiceRecordContainer = styled.div`
   ${variables.widthHeight("100vw", "100vh")}
   margin: calc(-20px);
-
   padding-top: 120px;
 `;
-
-// export const VoiceRecordContainer = styled.div`
-//   ${variables.widthHeight("100vw", "100vh")}
-//   display: grid;
-//   grid-template-rows: repeat(8, 1fr);
-//   margin: calc(-20px);
-//   background: url("./images/bg_reminisce_before.png");
-//   background-size: cover;
-
-//   @media (min-width: 769px) {
-//     ${variables.widthHeight("375px", "685px")}
-//     margin: calc(-20px);
-//     background: url("./images/bg_reminisce_before.png");
-//     background-size: cover;
-//   }
-// `;
 
 export const VoiceRecorder = styled.div`
   ${variables.widthHeight("100%", "300px")}
