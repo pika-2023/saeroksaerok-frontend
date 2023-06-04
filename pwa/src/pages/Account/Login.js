@@ -113,6 +113,11 @@ const FormInput = styled.input`
     color: ${({ theme }) => theme.style.gray3};
     letter-spacing: -0.03em;
   }
+
+  &:focus {
+    border: 1.5px solid #ffc700;
+    outline: none;
+  }
 `;
 
 const LoginButton = styled.button`

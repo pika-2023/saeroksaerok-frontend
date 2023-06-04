@@ -234,6 +234,11 @@ const FormInput = styled.input`
   &::placeholder {
     color: ${({ theme }) => theme.style.gray3};
   }
+
+  &:focus {
+    border: 1.5px solid #ffc700;
+    outline: none;
+  }
 `;
 
 const SignupButton = styled.button`
