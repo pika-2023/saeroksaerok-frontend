@@ -17,10 +17,7 @@ const Word = () => {
         들려주세요!
       </S.Title>
       <S.TodayWordContainer>
-        <S.TodayWord>
-          <S.TodayWordTitle>오늘의 단어</S.TodayWordTitle>
-          <S.TodayWordContent>기쁨</S.TodayWordContent>
-        </S.TodayWord>
+        <S.TodayWordContent>기쁨</S.TodayWordContent>
       </S.TodayWordContainer>
       <S.MemoryButton
         onClick={() => {

@@ -11,7 +11,6 @@ export const WordContainer = styled.div`
 export const MyInfoContainer = styled.div`
   ${variables.flex("row", "flex-end", "null")}
   ${variables.widthHeight("100%", "50px")}
-  margin-top: 20px;
 `;
 
 export const MyInfo = styled.button`
@@ -29,25 +28,11 @@ export const Title = styled.h1`
 
 export const TodayWordContainer = styled.div`
   ${variables.flex("column", "center", "center")}
+  grid-row: 2;
 `;
 
-export const TodayWord = styled.div`
-  ${variables.flex("column", "center", "center")}
-  ${variables.widthHeight("190px", "190px")}
-  margin-bottom: 60px;
-  background: ${({ theme }) => theme.style.gray1};
-  border-radius: 50%;
-  gap: 15px;
-`;
-
-export const TodayWordTitle = styled.h4`
-  ${variables.fontStyle("24px", 500)}
-  color: ${({ theme }) => theme.style.gray3};
-`;
-
-export const TodayWordContent = styled.h2`
-  ${variables.fontStyle("52px", 700)}
-  font-family: MBC1961GulimOTF;
+export const TodayWordContent = styled.img`
+  width: 146px;
 `;
 
 export const MemoryButton = styled.button`

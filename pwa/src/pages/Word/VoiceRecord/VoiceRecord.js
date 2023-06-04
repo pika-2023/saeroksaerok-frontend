@@ -1,14 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import useStore from "../../../state/store";
 import * as S from "../Word.style";
 import * as W from "./VoiceRecord.style";
-import ListeningIconImg from "../../../assets/images/listeningIcon.png";
-import Modal from "../../../components/Modal/Modal";
 import { SAVE_AUDIO } from "./voiceRecordData";
-import { EDIT_MEMORY } from "../../../components/Modal/modalData";
 
-const VoiceRecord = () => {
+const VoiceRecord = (e) => {
   const navigate = useNavigate();
   const {
     isOpen,
@@ -112,92 +110,112 @@ const VoiceRecord = () => {
     });
 
     setDisabled(false);
-    console.log(sound); // File 정보 출력
+    console.log("sound", sound); // File 정보 출력
   };
 
   // MARK: 녹음한 음성 재생하기
   const play = () => {
     const audio = new Audio(URL.createObjectURL(audioUrl));
-
     audio.loop = false;
     audio.volume = 1;
     audio.play();
   };
 
+  // 파일 다운로드
+  const downloadFile = () => {
+    const element = document.createElement("a");
+    element.setAttribute("href", audioUrl);
+    element.setAttribute("download", "recorded_audio.mp3");
+    element.style.display = "none";
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
+  };
+
+  // mp3 파일 다운로드 및 재생
+  const audioBlob = new Blob([e.data], { type: "audio/mp3" });
+  const formData = new FormData();
+  formData.append("audioFile", audioBlob, "recorded_audio.mp3");
+
+  // 파일 업로드
+  const uploadAudio = async (audioBlob) => {
+    try {
+      const formData = new FormData();
+      formData.append("audio", audioBlob);
+
+      const response = await axios.post(recordApiUrl, formData);
+      console.log("Audio uploaded successfully:", response.data);
+      // 서버로 오디오 업로드 후 응답 처리
+    } catch (error) {
+      console.error("Error uploading audio:", error);
+      // 오디오 업로드 중 오류 처리
+    }
+  };
+
+  const accessToken = localStorage.getItem("accessToken");
+  const recordApiUrl = "http://13.124.76.165:8080/diaries";
+
+  useEffect(() => {
+    if (accessToken) {
+      axios
+        .post(recordApiUrl, formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: ` Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log("Audio uploaded successfully:", response.data);
+          const audioUrl = URL.createObjectURL(audioBlob);
+          downloadFile(audioUrl, "recorded_audio.mp3");
+        })
+        .catch((error) => {
+          console.error("Error uploading audio:", error);
+        });
+    }
+  }, []);
+
   const showRecordResult = () => {
     setVoiceRecordData(SAVE_AUDIO);
     offRecAudio();
-  };
-
-  const showEditModal = () => {
-    setIsOpen(true);
-    setModalData(EDIT_MEMORY);
+    if (audioUrl) {
+      // 테스트용으로 변환한 mp3 파일을 다운로드하는 코드
+      downloadFile();
+      // 서버에 업로드할 때는 여기에서 uploadAudio 함수 호출
+      uploadAudio(audioUrl);
+    }
+    navigate("/textResult");
   };
 
   return (
     <W.VoiceRecordContainer>
       <S.TodayWordContainer>
-        <S.TodayWord>
-          <S.TodayWordTitle>오늘의 단어</S.TodayWordTitle>
-          <S.TodayWordContent>기쁨</S.TodayWordContent>
-        </S.TodayWord>
+        <S.TodayWordContent src="./images/text_family.png" alt="가족 텍스트" />
       </S.TodayWordContainer>
 
       {/* MARK: 녹음 테스트용 요소 */}
       <button onClick={play}>녹음본 듣기</button>
 
-      {voiceRecordData[0].buttonText === "말 끝맺기" ? (
-        <>
-          <W.VoiceRecorder>
-            <W.ListeningText>
-              {voiceRecordData[0].listeningText[0]} <br />
-              {voiceRecordData[0].listeningText[1]}
-            </W.ListeningText>
-            <W.ListeningIconContainer>
-              <W.ListeningIcon onClick={onRecAudio} src={ListeningIconImg} />
-            </W.ListeningIconContainer>
-            <W.FinishRecordButton onClick={showRecordResult}>
-              {voiceRecordData[0].buttonText}
-            </W.FinishRecordButton>
-          </W.VoiceRecorder>
+      <W.VoiceRecordTitle>언제 있었던 일인가요?</W.VoiceRecordTitle>
+      <W.ListeningText>귀기울여 듣고 있어요</W.ListeningText>
 
-          <W.CancelButton
-            onClick={() => {
-              navigate("/word");
-            }}
-          >
-            {voiceRecordData[0].subButtonText}
-          </W.CancelButton>
+      {onRec ? (
+        <>
+          <W.StartRecordButton onClick={onRecAudio}>
+            말 시작하기
+          </W.StartRecordButton>
         </>
       ) : (
         <>
-          <W.VoiceRecorder>
-            <W.ListeningText style={{ height: "200px", overflow: "scroll" }}>
-              {voiceRecordData[0].listeningText}
-            </W.ListeningText>
-            <W.FinishRecordButton
-              onClick={() => {
-                navigate("/result");
-              }}
-              style={{ background: "#212121", color: "white" }}
-            >
-              {voiceRecordData[0].buttonText}
-            </W.FinishRecordButton>
-          </W.VoiceRecorder>
-
-          <W.CancelButton onClick={showEditModal}>
-            {voiceRecordData[0].subButtonText}
-          </W.CancelButton>
+          <W.StartRecordButton onClick={showRecordResult}>
+            말 끝내기
+          </W.StartRecordButton>
         </>
       )}
 
-      {!isOpen && (
-        <Modal
-          setIsOpen={setIsOpen}
-          modalData={modalData}
-          setVoiceRecordData={setVoiceRecordData}
-        />
-      )}
+      <W.CancelButton onClick={() => navigate("/word")}>
+        취소하기
+      </W.CancelButton>
     </W.VoiceRecordContainer>
   );
 };
