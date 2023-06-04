@@ -92,7 +92,13 @@ const Signup = () => {
     <>
       {!signup && (
         <SignupContainer>
-          <SymbolMark src="./images/saeroksaerok_symbolmark.png" alt="none" />
+          <WelcomeContainer>
+            <SymbolMark src="./images/saeroksaerok_symbolmark.png" alt="none" />
+            <WelcomeTitle>
+              새록새록에 오신 것을 <br />
+              환영해요
+            </WelcomeTitle>
+          </WelcomeContainer>
           <SignupForm>
             <FormContainer>
               <FormTitle>이메일</FormTitle>
@@ -100,7 +106,7 @@ const Signup = () => {
                 type="email"
                 value={email}
                 name="email"
-                placeholder="이메일 입력란"
+                placeholder="이메일을 입력해주세요"
                 onChange={onChangeUserInfo}
               />
             </FormContainer>
@@ -110,14 +116,14 @@ const Signup = () => {
                 type="password"
                 value={password}
                 name="password"
-                placeholder="비밀번호 입력란"
+                placeholder="비밀번호를 입력해주세요"
                 onChange={onChangeUserInfo}
               />
               <FormInput
                 type="password"
                 value={checkPassword}
                 name="checkPassword"
-                placeholder="비밀번호 확인란"
+                placeholder="비밀번호를 다시 한 번 입력해주세요"
                 onChange={onChangeUserInfo}
               />
             </FormContainer>
@@ -175,21 +181,34 @@ const SignupContainer = styled.div`
   padding-top: 25%;
 `;
 
+const WelcomeContainer = styled.div`
+  width: 100%;
+  margin: -40px 0 40px 0;
+`;
+
 const SymbolMark = styled.img`
-  width: 187px;
+  width: 86px;
   margin-bottom: 28px;
+`;
+
+const WelcomeTitle = styled.h1`
+  ${variables.fontStyle("32px", 600)}
+  margin: -10px 0 10px 0;
+  line-height: 45px;
+  letter-spacing: -0.03em;
+  color: #212121;
 `;
 
 const UploadProfileImg = styled.div`
   ${variables.flex("column", "flex-start", "center")}
-  ${variables.widthHeight("147px", "auto")}
+  ${variables.widthHeight("86px", "auto")}
   ${variables.fontStyle("19px", 500)}
   margin-bottom: 40px;
   color: ${({ theme }) => theme.style.gray3};
 `;
 
 const BasicProfileImg = styled.img`
-  ${variables.widthHeight("147px", "147px")}
+  ${variables.widthHeight("86px", "86px")}
   margin-bottom: 16px;
   border-radius: 50%;
 `;
@@ -200,9 +219,8 @@ const BasicProfileImg = styled.img`
 // `;
 
 const UploadMyProfileImg = styled.div`
+  ${variables.fontStyle("19px", 500)}
   width: 235px;
-  font-weight: 500;
-  font-size: 19px;
   line-height: 150%;
   text-align: center;
   letter-spacing: -0.03em;
@@ -218,21 +236,24 @@ const FormContainer = styled.div`
 `;
 
 const FormTitle = styled.div`
-  ${variables.fontStyle("22px", 600)}
+  ${variables.fontStyle("22px", 500)}
   margin-bottom: 15px;
+  color: ${({ theme }) => theme.style.gray5};
+  letter-spacing: -0.03em;
 `;
 
 const FormInput = styled.input`
-  ${variables.fontStyle("22px", 500)}
-  margin-bottom: 20px;
+  ${variables.fontStyle("19px", 500)}
+  margin-bottom: 10px;
   padding: 13px 16px;
   width: 100%;
   background: ${({ theme }) => theme.style.gray1};
-  border: none;
-  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
 
   &::placeholder {
     color: ${({ theme }) => theme.style.gray3};
+    letter-spacing: -0.03em;
   }
 `;
 
@@ -240,7 +261,7 @@ const SignupButton = styled.button`
   ${variables.position("fixed", "null", "null", "0", "0")}
   ${variables.widthHeight("100%", "82px")}
   ${variables.fontStyle("22px", 600)}
-  background: ${({ theme }) => theme.style.yellow2};
+  background: ${({ theme }) => theme.style.yellow1};
   color: ${({ theme }) => theme.style.black};
   border: none;
   cursor: pointer;
