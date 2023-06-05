@@ -6,47 +6,51 @@ import useStore from "../../state/store";
 
 const Feed = () => {
   const [myFeed, setMyFeed] = useState([]);
-  const [friendsFeed, setFriendsMyFeed] = useState([]);
-  const { myFeedData, friendsFeedData, feedDetailData, removeFeedDetailData } =
-    useStore((state) => state);
-  const [currentMemory, setCurrentMemory] = useState(0);
+  const [friendsFeed, setFriendsFeed] = useState([]);
+  const { feedDetailData } = useStore((state) => state);
+  const [currentMemory, setCurrentMemory] = useState(1);
 
   const navigate = useNavigate();
 
-  //MARK : 헤더에 액세스토큰 추가 후 통신 연습 중
-  // const accessToken = localStorage.getItem("accessToken");
-
-  // useEffect(() => {
-  //   if (accessToken) {
-  //     fetch("http://13.124.76.165:8080/diaries?searchType=ALL", {
-  //       method: "GET",
-  //       headers: {
-  //         "Content-Type": "application/json;charset=utf-8",
-  //         Authorization: ` Bearer ${accessToken}`,
-  //       },
-  //     })
-  //       .then((response) => response.json())
-  //       .then((data) => {
-  //         console.log(data);
-  //       });
-  //   }
-  // }, []);
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    (async () => {
-      const data = await myFeedData();
-      setMyFeed(data.data);
-      removeFeedDetailData();
-    })();
-  }, [myFeedData, removeFeedDetailData]);
+    if (accessToken && currentMemory === 1) {
+      fetch("http://13.124.76.165:8080/diaries?searchType=ALL", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: ` Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setFriendsFeed(data.data);
+        });
+    } else if (accessToken && currentMemory === 0) {
+      fetch("http://13.124.76.165:8080/diaries?searchType=MY", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          Authorization: ` Bearer ${accessToken}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          setMyFeed(data.data);
+        });
+    }
+  }, [accessToken, currentMemory]);
 
-  useEffect(() => {
-    (async () => {
-      const data = await friendsFeedData();
-      setFriendsMyFeed(data.data);
-      removeFeedDetailData();
-    })();
-  }, [friendsFeedData, removeFeedDetailData]);
+  const getBackgroundImage = () => {
+    if (currentMemory === 0) {
+      return "url(images/my_memory.png)";
+    } else if (currentMemory === 1) {
+      return "url(images/friend_memory.png)";
+    } else {
+      return "";
+    }
+  };
 
   const MyMemory = () => {
     setCurrentMemory(0);
@@ -57,38 +61,38 @@ const Feed = () => {
 
   return (
     <>
-      <FeedPageHeader>
+      <FeedPageHeader
+        style={{ backgroundImage: getBackgroundImage(currentMemory) }}
+      >
         <UserInfo>내정보</UserInfo>
         <FeedSection>
-          <MyMemorySection value={currentMemory} onClick={MyMemory}>
-            나의 추억
-          </MyMemorySection>
-          <FriendsMemorySection value={currentMemory} onClick={FriendsMemory}>
-            친구의 추억
-          </FriendsMemorySection>
+          <Section onClick={MyMemory}>나의 추억</Section>
+          <Section onClick={FriendsMemory}>친구의 추억</Section>
         </FeedSection>
       </FeedPageHeader>
       <FeedFrameContainer>
         {(currentMemory === 0 ? myFeed : friendsFeed).map((data) => {
           const sliceData = (a, b) => {
-            return data.upload_date?.slice(a, b);
+            return data.createdAt?.slice(a, b);
           };
           return (
             <FeedFrame key={data.id}>
               <FeedInfo>
                 <FeedOwnerInfo>
                   <FeedOwnerImg></FeedOwnerImg>
-                  <FeedOwnerName>{data.name}</FeedOwnerName>
+                  <FeedOwnerName>{data.author}</FeedOwnerName>
                 </FeedOwnerInfo>
                 <FeedUploadDate>
-                  {`${sliceData(0, 4)}년 ${sliceData(5, 7)}월
-                ${sliceData(8, 10)}일`}
+                  {`${sliceData(0, 4)}년 ${sliceData(5, 7)}월 ${sliceData(
+                    8,
+                    10
+                  )}일`}
                 </FeedUploadDate>
               </FeedInfo>
-              <FeedImg></FeedImg>
+              <FeedImg src={data.pictureDiary} alt="새록새록" />
 
               <FeedContent>
-                <FeedWord>{data.word}</FeedWord>
+                <FeedWord>{data.keyWord}</FeedWord>
                 <FeedDetailButton
                   onClick={() => {
                     navigate("/feedDetail");
@@ -99,9 +103,9 @@ const Feed = () => {
                 </FeedDetailButton>
               </FeedContent>
               <FeedText>
-                {data.text.length > 38
-                  ? data.text.slice(0, 37) + "..."
-                  : data.text}
+                {data.textDiary.length > 38
+                  ? data.textDiary.slice(0, 37) + "..."
+                  : data.textDiary}
               </FeedText>
             </FeedFrame>
           );
@@ -114,77 +118,59 @@ const Feed = () => {
 export default Feed;
 
 const FeedPageHeader = styled.div`
-  ${variables.position("fixed", 0, "null", "null", 0)}
-  background-color: white;
+  ${variables.position("fixed", 0, "null", "null", 0)};
+  ${variables.widthHeight("100%", "187px")};
+  display: grid;
+
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 
   @media (min-width: 769px) {
-    ${variables.widthHeight("375px", "81px")};
-    position: sticky;
-    top: 0px;
-    margin: 0px 0px 0px calc(-40px);
-    padding: 20px 20px;
+    ${variables.widthHeight("375px", "187px")};
+    ${variables.position("sticky", 0, "null", "null", 0)};
+    margin: calc(-20px);
+    transform: translate(0%, -11%);
   }
 `;
 
 const UserInfo = styled.div`
   position: relative;
-  padding: 52px 20px 0 0;
+  padding: 61px 19px 0 0;
   text-align: right;
-
-  @media (min-width: 769px) {
-    ${variables.widthHeight("375px", "null")};
-    margin: calc(-40px) 0px 0px 0;
-    background-color: white;
-  }
 `;
 
-// TODO : 리팩토링하면서 스타일 줄이기
 const FeedSection = styled.div`
-  ${variables.flex("row", "null", "null")}
-  ${variables.widthHeight("100vw", "61px")};
-
-  @media (min-width: 769px) {
-    ${variables.widthHeight("375px", "61px")};
-    margin: 9px 0px 1px 0;
-  }
+  ${variables.flex("row", "null", "center")}
+  ${variables.widthHeight("100%", "57px")};
 `;
 
-const MyMemorySection = styled.div`
+const Section = styled.div`
   ${variables.fontStyle("19px", 600)};
   width: 50%;
-  padding: 18.5px 0;
-  background-color: ${(props) => props.theme.style.white};
+  line-height: 29px;
   text-align: center;
-  border-bottom: ${(props) =>
-    props.value === 0 ? "2px solid #212121" : "1px solid #e2e2e2"};
-`;
-
-const FriendsMemorySection = styled.div`
-  ${variables.fontStyle("19px", 600)};
-  width: 50%;
-  padding: 18.5px 0;
-  background-color: ${(props) => props.theme.style.white};
-  text-align: center;
-  border-bottom: ${(props) =>
-    props.value === 1 ? "2px solid #212121" : "1px solid #e2e2e2"};
 `;
 
 const FeedFrameContainer = styled.div`
-  margin-top: 130px;
+  margin: 167px calc(-20px) 0;
 
   @media (min-width: 769px) {
-    margin-top: 67px;
+    margin-top: 22px;
   }
 `;
 
 const FeedFrame = styled.div`
-  ${variables.widthHeight("335px", "430px")}
+  ${variables.widthHeight("100%", "430px")}
   margin : 0  auto 42px;
   overflow: hidden;
+  display: grid;
+  justify-items: center;
+  border-bottom: 1px solid #e2e2e2;
 `;
 
 const FeedInfo = styled.div`
-  ${variables.flex("", "space-between", "center")}
+  ${variables.flex("row", "space-between", "center")}
+  width : 335px;
 `;
 
 const FeedOwnerInfo = styled.div`
@@ -206,15 +192,16 @@ const FeedUploadDate = styled.div`
   ${variables.fontStyle("19px", 500)};
 `;
 
-const FeedImg = styled.div`
+const FeedImg = styled.img`
   ${variables.widthHeight("335px", "242px")}
   margin-top : 20px;
   background-color: ${(props) => props.theme.style.gray1};
 `;
 
 const FeedContent = styled.div`
-  ${variables.flex("", "space-between", "center")}
-  margin : 24px 0  16px 0;
+  ${variables.flex("row", "space-between", "center")};
+  width: 335px;
+  margin: 24px 0 16px 0;
 `;
 
 const FeedWord = styled.div`
@@ -227,7 +214,7 @@ const FeedDetailButton = styled.div`
 `;
 
 const FeedText = styled.div`
+  ${variables.widthHeight("335px", "62px")}
   ${variables.fontStyle("22px", 500)};
-  ${variables.widthHeight("100%", "62px")};
   line-height: 31px;
 `;
