@@ -9,12 +9,7 @@ import { SAVE_AUDIO } from "./voiceRecordData";
 const VoiceRecord = (e) => {
   const navigate = useNavigate();
   const {
-    isOpen,
-    setIsOpen,
-    voiceRecordData,
     setVoiceRecordData,
-    modalData,
-    setModalData,
     stream,
     setStream,
     media,
@@ -27,7 +22,6 @@ const VoiceRecord = (e) => {
     setAnalyser,
     audioUrl,
     setAudioUrl,
-    disabled,
     setDisabled,
   } = useStore((state) => state);
 
