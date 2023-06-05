@@ -2,6 +2,8 @@ import styled from "styled-components";
 import variables from "../../../styles/variables";
 
 export const VoiceRecordContainer = styled.div`
+  ${variables.widthHeight("100vw", "100vh")}
+  margin: calc(-20px);
   padding-top: 120px;
 `;
 

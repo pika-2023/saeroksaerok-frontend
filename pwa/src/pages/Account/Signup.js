@@ -1,19 +1,48 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import variables from "../../styles/variables";
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const [basicProfileImg, setBasicProfileImg] = useState(
+    "./images/saeroksaerok_profile.png"
+  );
   const [userInfo, setUserInfo] = useState({
     email: "",
     password: "",
     checkPassword: "",
+    nickname: "",
   });
+  console.log(userInfo);
+  console.log(basicProfileImg);
+  const [signup, setSignup] = useState(false);
 
-  const { email, password, checkPassword } = userInfo;
+  const { email, password, checkPassword, nickname } = userInfo;
 
   const onChangeUserInfo = (e) => {
     const { name, value } = e.target;
     setUserInfo({ ...userInfo, [name]: value });
+  };
+
+  const fileInput = useRef(null);
+
+  const onChange = (e) => {
+    if (e.target.files[0]) {
+      setBasicProfileImg(URL.createObjectURL(e.target.files[0]));
+    } else {
+      //MARK : 업로드 취소할 시
+      setBasicProfileImg("./images/saeroksaerok_profile.png");
+      return;
+    }
+    // MARK : 화면에 프로필 사진 표시
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setBasicProfileImg(reader.result);
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
   };
 
   const ApiUrl = "http://13.124.76.165:8080/signup";
@@ -30,50 +59,120 @@ const Signup = () => {
         checkPassword,
       }),
     })
-      .then((response) => response.json)
+      .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        if (data.email === email) {
+          setSignup(true);
+        } else alert("중복된 이메일 입니다.");
+      });
+  };
+
+  const createProfile = () => {
+    console.log(userInfo, basicProfileImg);
+    const formData = new FormData();
+    formData.append("file", basicProfileImg); // FormData에 파일 추가
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("checkPassword", checkPassword);
+    formData.append("nickname", nickname);
+
+    fetch("http://13.124.76.165:8080/profiles", {
+      method: "POST",
+      body: formData, // FormData를 요청의 body로 전달
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.nickname === nickname) {
+          navigate("/login");
+        }
       });
   };
 
   return (
-    <SignupContainer>
-      <UploadProfileImg>프로필</UploadProfileImg>
-      <EditImgIcon
-        src="/icons/profileImgIcon.png"
-        alt="프로필 사진 등록하기 버튼"
-      />
-      <SignupForm>
-        <FormContainer>
-          <FormTitle>이메일</FormTitle>
-          <FormInput
-            type="email"
-            value={email}
-            name="email"
-            placeholder="이메일 입력란"
-            onChange={onChangeUserInfo}
-          />
-        </FormContainer>
-        <FormContainer>
-          <FormTitle>비밀번호</FormTitle>
-          <FormInput
-            type="password"
-            value={password}
-            name="password"
-            placeholder="비밀번호 입력란"
-            onChange={onChangeUserInfo}
-          />
-          <FormInput
-            type="password"
-            value={checkPassword}
-            name="checkPassword"
-            placeholder="비밀번호 확인란"
-            onChange={onChangeUserInfo}
-          />
-        </FormContainer>
-      </SignupForm>
-      <SignupButton onClick={handleSignup}>회원가입</SignupButton>
-    </SignupContainer>
+    <>
+      {!signup && (
+        <SignupContainer>
+          <WelcomeContainer>
+            <SymbolMark src="./images/saeroksaerok_symbolmark.png" alt="none" />
+            <WelcomeTitle>
+              새록새록에 오신 것을 <br />
+              환영해요
+            </WelcomeTitle>
+          </WelcomeContainer>
+          <SignupForm>
+            <FormContainer>
+              <FormTitle>이메일</FormTitle>
+              <FormInput
+                type="email"
+                value={email}
+                name="email"
+                placeholder="이메일을 입력해주세요"
+                onChange={onChangeUserInfo}
+              />
+            </FormContainer>
+            <FormContainer>
+              <FormTitle>비밀번호</FormTitle>
+              <FormInput
+                type="password"
+                value={password}
+                name="password"
+                placeholder="비밀번호를 입력해주세요"
+                onChange={onChangeUserInfo}
+              />
+              <FormInput
+                type="password"
+                value={checkPassword}
+                name="checkPassword"
+                placeholder="비밀번호를 다시 한 번 입력해주세요"
+                onChange={onChangeUserInfo}
+              />
+            </FormContainer>
+          </SignupForm>
+          <SignupButton onClick={handleSignup} value={0}>
+            다음으로
+          </SignupButton>
+        </SignupContainer>
+      )}
+      {signup && (
+        <SignupContainer>
+          <UploadProfileImg>
+            <BasicProfileImg
+              src={basicProfileImg}
+              onClick={() => {
+                fileInput.current.click();
+              }}
+            />
+            <input
+              type="file"
+              style={{ display: "none" }}
+              accept="image/jpg,image/png,image/jpeg, image/webp, image/git, image/bmp, image/svg"
+              name="profileimage"
+              onChange={onChange}
+              ref={fileInput}
+            />
+            <UploadMyProfileImg>
+              나를 나타내는 사진을 올려보세요
+            </UploadMyProfileImg>
+          </UploadProfileImg>
+          <SignupForm>
+            <FormContainer>
+              <FormTitle>이름</FormTitle>
+              <FormInput
+                type="text"
+                name="nickname"
+                placeholder="이름을 입력해주세요"
+                value={nickname}
+                onChange={onChangeUserInfo}
+              />
+            </FormContainer>
+          </SignupForm>
+
+          <SignupButton onClick={createProfile} value={1}>
+            회원가입하기
+          </SignupButton>
+        </SignupContainer>
+      )}
+    </>
   );
 };
 
@@ -84,23 +183,49 @@ const SignupContainer = styled.div`
   padding-top: 25%;
 `;
 
+const WelcomeContainer = styled.div`
+  width: 100%;
+  margin: -40px 0 40px 0;
+`;
+
+const SymbolMark = styled.img`
+  width: 86px;
+  margin-bottom: 28px;
+`;
+
+const WelcomeTitle = styled.h1`
+  ${variables.fontStyle("32px", 600)}
+  margin: -10px 0 10px 0;
+  line-height: 45px;
+  letter-spacing: -0.03em;
+  color: #212121;
+`;
+
 const UploadProfileImg = styled.div`
-  ${variables.flex("row", "center", "center")}
-  ${variables.widthHeight("147px", "147px")}
-  ${variables.fontStyle("22px", 500)}
-  margin-bottom: 50px;
-  background: ${({ theme }) => theme.style.gray1};
+  ${variables.flex("column", "flex-start", "center")}
+  ${variables.widthHeight("147px", "auto")}
+  ${variables.fontStyle("19px", 500)}
+  margin-bottom: 40px;
   color: ${({ theme }) => theme.style.gray3};
+`;
+
+const BasicProfileImg = styled.img`
+  ${variables.widthHeight("147px", "147px")}
+  margin-bottom: 16px;
   border-radius: 50%;
 `;
 
-const EditImgIcon = styled.img`
-  ${variables.widthHeight("50px", "50px")}
-  margin: -100px -100px 60px 0;
+const UploadMyProfileImg = styled.div`
+  ${variables.fontStyle("19px", 500)}
+  width: 235px;
+  line-height: 150%;
+  text-align: center;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.style.gray4};
 `;
 
 const SignupForm = styled.div`
-  width: 90%;
+  width: 100%;
 `;
 
 const FormContainer = styled.div`
@@ -108,21 +233,34 @@ const FormContainer = styled.div`
 `;
 
 const FormTitle = styled.div`
-  ${variables.fontStyle("24px", 500)}
+  ${variables.fontStyle("22px", 500)}
   margin-bottom: 15px;
+  color: ${({ theme }) => theme.style.gray5};
+  letter-spacing: -0.03em;
 `;
 
 const FormInput = styled.input`
-  ${variables.fontStyle("22px", 500)}
-  margin-bottom: 20px;
+  ${variables.fontStyle("19px", 500)}
+  margin-bottom: 10px;
   padding: 13px 16px;
   width: 100%;
   background: ${({ theme }) => theme.style.gray1};
-  border: none;
-  border-radius: 6px;
+  border: 1px solid #e5e5e5;
+  border-radius: 12px;
 
   &::placeholder {
     color: ${({ theme }) => theme.style.gray3};
+    letter-spacing: -0.03em;
+  }
+
+  &:focus {
+    border: 1.5px solid #ffc700;
+    outline: none;
+  }
+
+  &:focus {
+    border: 1.5px solid #ffc700;
+    outline: none;
   }
 `;
 
@@ -130,8 +268,8 @@ const SignupButton = styled.button`
   ${variables.position("fixed", "null", "null", "0", "0")}
   ${variables.widthHeight("100%", "82px")}
   ${variables.fontStyle("22px", 600)}
-  background: ${({ theme }) => theme.style.black};
-  color: ${({ theme }) => theme.style.white};
+  background: ${(props) => (props.value === 0 ? "#FFF4CC" : "#FFE380")};
+  color: ${({ theme }) => theme.style.black};
   border: none;
   cursor: pointer;
 `;

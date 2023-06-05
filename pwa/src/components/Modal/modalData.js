@@ -1,8 +1,8 @@
 export const RECORD_METHOD = [
   {
     id: 1,
-    title: ["어떤 방식으로", " 추억을 남길까요?"],
-    options: ["목소리로 남기기", "키보드로 남기기"],
+    title: ["무엇으로", " 추억을 남길까요?"],
+    options: ["키보드", "목소리"],
   },
 ];
 
