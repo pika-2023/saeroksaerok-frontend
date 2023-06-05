@@ -36,8 +36,27 @@ const useStore = create((set) => ({
   modalData: RECORD_METHOD,
   setModalData: (state) => set({ modalData: state }),
 
-  keyword: "",
-  setKeyword: (state) => set({ keyword: state }),
+  // voiceRecord state
+  stream: null,
+  setStream: (state) => set({ stream: state }),
+
+  media: null,
+  setMedia: (state) => set({ media: state }),
+
+  onRec: true,
+  setOnRec: (state) => set({ onRec: state }),
+
+  source: null,
+  setSource: (state) => set({ source: state }),
+
+  analyser: null,
+  setAnalyser: (state) => set({ analyser: state }),
+
+  audioUrl: null,
+  setAudioUrl: (state) => set({ audioUrl: state }),
+
+  disabled: true,
+  setDisabled: (state) => set({ disabled: state }),
 }));
 
 export default useStore;
