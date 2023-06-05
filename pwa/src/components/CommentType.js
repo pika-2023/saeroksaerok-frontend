@@ -28,7 +28,7 @@ const CommentType = ({ setIsOpenModal, type }) => {
             {type[0] === "card" && (
               <CommentModal>
                 <CommentModalTitle>
-                  {name.slice(1)}님에게 전할
+                  {name}님에게 전할
                   <br />
                   덕담을 골라주세요
                 </CommentModalTitle>
@@ -56,9 +56,9 @@ const CommentType = ({ setIsOpenModal, type }) => {
                 {recoding && (
                   <>
                     <CommentModalTitle>
-                      {name.slice(1)}님의 말씀을
+                      {name.slice(1)}님에게 남길
                       <br />
-                      듣고 있어요
+                      답장을 말씀해주세요
                     </CommentModalTitle>
                     <RecodingComment src={ListeningIconImg} />
                   </>
@@ -70,7 +70,7 @@ const CommentType = ({ setIsOpenModal, type }) => {
                         setRecoding(false);
                       }}
                     >
-                      말 끝맺기
+                      다음으로
                     </StopRecoding>
                     <CancelMakeComment onClick={ColesModal}>
                       취소하기
@@ -170,7 +170,8 @@ const StopRecoding = styled.div`
   ${variables.fontStyle("22px", 600)}
   padding : 16px;
   margin: auto;
-  border-top: 1px solid #e2e2e2;
+  background-color: ${(props) => props.theme.style.yellow1};
+  border-radius: 0 0 24px 24px;
 `;
 
 const MakeComment = styled.div`
@@ -181,8 +182,8 @@ const MakeComment = styled.div`
   padding : 16px;
   margin: auto;
   border-top: 1px solid #e2e2e2;
-  color: white;
-  background-color: black;
+  color: ${(props) => props.theme.style.black};
+  background-color: ${(props) => props.theme.style.yellow2};
   border-radius: 0 0 24px 24px;
 `;
 

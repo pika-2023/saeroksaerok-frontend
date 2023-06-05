@@ -32,15 +32,15 @@ const CommentModal = ({ setIsOpenModal }) => {
           </CommentMethodTitle>
           <CommentMethod>
             <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
-              덕담 카드 보내기
+              덕담 카드
               <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
             </ChooseCommentMethod>
             <ChooseCommentMethod data-value="voice" onClick={ClickMethod}>
-              목소리로 답글 달기
+              목소리
               <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
             </ChooseCommentMethod>
             <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
-              키보드로 답글 달기
+              키보드
               <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
             </ChooseCommentMethod>
           </CommentMethod>
@@ -55,7 +55,7 @@ const CommentModal = ({ setIsOpenModal }) => {
       )}
       {!commentTypeModal && (
         <CancelMakeComment onClick={CloseCommentModal}>
-          취소하기
+          뒤로가기
         </CancelMakeComment>
       )}
     </>
@@ -66,7 +66,8 @@ export default CommentModal;
 
 const CommentModalBackground = styled.div`
   ${variables.position("fixed", "0", "0", "0", "0")}
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(45px);
 `;
 
 const CommentMethodContainer = styled.ul`
@@ -109,6 +110,6 @@ const CancelMakeComment = styled.div`
   ${variables.position("fixed", "null", "156px", "12px", "156px")}
   margin :  auto;
   text-align: center;
-  color: ${(props) => props.theme.style.white};
+  color: ${(props) => props.theme.style.gray4};
   z-index: 9999;
 `;

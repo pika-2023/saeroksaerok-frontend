@@ -14,7 +14,7 @@ const FeedDetail = () => {
   };
 
   return (
-    <>
+    <FeedDetailContainer isOpenModal={isOpenModal}>
       <FeedReturnButton
         onClick={() => {
           navigate("/feed");
@@ -52,20 +52,22 @@ const FeedDetail = () => {
           </FeedFrame>
         );
       })}
-      {!isOpenModal && (
-        <MakeComment onClick={OpenCommentModal}>답글 남기기</MakeComment>
-      )}
+
+      <MakeComment onClick={OpenCommentModal}>답글 남기기</MakeComment>
+
       {isOpenModal && (
         <CommentModal
           setIsOpenModal={setIsOpenModal}
           feedDetailData={feedDetailData}
         />
       )}
-    </>
+    </FeedDetailContainer>
   );
 };
 
 export default FeedDetail;
+
+const FeedDetailContainer = styled.div``;
 
 const FeedReturnButton = styled.div`
   ${variables.widthHeight("335px", "29px")}
@@ -155,7 +157,7 @@ const MakeComment = styled.button`
   ${variables.widthHeight("375px", "82px")};
   ${variables.fontStyle("22px", 600)}
   margin: auto;
-  color: white;
-  background-color: black;
+  color: ${(props) => props.theme.style.black};
+  background-color: ${(props) => props.theme.style.yellow2};
   border: none;
 `;
