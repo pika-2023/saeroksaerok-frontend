@@ -16,6 +16,14 @@ const VoiceRecord = (e) => {
   const accessToken = localStorage.getItem("accessToken");
   const recordApiUrl = "http://13.124.76.165:8080/diaries";
 
+  const handleButtonClick = async (index) => {
+    if (recorders[index]) {
+      await stopRecording(index);
+    } else {
+      startRecording(index);
+    }
+  };
+
   const startRecording = async (index) => {
     const mp3Recorder = new MicRecorder({ bitRate: 128 });
 
@@ -41,244 +49,148 @@ const VoiceRecord = (e) => {
       await recorder.stop();
       const [buffer, blob] = await recorder.getMp3();
 
+      console.log("buffer:", buffer);
+      console.log("blob:", blob);
+
+      const numberSuffix = ["st", "nd", "rd"];
+      const suffix = numberSuffix[index] || "th";
       const fileName = `${index + 1}${suffix}_q.mp3`;
 
       const file = new File([blob], fileName, {
-        type: "audio/mp3",
+        type: "audio/mp3", // 파일 형식 지정
         lastModified: Date.now(),
       });
 
+      if (file.size === 0) {
+        console.log("File is empty or invalid.");
+        return;
+      }
+
+      console.log("File:", file);
+
+      setAudioUrls((prevAudioUrls) => {
+        const newAudioUrls = [...prevAudioUrls];
+        newAudioUrls[index] = URL.createObjectURL(file);
+        return newAudioUrls;
+      });
+
+      // Make POST request to upload audio to the server
       if (accessToken) {
         const formData = new FormData();
         formData.append("keyword", "설레임");
 
+        // Append first answer file
         if (index === 0) {
-          formData.append("audioDiary", file, "1st_q.mp3");
-        } else {
-          formData.append("answer" + index, file, fileName);
+          formData.append("firstAnswer", file, "1st_q.mp3");
+        } else if (index === 1) {
+          // Append second answer file
+          formData.append("secondAnswer", file, "2nd_q.mp3");
+        } else if (index === 2) {
+          // Append third answer file
+          formData.append("thirdAnswer", file, "3rd_q.mp3");
         }
 
-        console.log("formData:", formData);
+        // Append additional files to FormData
+        for (let i = 0; i < recorders.length; i++) {
+          if (i !== index) {
+            const additionalRecorder = recorders[i];
+            if (additionalRecorder) {
+              await additionalRecorder.stop();
+              const [_, additionalBlob] = await additionalRecorder.getMp3();
+              const additionalSuffix = numberSuffix[i] || "th";
+              const additionalFileName = `${i + 1}${additionalSuffix}_q.mp3`;
+              const additionalFile = new File(
+                [additionalBlob],
+                additionalFileName,
+                {
+                  type: additionalBlob.type,
+                  lastModified: Date.now(),
+                }
+              );
 
-        const response = await fetch("http://13.124.76.165:8080/diaries", {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-          body: formData,
-        });
+              // Append additional answer file
+              if (i === 0) {
+                formData.append(
+                  "firstAnswer",
+                  additionalFile,
+                  additionalFileName
+                );
+              } else if (i === 1) {
+                formData.append(
+                  "secondAnswer",
+                  additionalFile,
+                  additionalFileName
+                );
+              } else if (i === 2) {
+                formData.append(
+                  "thirdAnswer",
+                  additionalFile,
+                  additionalFileName
+                );
+              }
+            }
+          }
+        }
 
-        const data = await response.json();
-        console.log("API response:", data);
+        // 콘솔에 formData 출력
+        console.log("...formData", ...formData);
+
+        console.log(
+          "formData",
+          Array.from(formData).reduce((acc, [key, value]) => {
+            acc[key] = value;
+            return acc;
+          }, {})
+        );
+
+        // 서버로 formData 전송
+        axios
+          .post(recordApiUrl, formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${accessToken}`,
+            },
+            transformRequest: (data, headers) => {
+              return data;
+            },
+          })
+
+          .then((res) => {
+            console.log(res);
+            console.log("음성 파일 등록 성공:", res.data);
+          })
+          .catch((err) => {
+            console.log("등록을 실패하였습니다:", err);
+          });
+      } else {
+        console.log("액세스 토큰이 없습니다");
       }
-
-      setRecorders((prevRecorders) => {
-        const newRecorders = [...prevRecorders];
-        newRecorders[index] = null;
-        return newRecorders;
-      });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error("err", err);
     }
   };
-
-  const handleButtonClick = async (index) => {
-    if (recorders[index]) {
-      await stopRecording(index);
-    } else {
-      startRecording(index);
-    }
-  };
-
-  // const startRecording = async (index) => {
-  //   const mp3Recorder = new MicRecorder({ bitRate: 64 });
-
-  //   try {
-  //     await mp3Recorder.start();
-  //     setRecorders((prevRecorders) => {
-  //       const newRecorders = [...prevRecorders];
-  //       newRecorders[index] = mp3Recorder;
-  //       return newRecorders;
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-
-  // const handleButtonClick = async (index) => {
-  //   if (recorders[index]) {
-  //     await stopRecording(index);
-  //   } else {
-  //     startRecording(index);
-  //   }
-  // };
-
-  // const stopRecording = async (index) => {
-  //   try {
-  //     const recorder = recorders[index];
-  //     if (!recorder) {
-  //       return;
-  //     }
-
-  //     await recorder.stop();
-  //     const [buffer, blob] = await recorder.getMp3();
-
-  //     console.log("buffer:", buffer);
-  //     console.log("blob:", blob);
-
-  //     const numberSuffix = ["st", "nd", "rd"];
-  //     const suffix = numberSuffix[index] || "th";
-  //     const fileName = `${index + 1}${suffix}_q.mp3`;
-
-  //     const file = new File([blob], fileName, {
-  //       type: "audio/mp3", // 파일 형식 지정
-  //       lastModified: Date.now(),
-  //     });
-
-  //     if (file.size === 0) {
-  //       console.log("File is empty or invalid.");
-  //       return;
-  //     }
-
-  //     console.log("File:", file);
-
-  //     setAudioUrls((prevAudioUrls) => {
-  //       const newAudioUrls = [...prevAudioUrls];
-  //       newAudioUrls[index] = URL.createObjectURL(file);
-  //       return newAudioUrls;
-  //     });
-
-  //     // Make POST request to upload audio to the server
-  //     if (accessToken) {
-  //       const formData = new FormData();
-  //       formData.append("keyword", "설레임");
-
-  //       // Append first answer file
-  //       if (index === 0) {
-  //         formData.append("firstAnswer", file, "1st_q.mp3");
-  //       } else if (index === 1) {
-  //         // Append second answer file
-  //         formData.append("secondAnswer", file, "2nd_q.mp3");
-  //       } else if (index === 2) {
-  //         // Append third answer file
-  //         formData.append("thirdAnswer", file, "3rd_q.mp3");
-  //       }
-
-  //       // Append additional files to FormData
-  //       for (let i = 0; i < recorders.length; i++) {
-  //         if (i !== index) {
-  //           const additionalRecorder = recorders[i];
-  //           if (additionalRecorder) {
-  //             await additionalRecorder.stop();
-  //             const [_, additionalBlob] = await additionalRecorder.getMp3();
-  //             const additionalSuffix = numberSuffix[i] || "th";
-  //             const additionalFileName = `${i + 1}${additionalSuffix}_q.mp3`;
-  //             const additionalFile = new File(
-  //               [additionalBlob],
-  //               additionalFileName,
-  //               {
-  //                 type: additionalBlob.type,
-  //                 lastModified: Date.now(),
-  //               }
-  //             );
-
-  //             // Append additional answer file
-  //             if (i === 0) {
-  //               formData.append(
-  //                 "firstAnswer",
-  //                 additionalFile,
-  //                 additionalFileName
-  //               );
-  //             } else if (i === 1) {
-  //               formData.append(
-  //                 "secondAnswer",
-  //                 additionalFile,
-  //                 additionalFileName
-  //               );
-  //             } else if (i === 2) {
-  //               formData.append(
-  //                 "thirdAnswer",
-  //                 additionalFile,
-  //                 additionalFileName
-  //               );
-  //             }
-  //           }
-  //         }
-  //       }
-
-  //       // 콘솔에 formData 출력
-  //       console.log("...formData", ...formData);
-
-  //       console.log(
-  //         "formData",
-  //         Array.from(formData).reduce((acc, [key, value]) => {
-  //           acc[key] = value;
-  //           return acc;
-  //         }, {})
-  //       );
-
-  //       // 서버로 formData 전송
-  //       axios
-  //         .post(recordApiUrl, formData, {
-  //           headers: {
-  //             "Content-Type": "multipart/form-data",
-  //             Authorization: `Bearer ${accessToken}`,
-  //           },
-  //           transformRequest: (data, headers) => {
-  //             return data;
-  //           },
-  //         })
-  //         .then((res) => {
-  //           console.log(res);
-  //           console.log("음성 파일 등록 성공:", res.data);
-  //         })
-  //         .catch((err) => {
-  //           console.log("등록을 실패하였습니다:", err);
-  //         });
-  //     } else {
-  //       console.log("액세스 토큰이 없습니다");
-  //     }
-  //   } catch (err) {
-  //     console.error("err", err);
-  //   }
-  // };
 
   return (
     <W.VoiceRecordContainer>
       {/* First Answer */}
       <AnswerContainer>
         <button onClick={() => handleButtonClick(0)}>
-          {recorders[0] ? "Stop recording" : "Start recording"}
+          {recorders[0] ? "Stop recording1" : "Start recording1"}
         </button>
-        {audioUrls[0] && (
-          <audio src={audioUrls[0]} controls style={{ marginTop: "100px" }}>
-            Your browser does not support the audio element.
-          </audio>
-        )}
       </AnswerContainer>
 
       {/* Second Answer */}
       <AnswerContainer>
         <button onClick={() => handleButtonClick(1)}>
-          {recorders[1] ? "Stop recording" : "Start recording"}
+          {recorders[1] ? "Stop recording2" : "Start recording2"}
         </button>
-        {audioUrls[1] && (
-          <audio src={audioUrls[1]} controls style={{ marginTop: "100px" }}>
-            Your browser does not support the audio element.
-          </audio>
-        )}
       </AnswerContainer>
 
       {/* Third Answer */}
       <AnswerContainer>
         <button onClick={() => handleButtonClick(2)}>
-          {recorders[2] ? "Stop recording" : "Start recording"}
+          {recorders[2] ? "Stop recording3" : "Start recording3"}
         </button>
-        {audioUrls[2] && (
-          <audio src={audioUrls[2]} controls style={{ marginTop: "100px" }}>
-            Your browser does not support the audio element.
-          </audio>
-        )}
       </AnswerContainer>
 
       <W.VoiceRecordTitle>언제 있었던 일인가요?</W.VoiceRecordTitle>
@@ -292,7 +204,14 @@ const VoiceRecord = (e) => {
 
 export default VoiceRecord;
 
-const AnswerContainer = styled.div``;
+const AnswerContainer = styled.div`
+  margin: 100px;
+
+  button {
+    width: 100px;
+    height: 100px;
+  }
+`;
 
 ////////////////////////// 녹음 테스트
 
