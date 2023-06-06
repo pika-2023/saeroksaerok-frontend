@@ -36,31 +36,31 @@ const useStore = create((set) => ({
   modalData: RECORD_METHOD,
   setModalData: (state) => set({ modalData: state }),
 
-  // voiceRecord state
-  stream: null,
-  setStream: (state) => set({ stream: state }),
-
-  media: null,
-  setMedia: (state) => set({ media: state }),
-
-  onRec: true,
-  setOnRec: (state) => set({ onRec: state }),
-
-  source: null,
-  setSource: (state) => set({ source: state }),
-
-  analyser: null,
-  setAnalyser: (state) => set({ analyser: state }),
-
+  // MARK: 녹음 state
   audioUrl: null,
   setAudioUrl: (state) => set({ audioUrl: state }),
 
   disabled: true,
   setDisabled: (state) => set({ disabled: state }),
 
-  // keyword state
   keyword: "",
   setKeyword: (state) => set({ keyword: state }),
+
+  audioData: [],
+  setAudioData: (state) => set({ audioData: state }),
+
+  isRecording: false,
+  setIsRecording: () => set((state) => ({ isRecording: !state.isRecording })),
+
+  recorder: "",
+  setRecorder: (state) => set({ recorder: state }),
+
+  // MARK: 결과 state
+  textDiary: "",
+  setTextDiary: (state) => set({ textDiary: state }),
+
+  pictureDiary: "",
+  setPictureDiary: (state) => set({ pictureDiary: state }),
 }));
 
 export default useStore;

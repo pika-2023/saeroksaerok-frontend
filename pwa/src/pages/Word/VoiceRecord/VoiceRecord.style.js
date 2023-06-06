@@ -21,6 +21,7 @@ export const VoiceRecordTitle = styled.h2`
   letter-spacing: -0.03em;
   white-space: nowrap;
   transform: translate(-50%, -50%);
+  cursor: pointer;
 `;
 
 // MARK: fade in-out animation css
@@ -65,13 +66,6 @@ export const StartRecordButton = styled.button`
   transform: translate(-50%, -50%);
   cursor: pointer;
 `;
-
-// export const FinishRecordButton = styled.div`
-//   ${variables.fontStyle("22px", 600)}
-//   grid-row: 7;
-//   text-align: center;
-//   cursor: pointer;
-// `;
 
 export const CancelButton = styled.button`
   ${variables.position("absolute", "null", "null", "5%", "50%")}
