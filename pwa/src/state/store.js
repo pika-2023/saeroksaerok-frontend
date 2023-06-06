@@ -57,6 +57,10 @@ const useStore = create((set) => ({
 
   disabled: true,
   setDisabled: (state) => set({ disabled: state }),
+
+  // keyword state
+  keyword: "",
+  setKeyword: (state) => set({ keyword: state }),
 }));
 
 export default useStore;

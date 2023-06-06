@@ -6,8 +6,10 @@ import * as W from "./VoiceRecord.style";
 
 import MicRecorder from "mic-recorder-to-mp3";
 import styled from "styled-components";
+import useStore from "../../../state/store";
 
 const VoiceRecord = (e) => {
+  const { keyword, setKeyword } = useStore((state) => state);
   const navigate = useNavigate();
 
   const [recorders, setRecorders] = useState([null, null, null]);
@@ -77,7 +79,7 @@ const VoiceRecord = (e) => {
       // Make POST request to upload audio to the server
       if (accessToken) {
         const formData = new FormData();
-        formData.append("keyword", "설레임");
+        formData.append("keyword", keyword);
 
         // Append first answer file
         if (index === 0) {
