@@ -24,34 +24,36 @@ const FeedDetail = () => {
         {"<"} 뒤로가기
       </FeedReturnButton>
 
-      {feedDetailData.map(({ id, name, upload_date, word, text }) => {
-        const sliceData = (a, b) => {
-          return upload_date?.slice(a, b);
-        };
-        return (
-          <FeedFrame key={id}>
-            <FeedInfo>
-              <FeedOwnerInfo>
-                <FeedOwnerImg></FeedOwnerImg>
-                <FeedOwnerName>{name}</FeedOwnerName>
-              </FeedOwnerInfo>
-              <FeedUploadDate>
-                {`${sliceData(0, 4)}년 ${sliceData(5, 7)}월
+      {feedDetailData.map(
+        ({ id, author, createdAt, keyword, textDiary, pictureDiary }) => {
+          const sliceData = (a, b) => {
+            return createdAt?.slice(a, b);
+          };
+          return (
+            <FeedFrame key={id}>
+              <FeedInfo>
+                <FeedOwnerInfo>
+                  <FeedOwnerImg></FeedOwnerImg>
+                  <FeedOwnerName>{author}</FeedOwnerName>
+                </FeedOwnerInfo>
+                <FeedUploadDate>
+                  {`${sliceData(0, 4)}년 ${sliceData(5, 7)}월
                 ${sliceData(8, 10)}일`}
-              </FeedUploadDate>
-            </FeedInfo>
-            <FeedImg></FeedImg>
+                </FeedUploadDate>
+              </FeedInfo>
+              <FeedImg></FeedImg>
 
-            <FeedContent>
-              <FeedWord>{word}</FeedWord>
-              <ListenToVoice>
-                목소리 듣기 <VoiceButton></VoiceButton>
-              </ListenToVoice>
-            </FeedContent>
-            <FeedText>{text}</FeedText>
-          </FeedFrame>
-        );
-      })}
+              <FeedContent>
+                <FeedWord>{keyword}</FeedWord>
+                <ListenToVoice>
+                  목소리 듣기 <VoiceButton></VoiceButton>
+                </ListenToVoice>
+              </FeedContent>
+              <FeedText>{textDiary}</FeedText>
+            </FeedFrame>
+          );
+        }
+      )}
       {!isOpenModal && (
         <MakeComment onClick={OpenCommentModal}>답글 남기기</MakeComment>
       )}
