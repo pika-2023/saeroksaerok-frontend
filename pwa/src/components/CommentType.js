@@ -1,107 +1,226 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import styled, { keyframes } from "styled-components";
+import MicRecorder from "mic-recorder-to-mp3";
 import variables from "../styles/variables";
 import useStore from "../state/store";
-import ListeningIconImg from "../assets/images/listeningIcon.png";
 
-const CommentType = ({ setIsOpenModal, type }) => {
-  const { feedDetailData, removeCommentType } = useStore((state) => state);
-  const [recoding, setRecoding] = useState(true);
+const CommentType = ({ setIsOpenModal, type, detailData }) => {
+  const [isVisible, setIsVisible] = useState(true);
+  const {
+    removeCommentType,
+    setAudioUrl,
+    isRecording,
+    setIsRecording,
+    recorder,
+    setRecorder,
+  } = useStore((state) => state);
+
+  const [voiceFile, setVoiceFile] = useState({});
+  const [recording, setRecording] = useState(0);
   const [textComment, setTextComment] = useState("");
   const ColesModal = () => {
     setIsOpenModal(false);
     removeCommentType();
   };
-  console.log(textComment);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsVisible((prevVisible) => !prevVisible);
+    }, 3000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  const startRecording = async () => {
+    const mp3Recorder = new MicRecorder({ bitRate: 128 });
+
+    try {
+      await mp3Recorder.start();
+      setRecorder(mp3Recorder);
+      setIsRecording(true);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const stopRecording = async () => {
+    try {
+      const [buffer, blob] = await recorder.stop().getMp3();
+      const file = new File(buffer, "reply_audio.mp3", {
+        type: blob.type,
+        lastModified: Date.now(),
+      });
+
+      if (file.size === 0) {
+        console.log("파일이 비어있거나 유효하지 않습니다");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("diaryId", detailData.id);
+      formData.append("audioReply", file);
+      console.log("formData:", ...formData);
+
+      setAudioUrl(URL.createObjectURL(file));
+      setIsRecording(false);
+
+      if (accessToken) {
+        axios
+          .post("http://13.124.76.165:8080/replies/text", formData, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
+          .then((response) => {
+            console.log("음성 파일 업로드 성공 ✨", response.data);
+            setVoiceFile(response.data);
+            setRecording(2);
+          })
+          .catch((error) => {
+            console.error("음성 파일 업로드 실패:", error);
+          });
+      } else {
+        console.log("액세스 토큰이 존재하지 않습니다");
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleButtonClick = () => {
+    if (isRecording) {
+      stopRecording();
+    } else {
+      startRecording();
+      setRecording(1);
+    }
+  };
+
+  const VoiceComment = () => {};
+
+  const accessToken = localStorage.getItem("accessToken");
+
+  const CommentCard = (e) => {
+    fetch("http://13.124.76.165:8080/replies/emoji", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        Authorization: ` Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        diaryId: detailData.id,
+        emoji: e.currentTarget.dataset.value,
+      }),
+    })
+      .then((response) => response.json())
+      .then(() => {
+        ColesModal();
+      });
+  };
+
   return (
     <>
-      {feedDetailData.map(({ id, name, text, profile }) => {
-        return (
-          <div key={id}>
-            <Post>
-              <OwnerInfo>
-                <PostOwnerProfileImg src={profile} alt="" />
-                <PostOwner>{name}</PostOwner>
-              </OwnerInfo>
-              <PostText>{text}</PostText>
-            </Post>
-            {type[0] === "card" && (
-              <CommentModal>
-                <CommentModalTitle>
-                  {name}님에게 전할
-                  <br />
-                  덕담을 골라주세요
-                </CommentModalTitle>
-                <BlessingComment>
-                  <ChooseBlessingComment data-value="건강하세요">
-                    건강하세요
-                    <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-                  </ChooseBlessingComment>
-                  <ChooseBlessingComment data-value="행복하세요">
-                    행복하세요
-                    <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-                  </ChooseBlessingComment>
-                  <ChooseBlessingComment data-value="아름다운 추억이에요">
-                    아름다운 추억이에요
-                    <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-                  </ChooseBlessingComment>
-                </BlessingComment>
-                <CancelMakeComment onClick={ColesModal}>
-                  취소하기
-                </CancelMakeComment>
-              </CommentModal>
-            )}
-            {type[0] === "voice" && (
-              <CommentModal>
-                {recoding && (
-                  <>
-                    <CommentModalTitle>
-                      {name.slice(1)}님에게 남길
-                      <br />
-                      답장을 말씀해주세요
-                    </CommentModalTitle>
-                    <RecodingComment src={ListeningIconImg} />
-                  </>
-                )}
-                {recoding ? (
-                  <>
-                    <StopRecoding
-                      onClick={() => {
-                        setRecoding(false);
-                      }}
-                    >
-                      다음으로
-                    </StopRecoding>
-                    <CancelMakeComment onClick={ColesModal}>
-                      취소하기
-                    </CancelMakeComment>
-                  </>
-                ) : (
-                  <>
-                    <MakeComment> 답글 남기기</MakeComment>
-                    <CorrectComment>답글 수정하기</CorrectComment>
-                  </>
-                )}
-              </CommentModal>
-            )}
-            {type[0] === "text" && (
-              <CommentModal>
-                <TextCommentInput
-                  type="textarea"
-                  onChange={(e) => {
-                    setTextComment(e.target.value);
-                  }}
-                />
+      <Post>
+        <OwnerInfo>
+          <PostOwnerProfileImg src={detailData?.profile} alt="" />
+          <PostOwner>{detailData?.author}</PostOwner>
+        </OwnerInfo>
+        <PostText>{detailData?.textDiary}</PostText>
+      </Post>
+      {type[0] === "card" && (
+        <CommentModal>
+          <CommentModalTitle>
+            {detailData.author}님에게 전할
+            <br />
+            덕담을 골라주세요
+          </CommentModalTitle>
+          <BlessingComment>
+            <ChooseBlessingComment data-value="HAPPY" onClick={CommentCard}>
+              <BlessingIcons
+                src="./icons/icon_blessing_happy.png"
+                alt="새록새록"
+              />
+              <CommentValue>행복하세요</CommentValue>
+            </ChooseBlessingComment>
+            <ChooseBlessingComment data-value="Beautiful" onClick={CommentCard}>
+              <BlessingIcons
+                src="./icons/icon_blessing_beautiful.png"
+                alt="새록새록"
+              />
+              <CommentValue>아름다워요</CommentValue>
+            </ChooseBlessingComment>
+          </BlessingComment>
+          <CancelMakeComment onClick={ColesModal}>뒤로가기</CancelMakeComment>
+        </CommentModal>
+      )}
+      {type[0] === "voice" && (
+        <CommentModal>
+          {recording === 2 ? (
+            <CommentModalTitle>
+              {detailData?.author}님에게 남길
+              <br />
+              답장이에요
+            </CommentModalTitle>
+          ) : (
+            <CommentModalTitle>
+              {detailData.author}님에게 남길
+              <br />
+              답장을 말씀해주세요
+            </CommentModalTitle>
+          )}
 
-                <MakeComment> 답글 남기기</MakeComment>
-                <CancelMakeComment onClick={ColesModal}>
-                  취소하기
-                </CancelMakeComment>
-              </CommentModal>
-            )}
-          </div>
-        );
-      })}
+          {recording === 1 && (
+            <ListenCarefully isVisible={isVisible}>
+              귀 기울여 듣고 있어요
+            </ListenCarefully>
+          )}
+          {recording === 2 && (
+            //TODO : 기능 먼저 구현하고 <div> 없애고 스타일링 하겠습니다!!
+            <div>{voiceFile.textReply}</div>
+          )}
+          {recording === 0 && (
+            <>
+              <StopRecording onClick={handleButtonClick}>
+                말 시작하기
+              </StopRecording>
+              <CancelMakeComment onClick={ColesModal}>
+                취소하기
+              </CancelMakeComment>
+            </>
+          )}
+          {recording === 1 && (
+            <>
+              <MakeComment onClick={handleButtonClick}> 말 끝맺기 </MakeComment>
+              <CorrectComment>뒤로가기</CorrectComment>
+            </>
+          )}
+          {recording === 2 && (
+            <>
+              <MakeComment onClick={VoiceComment}>답장 남기기</MakeComment>
+              <CorrectComment onClick={ColesModal}>
+                답장 수정하기
+              </CorrectComment>
+            </>
+          )}
+        </CommentModal>
+      )}
+      {type[0] === "text" && (
+        <CommentModal>
+          <TextCommentInput
+            type="textarea"
+            onChange={(e) => {
+              setTextComment(e.target.value);
+            }}
+          />
+
+          <MakeComment> 답글 남기기</MakeComment>
+          <CancelMakeComment onClick={ColesModal}>취소하기</CancelMakeComment>
+        </CommentModal>
+      )}
     </>
   );
 };
@@ -142,7 +261,6 @@ const CommentModal = styled.ul`
   ${variables.widthHeight("335px", "288px")}
   ${variables.position("fixed", "405px", "20px", "105px", "20px")}
   margin : auto;
-  padding: 20px;
   background: ${(props) => props.theme.style.white};
   box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.05);
   border-radius: 24px;
@@ -152,18 +270,48 @@ const CommentModal = styled.ul`
 const CommentModalTitle = styled.div`
   ${variables.fontStyle("24px", 600)};
   ${variables.widthHeight("fit-content", "66px")};
-  margin: 4px 0 2px 0px;
+  margin: 20px 0 30px 20px;
   color: ${(props) => props.theme.style.black};
   line-height: 33px;
 `;
 
-const RecodingComment = styled.img`
-  ${variables.position("absolute", "50%", "null", "null", "50%")};
-  ${variables.widthHeight("96px", "96px")};
-  transform: translate(-50%, -50%);
+const BlessingIcons = styled.img`
+  ${variables.widthHeight("36px", "36px")}
 `;
 
-const StopRecoding = styled.div`
+const CommentValue = styled.div`
+  ${variables.widthHeight("80px", "29px")}
+  ${variables.fontStyle("19px", 500)}
+  line-height: 29px;
+  text-align: center;
+  letter-spacing: -0.03em;
+`;
+
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const ListenCarefully = styled.div`
+  ${variables.position("absolute", "50%", "null", "null", "50%")};
+  ${variables.fontStyle("19px", 500)}
+  opacity: 0;
+  animation: ${fadeIn} 3s infinite;
+  ${({ isVisible }) => isVisible && "opacity: 1;"}
+  transform: translate(-50%, -50%);
+  line-height: 29px;
+  text-align: right;
+  letter-spacing: -0.03em;
+`;
+
+const StopRecording = styled.div`
   ${variables.flex("row", "center", "center")}
   ${variables.position("fixed", "605px", "20px", "85px", "20px")}
   ${variables.widthHeight("335px", "68px")}
@@ -188,8 +336,9 @@ const MakeComment = styled.div`
 `;
 
 const BlessingComment = styled.div`
-  ${variables.flex("column", "center", "center")}
-  gap: 32px;
+  ${variables.flex("row", "center", "center")}
+  gap : 11px;
+  margin: 0 20px;
 `;
 
 const TextCommentInput = styled.textarea`
@@ -199,34 +348,39 @@ const TextCommentInput = styled.textarea`
   white-space: pre-wrap;
 `;
 
-const ChooseBlessingComment = styled.li`
-  ${variables.flex("row", "space-between", "center")}
-  ${variables.widthHeight("295px", "31px")}
-  ${variables.fontStyle("22px", 500)}
- 
-  color: ${(props) => props.theme.style.black};
-`;
-
-const CommentMethodArrowRight = styled.div`
-  color: #ababab;
+const ChooseBlessingComment = styled.div`
+  ${variables.flex("column", "center", "center")}
+  ${variables.widthHeight("142px", "107px")}
+  ${variables.fontStyle("22px", 500)};
+  color: ${(props) => props.theme.style.gray5};
+  background-color: ${(props) => props.theme.style.gray1};
+  border-radius: 12px;
 `;
 
 const CancelMakeComment = styled.div`
-  ${variables.widthHeight("99px", "29px")}
+  ${variables.widthHeight("64px", "29px")}
   ${variables.position("fixed", "null", "50%", "12px", "50%")}
+  ${variables.fontStyle("19px", 500)}
   margin :  auto;
+  color: ${(props) => props.theme.style.gray4};
   text-align: center;
-  color: ${(props) => props.theme.style.white};
+  line-height: 29px;
+  text-align: right;
+  letter-spacing: -0.03em;
   transform: translate(-50%, 0%);
   z-index: 10;
 `;
 
 const CorrectComment = styled.div`
-  ${variables.widthHeight("99px", "29px")}
+  ${variables.widthHeight("100px", "29px")}
   ${variables.position("fixed", "null", "50%", "12px", "50%")}
+  ${variables.fontStyle("19px", 500)}
   margin :  auto;
+  color: ${(props) => props.theme.style.gray4};
   text-align: center;
-  color: ${(props) => props.theme.style.white};
+  line-height: 29px;
+  text-align: right;
+  letter-spacing: -0.03em;
   transform: translate(-50%, 0%);
   z-index: 10;
 `;

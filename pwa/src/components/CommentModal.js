@@ -4,14 +4,13 @@ import styled from "styled-components";
 import variables from "../styles/variables";
 import useStore from "../state/store";
 
-const CommentModal = ({ setIsOpenModal }) => {
+const CommentModal = ({ setIsOpenModal, detailData }) => {
   const { commentType, removeCommentType } = useStore((state) => state);
 
   const CloseCommentModal = () => {
     setIsOpenModal(false);
     removeCommentType();
   };
-
   const [commentTypeModal, setCommentTypeModal] = useState(false);
 
   const ClickMethod = (e) => {
@@ -51,6 +50,7 @@ const CommentModal = ({ setIsOpenModal }) => {
           type={commentType}
           setCommentTypeModal={setCommentTypeModal}
           setIsOpenModal={setIsOpenModal}
+          detailData={detailData}
         />
       )}
       {!commentTypeModal && (
@@ -74,7 +74,6 @@ const CommentMethodContainer = styled.ul`
   ${variables.widthHeight("335px", "288px")}
   ${variables.position("fixed", "405px", "20px", "105px", "20px")}
   margin : auto;
-  padding: 20px;
   background: ${(props) => props.theme.style.white};
   box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.05);
   border-radius: 24px;
@@ -84,7 +83,7 @@ const CommentMethodContainer = styled.ul`
 const CommentMethodTitle = styled.div`
   ${variables.fontStyle("24px", 600)};
   ${variables.widthHeight("fit-content", "66px")};
-  margin: 4px 0 2px 0px;
+  margin: 20px;
   color: ${(props) => props.theme.style.black};
   line-height: 33px;
 `;
@@ -106,10 +105,10 @@ const CommentMethodArrowRight = styled.div`
 `;
 
 const CancelMakeComment = styled.div`
-  ${variables.widthHeight("64px", "29px")}
   ${variables.position("fixed", "null", "156px", "12px", "156px")}
+  ${variables.widthHeight("64px", "29px")}
   margin :  auto;
-  text-align: center;
   color: ${(props) => props.theme.style.gray4};
+  text-align: center;
   z-index: 9999;
 `;
