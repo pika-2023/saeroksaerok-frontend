@@ -1,6 +1,42 @@
 import styled, { keyframes } from "styled-components";
 import variables from "../../../styles/variables";
 
+const fadeIn = keyframes`
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+
+const slideUp = keyframes`
+  0% {
+    bottom: 10%;
+    opacity: 0;
+  }
+  25% {
+    bottom: 30%;
+    opacity: 1;
+  }
+  100% {
+    bottom: 30%;
+    opacity: 0;
+  }
+`;
+
+const recordAnimation = keyframes`
+ 0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+`;
+
 export const VoiceRecordContainer = styled.div`
   ${variables.widthHeight("100vw", "100vh")}
   position: relative;
@@ -15,26 +51,15 @@ export const VoiceRecordContainer = styled.div`
 `;
 
 export const VoiceRecordTitle = styled.h2`
-  ${variables.fontStyle("32px", 600)}
-  ${variables.position("absolute", "42%", "null", "null", "50%")}
-  text-align: center;
-  letter-spacing: -0.03em;
-  white-space: nowrap;
-  transform: translate(-50%, -50%);
-  cursor: pointer;
-`;
+  ${variables.position("absolute", "null", "null", "30%", "50%")};
+  ${variables.flex("row", "center", "center")};
+  ${variables.widthHeight("100vw", "100vh")};
+  ${variables.fontStyle("30px", 600)};
+  white-space: no-wrap;
+  opacity: 0;
 
-// MARK: fade in-out animation css
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  animation: ${slideUp} 2s ease-in;
+  transform: translate(-50%, 50%);
 `;
 
 export const ListeningText = styled.h6`
@@ -48,7 +73,7 @@ export const ListeningText = styled.h6`
   animation: ${fadeIn} 3s infinite;
   ${({ isVisible }) => isVisible && "opacity: 1;"}
   white-space: nowrap;
-  opacity: 0;
+  opacity: 1;
 `;
 
 export const StartRecordButton = styled.button`
@@ -64,7 +89,10 @@ export const StartRecordButton = styled.button`
   border: none;
   border-radius: 20px;
   transform: translate(-50%, -50%);
+  opacity: 1;
   cursor: pointer;
+
+  animation: ${recordAnimation} 3s ease-in-out;
 `;
 
 export const CancelButton = styled.button`
@@ -75,5 +103,8 @@ export const CancelButton = styled.button`
   background: none;
   border: none;
   transform: translate(-50%, -50%);
+  opacity: 1;
   cursor: pointer;
+
+  animation: ${recordAnimation} 3s ease-in-out;
 `;
