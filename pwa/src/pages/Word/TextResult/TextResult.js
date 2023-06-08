@@ -16,17 +16,8 @@ const TextResult = () => {
         글로 적었어요
       </TextResultTitle>
       <TextResultContent>
-        <TextResultContentTitle>가족{keyword}</TextResultContentTitle>
-        <TextResultContentText>
-          그때가 아마 삼십 년도 더 됐을 거야. 옛날에 거기 영등포 살던 곳에
-          마당이 큰 거 있었어. 거기서들 손녀딸내미들이랑 사방치기 했지. 고무줄
-          놀이 했지. 아주 재밌게 놀았어. 그때가 아마 삼십 년도 더 됐을 거야.
-          옛날에 거기 영등포 살던 곳에 마당이 큰 거 있었어. 거기서들
-          손녀딸내미들이랑 사방치기 했지. 고무줄 놀이 했지. 아주 재밌게 놀았어.
-          그때가 아마 삼십 년도 더 됐을 거야. 옛날에 거기 영등포 살던 곳에
-          마당이 큰 거 있었어. 거기서들 손녀딸내미들이랑 사방치기 했지. 고무줄
-          놀이 했지. 아주 재밌게 놀았어.{textDiary}
-        </TextResultContentText>
+        <TextResultContentTitle>{keyword}</TextResultContentTitle>
+        <TextResultContentText>{textDiary}</TextResultContentText>
       </TextResultContent>
       <GradationBox></GradationBox>
       <S.MemoryButton onClick={() => navigate("/pictureResult")}>
