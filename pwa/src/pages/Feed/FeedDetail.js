@@ -25,14 +25,19 @@ const FeedDetail = () => {
     })
       .then((response) => response.json())
       .then((data) => setDetailData(data));
-  }, [accessToken, feedDetailData]);
+  }, [feedDetailData, accessToken]);
 
   const sliceData = (a, b) => {
     return detailData?.createdAt?.slice(a, b);
   };
 
   const combineReplies = [detailData?.textReplies, detailData?.emojiReplies];
+
   const allReplies = combineReplies.flat();
+
+  const allRepliesSort = allReplies.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
 
   return (
     <>
@@ -65,15 +70,13 @@ const FeedDetail = () => {
           </FeedContent>
           <FeedText>{detailData?.textDiary}</FeedText>
         </FeedFrame>
-        {allReplies?.reverse().map((a) => {
-          const createdAt = a?.createdAt;
+        {allRepliesSort?.map((reply) => {
+          const createdAt = reply?.createdAt;
           const createdAtDate = new Date(createdAt);
           const currentDate = new Date();
-
           const timeDifference =
             currentDate.getTime() - createdAtDate.getTime();
           const secondsDifference = Math.floor(timeDifference / 1000);
-
           let displayText;
 
           if (secondsDifference < 60) {
@@ -88,19 +91,33 @@ const FeedDetail = () => {
             const daysDifference = Math.floor(secondsDifference / 86400);
             displayText = `${daysDifference}일 전`;
           }
-          console.log(a);
 
           return (
             <CommentSection>
               <CommentFrame>
                 <CommentInfo>
-                  <div>{a?.author}</div>
+                  <CommentAuthorInfo>
+                    <ProfileImag src={reply?.profileImageUrl} alt="no" />
+                    <div>{reply?.author}</div>
+                  </CommentAuthorInfo>
                   <div>{displayText}</div>
                 </CommentInfo>
-                {a?.emojiReply && (
-                  <div value={a?.emojiReply}>{a?.emojiReply}</div>
+                {reply?.emojiReply && (
+                  <div>
+                    {reply?.emojiReply === "HAPPY" ? (
+                      <EmojiReply
+                        src="./images/card_blessing_happy.png"
+                        alt="none"
+                      />
+                    ) : (
+                      <EmojiReply
+                        src="./images/card_blessing_beautiful.png"
+                        alt="none"
+                      />
+                    )}
+                  </div>
                 )}
-                <div>{a?.textReply}</div>
+                {reply?.textReply && <div>{reply?.textReply}</div>}
               </CommentFrame>
             </CommentSection>
           );
@@ -123,7 +140,11 @@ const FeedDetail = () => {
 export default FeedDetail;
 
 const FeedDetailContainer = styled.div`
-  margin-bottom: 96px;
+  margin-bottom: 82px;
+
+  @media (min-width: 769px) {
+    margin-bottom: 0px;
+  }
 `;
 
 const FeedReturnButton = styled.div`
@@ -255,7 +276,20 @@ const CommentFrame = styled.div`
   margin-bottom: 40px;
 `;
 
+const CommentAuthorInfo = styled.div`
+  ${variables.flex("row", "center", "center")}
+`;
+
+const ProfileImag = styled.img`
+  ${variables.widthHeight("32px", "32px")}
+  border-radius:50%;
+`;
+
 const CommentInfo = styled.div`
   ${variables.flex("row", "space-between", "null")}
   margin-bottom : 16px;
+`;
+
+const EmojiReply = styled.img`
+  ${variables.widthHeight("114px", "114px")}
 `;

@@ -146,7 +146,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
               />
               <CommentValue>행복하세요</CommentValue>
             </ChooseBlessingComment>
-            <ChooseBlessingComment data-value="Beautiful" onClick={CommentCard}>
+            <ChooseBlessingComment data-value="BEAUTIFUL" onClick={CommentCard}>
               <BlessingIcons
                 src="./icons/icon_blessing_beautiful.png"
                 alt="새록새록"

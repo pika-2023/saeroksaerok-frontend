@@ -68,6 +68,7 @@ const CommentModalBackground = styled.div`
   ${variables.position("fixed", "0", "0", "0", "0")}
   background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(45px);
+  z-index: 10;
 `;
 
 const CommentMethodContainer = styled.ul`
