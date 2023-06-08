@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import useStore from "../../../state/store";
 import styled from "styled-components";
 import variables from "../../../styles/variables";
+import * as S from "../Word.style";
 
 const TextResult = () => {
   const { keyword, textDiary } = useStore((state) => state);
@@ -10,17 +11,28 @@ const TextResult = () => {
 
   return (
     <TextResultContainer>
-      <TextResultTitle>추억을 글로 적었어요</TextResultTitle>
+      <TextResultTitle>
+        추억을 <br />
+        글로 적었어요
+      </TextResultTitle>
       <TextResultContent>
-        <TextResultContentTitle>{keyword}</TextResultContentTitle>
-        <TextResultContentText>{textDiary}</TextResultContentText>
+        <TextResultContentTitle>가족{keyword}</TextResultContentTitle>
+        <TextResultContentText>
+          그때가 아마 삼십 년도 더 됐을 거야. 옛날에 거기 영등포 살던 곳에
+          마당이 큰 거 있었어. 거기서들 손녀딸내미들이랑 사방치기 했지. 고무줄
+          놀이 했지. 아주 재밌게 놀았어. 그때가 아마 삼십 년도 더 됐을 거야.
+          옛날에 거기 영등포 살던 곳에 마당이 큰 거 있었어. 거기서들
+          손녀딸내미들이랑 사방치기 했지. 고무줄 놀이 했지. 아주 재밌게 놀았어.
+          그때가 아마 삼십 년도 더 됐을 거야. 옛날에 거기 영등포 살던 곳에
+          마당이 큰 거 있었어. 거기서들 손녀딸내미들이랑 사방치기 했지. 고무줄
+          놀이 했지. 아주 재밌게 놀았어.{textDiary}
+        </TextResultContentText>
       </TextResultContent>
-      <ShareButton onClick={() => navigate("/pictureResult")}>
+      <GradationBox></GradationBox>
+      <S.MemoryButton onClick={() => navigate("/pictureResult")}>
         추억 그리기
-      </ShareButton>
-      {/* TODO: 추후 수정하기 버튼이 들어갈 자리입니다.
-        <ShareButton>추억 수정하기</ShareButton> 
-      */}
+      </S.MemoryButton>
+      <ModifyButton onClick={() => navigate("/")}>추억 수정하기</ModifyButton>
     </TextResultContainer>
   );
 };
@@ -28,10 +40,19 @@ const TextResult = () => {
 export default TextResult;
 
 const TextResultContainer = styled.div`
+  ${variables.widthHeight("100vw", "100vh")}
+  position: relative;
   display: grid;
   grid-auto-rows: 5%;
-  padding-bottom: 100px;
-  height: 100%;
+  margin: calc(-20px);
+  padding: 20px;
+  background: url("./images/bg_speach_to_text.png") no-repeat;
+  background-size: cover;
+  overflow: hidden;
+
+  @media (min-width: 769px) {
+    ${variables.widthHeight("375px", "685px")}
+  }
 `;
 
 const TextResultTitle = styled.h1`
@@ -40,7 +61,7 @@ const TextResultTitle = styled.h1`
 `;
 
 const TextResultContent = styled.div`
-  grid-row: 15;
+  grid-row: 7;
 `;
 
 const TextResultContentTitle = styled.h2`
@@ -49,18 +70,33 @@ const TextResultContentTitle = styled.h2`
 `;
 
 const TextResultContentText = styled.p`
-  ${variables.widthHeight("100%", "120px")}
+  ${variables.widthHeight("100%", "30vh")}
   ${variables.fontStyle("22px", 500)}
-  line-height: 31px;
-  letter-spacing: -0.04em;
+  color: ${({ theme }) => theme.style.gray5};
+  line-height: 32px;
+  letter-spacing: -0.03em;
   overflow: scroll;
 `;
 
-const ShareButton = styled.button`
-  ${variables.position("fixed", "null", "null", "0", "0")}
-  ${variables.widthHeight("100%", "82px")}
-  ${variables.fontStyle("22px", 600)}
-  background: ${({ theme }) => theme.style.black};
-  color: ${({ theme }) => theme.style.white};
+const GradationBox = styled.div`
+  ${variables.position("absolute", "null", "null", "0", "0")}
+  ${variables.widthHeight("100%", "400px")}
+  background: linear-gradient(
+    180deg,
+    #ffffff 60.17%,
+    rgba(255, 255, 255, 0) 98.19%
+  );
+  transform: rotate(-180deg);
+`;
+
+const ModifyButton = styled.button`
+  ${variables.position("absolute", "null", "null", "5%", "50%")}
+  ${variables.flex("row", "center", "center")}
+  ${variables.fontStyle("19px", 500)}
+  color: ${({ theme }) => theme.style.gray4};
+  background: none;
   border: none;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  z-index: 100;
 `;
