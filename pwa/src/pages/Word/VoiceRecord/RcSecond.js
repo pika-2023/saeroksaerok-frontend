@@ -78,22 +78,20 @@ const RcSecond = (e) => {
           })()}
         </S.TodayWord>
       </S.TodayWordContainer>
-      <W.VoiceRecordTitle>장소는 어디였나요?</W.VoiceRecordTitle>
+      <W.QuestionText>장소는 어디였나요?</W.QuestionText>
       {isRecording ? (
         <>
           <W.ListeningText>귀기울여 듣고 있어요</W.ListeningText>
-          <W.StartRecordButton onClick={handleButtonClick} value={1}>
-            말 끝내기
-          </W.StartRecordButton>
+          <W.RecordBtn onClick={handleButtonClick}>말 끝내기</W.RecordBtn>
         </>
       ) : (
-        <W.StartRecordButton onClick={handleButtonClick} value={0}>
+        <W.RecordBtn onClick={handleButtonClick} value={"start"}>
           말 시작하기
-        </W.StartRecordButton>
+        </W.RecordBtn>
       )}
-      <W.CancelButton onClick={() => navigate("/word")}>
+      <W.CancelBtn onClick={() => navigate("/word")} value={"start"}>
         취소하기
-      </W.CancelButton>
+      </W.CancelBtn>
     </W.VoiceRecordContainer>
   );
 };

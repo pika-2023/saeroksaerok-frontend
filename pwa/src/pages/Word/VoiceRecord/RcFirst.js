@@ -4,8 +4,6 @@ import useStore from "../../../state/store";
 import MicRecorder from "mic-recorder-to-mp3";
 import * as S from "../Word.style";
 import * as W from "./VoiceRecord.style";
-import styled, { keyframes } from "styled-components";
-import variables from "../../../styles/variables";
 
 const RcFirst = (e) => {
   const navigate = useNavigate();
@@ -83,97 +81,22 @@ const RcFirst = (e) => {
           })()}
         </S.TodayWord>
       </S.TodayWordContainer>
-      <QuestionText style={{}}>언제 있었던 일인가요?</QuestionText>
+      <W.QuestionText>언제 있었던 일인가요?</W.QuestionText>
       {isRecording ? (
         <>
           <W.ListeningText>귀기울여 듣고 있어요</W.ListeningText>
-          <RecordBtn onClick={handleButtonClick} value={1}>
-            말 끝내기
-          </RecordBtn>
+          <W.RecordBtn onClick={handleButtonClick}>말 끝내기</W.RecordBtn>
         </>
       ) : (
-        <RecordBtn onClick={handleButtonClick} value={0}>
+        <W.RecordBtn onClick={handleButtonClick} value={"start"}>
           말 시작하기
-        </RecordBtn>
+        </W.RecordBtn>
       )}
-      <CancelBtn onClick={() => navigate("/word")}>취소하기</CancelBtn>
+      <W.CancelBtn onClick={() => navigate("/word")} value={"start"}>
+        취소하기
+      </W.CancelBtn>
     </W.VoiceRecordContainer>
   );
 };
-
-const slideUp = keyframes`
-  0% {
-    bottom: 30%;
-    opacity: 0;
-  }
-  50% {
-    bottom: 30%;
-    opacity: 1;
-  }
-  70% {
-    bottom: 50%;
-    opacity: 1;
-  }
-`;
-
-const recordAnimation = keyframes`
- 0% {
-    opacity: 0%;
-  }
-  75% {
-    opacity: 0%;
-  }
-  90% {
-    opacity: 0%;
-  }
-  100% {
-    opacity: 100%;
-  }
-`;
-
-const QuestionText = styled.div`
-  ${variables.position("absolute", "null", "null", "50%", "50%")};
-  ${variables.flex("row", "center", "center")};
-  ${variables.widthHeight("100vw", "100vh")};
-  ${variables.fontStyle("30px", 600)};
-  white-space: no-wrap;
-  opacity: 1;
-
-  animation: ${slideUp} 2s ease-in;
-  transform: translate(-50%, 50%);
-`;
-
-const RecordBtn = styled.button`
-  ${variables.position("absolute", "null", "null", "10%", "50%")}
-  ${variables.flex("row", "center", "center")}
-  ${variables.widthHeight("90%", "68px")}
-  ${variables.fontStyle("22px", 600)}
-  background: ${(props) => (props.value === 0 ? "#FFF4CC" : "#FFE380")};
-  color: ${({ theme }) => theme.style.gray5};
-  line-height: 32px;
-  text-align: center;
-  letter-spacing: -0.03em;
-  border: none;
-  border-radius: 20px;
-  transform: translate(-50%, -50%);
-  opacity: 1;
-  cursor: pointer;
-
-  animation: ${recordAnimation} 3s ease-in;
-`;
-
-const CancelBtn = styled.button`
-  ${variables.position("absolute", "null", "null", "5%", "50%")}
-  ${variables.flex("row", "center", "center")}
-  ${variables.fontStyle("19px", 500)}
-  color: ${({ theme }) => theme.style.gray3};
-  background: none;
-  border: none;
-  transform: translate(-50%, -50%);
-  opacity: 1;
-  cursor: pointer;
-
-  animation: ${recordAnimation} 3s ease-in;
-`;
 
 export default RcFirst;
