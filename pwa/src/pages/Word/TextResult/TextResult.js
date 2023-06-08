@@ -49,6 +49,8 @@ const TextResultContainer = styled.div`
 const TextResultTitle = styled.h1`
   ${variables.fontStyle("32px", 600)}
   grid-row: 3;
+  line-height: 45px;
+  letter-spacing: -0.03em;
 `;
 
 const TextResultContent = styled.div`
@@ -67,6 +69,7 @@ const TextResultContentText = styled.p`
   line-height: 32px;
   letter-spacing: -0.03em;
   overflow: scroll;
+  word-break: keep-all;
 `;
 
 const GradationBox = styled.div`
