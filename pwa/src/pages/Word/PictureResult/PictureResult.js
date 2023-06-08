@@ -15,15 +15,10 @@ const PictureResult = () => {
         <br />
         추억이에요
       </PictureResultTitle>
-      <PictureResultImage src={pictureDiary} alt="그림 결과" />
+      <PictureResultImage src={pictureDiary} alt="추억 그림 이미지" />
       <PictureResultContent>
-        {/* TODO: 아래 텍스트는 테스트용으로 작성해둔 것으로, 추후 삭제 예정입니다 */}
-        <PictureResultContentTitle>가족{keyword}</PictureResultContentTitle>
-        <PictureResultContentText>
-          그때가 아마 삼십 년도 더 됐을 거야. 옛날에 거기 영등포 살던 곳에
-          마당이 큰 거 있었어. 거기서들 손녀딸내미들이랑 사방치기 했지. 고무줄
-          놀이 했지. 아주 재밌게 놀았어.{textDiary}
-        </PictureResultContentText>
+        <PictureResultContentTitle>{keyword}</PictureResultContentTitle>
+        <PictureResultContentText>{textDiary}</PictureResultContentText>
       </PictureResultContent>
       <GradationBox></GradationBox>
       <ShareButton onClick={() => navigate("/feed")}>
@@ -63,9 +58,6 @@ const PictureResultImage = styled.img`
   ${variables.widthHeight("100%", "242px")}
   margin-top: 10px;
   grid-row: 6;
-
-  /* TODO: 테스트용 디자인으로, 추후 삭제 예정입니다 */
-  border: 1px solid black;
 `;
 
 const PictureResultContent = styled.div`
@@ -87,6 +79,7 @@ const PictureResultContentText = styled.p`
   line-height: 31px;
   letter-spacing: -0.04em;
   overflow: scroll;
+  word-break: keep-all;
 
   @media (min-width: 769px) {
     margin-top: -20px;

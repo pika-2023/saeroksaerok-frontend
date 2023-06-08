@@ -16,17 +16,8 @@ const TextResult = () => {
         글로 적었어요
       </TextResultTitle>
       <TextResultContent>
-        <TextResultContentTitle>가족{keyword}</TextResultContentTitle>
-        <TextResultContentText>
-          그때가 아마 삼십 년도 더 됐을 거야. 옛날에 거기 영등포 살던 곳에
-          마당이 큰 거 있었어. 거기서들 손녀딸내미들이랑 사방치기 했지. 고무줄
-          놀이 했지. 아주 재밌게 놀았어. 그때가 아마 삼십 년도 더 됐을 거야.
-          옛날에 거기 영등포 살던 곳에 마당이 큰 거 있었어. 거기서들
-          손녀딸내미들이랑 사방치기 했지. 고무줄 놀이 했지. 아주 재밌게 놀았어.
-          그때가 아마 삼십 년도 더 됐을 거야. 옛날에 거기 영등포 살던 곳에
-          마당이 큰 거 있었어. 거기서들 손녀딸내미들이랑 사방치기 했지. 고무줄
-          놀이 했지. 아주 재밌게 놀았어.{textDiary}
-        </TextResultContentText>
+        <TextResultContentTitle>{keyword}</TextResultContentTitle>
+        <TextResultContentText>{textDiary}</TextResultContentText>
       </TextResultContent>
       <GradationBox></GradationBox>
       <S.MemoryButton onClick={() => navigate("/pictureResult")}>
@@ -58,6 +49,8 @@ const TextResultContainer = styled.div`
 const TextResultTitle = styled.h1`
   ${variables.fontStyle("32px", 600)}
   grid-row: 3;
+  line-height: 45px;
+  letter-spacing: -0.03em;
 `;
 
 const TextResultContent = styled.div`
@@ -76,6 +69,7 @@ const TextResultContentText = styled.p`
   line-height: 32px;
   letter-spacing: -0.03em;
   overflow: scroll;
+  word-break: keep-all;
 `;
 
 const GradationBox = styled.div`
