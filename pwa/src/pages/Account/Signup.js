@@ -188,6 +188,11 @@ export default Signup;
 const SignupContainer = styled.div`
   ${variables.flex("column", "center", "center")}
   padding-top: 25%;
+  margin-bottom: 82px;
+
+  @media (min-width: 769px) {
+    margin-bottom: 0px;
+  }
 `;
 
 const WelcomeContainer = styled.div`
@@ -235,31 +240,6 @@ const SignupForm = styled.div`
   width: 100%;
 `;
 
-const GoToLogin = styled.div`
-  ${variables.position("absolute", "null", "50%", "120px", "null")}
-  transform: translate(50%, 0);
-  white-space: nowrap;
-`;
-
-const GoToLoginText = styled.span`
-  ${variables.fontStyle("19px", 500)}
-  line-height: 29px;
-  text-align: center;
-  letter-spacing: -0.03em;
-  color: ${({ theme }) => theme.style.gray3};
-`;
-
-const GoToLoginButton = styled.button`
-  ${variables.fontStyle("19px", 500)}
-  line-height: 29px;
-  text-align: center;
-  letter-spacing: -0.03em;
-  color: ${({ theme }) => theme.style.gray5};
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
 const FormContainer = styled.div`
   margin-bottom: 20px;
 `;
@@ -296,6 +276,30 @@ const FormInput = styled.input`
   }
 `;
 
+const GoToLogin = styled.div`
+  margin-top: 5%;
+  white-space: nowrap;
+`;
+
+const GoToLoginText = styled.span`
+  ${variables.fontStyle("19px", 500)}
+  line-height: 29px;
+  text-align: center;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.style.gray3};
+`;
+
+const GoToLoginButton = styled.button`
+  ${variables.fontStyle("19px", 500)}
+  line-height: 29px;
+  text-align: center;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.style.gray5};
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
+
 const SignupButton = styled.button`
   ${variables.position("fixed", "null", "null", "0", "0")}
   ${variables.widthHeight("100%", "82px")}
@@ -304,4 +308,11 @@ const SignupButton = styled.button`
   color: ${({ theme }) => theme.style.black};
   border: none;
   cursor: pointer;
+
+  @media (min-width: 769px) {
+    position: sticky;
+    width: 375px;
+    bottom: 0px;
+    transform: translate(0px, 20px);
+  }
 `;
