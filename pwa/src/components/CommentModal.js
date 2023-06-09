@@ -3,8 +3,14 @@ import CommentType from "./CommentType";
 import styled from "styled-components";
 import variables from "../styles/variables";
 import useStore from "../state/store";
+import { COMMENT_METHOD } from "./Modal/modalData";
 
-const CommentModal = ({ setIsOpenModal, detailData }) => {
+const CommentModal = ({
+  setIsOpenModal,
+  modalData,
+  setModalData,
+  detailData,
+}) => {
   const { commentType, removeCommentType } = useStore((state) => state);
 
   const CloseCommentModal = () => {
@@ -26,22 +32,23 @@ const CommentModal = ({ setIsOpenModal, detailData }) => {
       {!commentTypeModal && (
         <CommentMethodContainer>
           <CommentMethodTitle>
-            어떤 방식으로
-            <br /> 답글을 남길까요?
+            {modalData[0].title[0]} <br /> {modalData[0].title[1]}
           </CommentMethodTitle>
           <CommentMethod>
             <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
-              덕담 카드
+              {modalData[0].options[0]}
               <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
             </ChooseCommentMethod>
             <ChooseCommentMethod data-value="voice" onClick={ClickMethod}>
-              목소리
+              {modalData[0].options[1]}
               <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
             </ChooseCommentMethod>
-            <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
-              키보드
-              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-            </ChooseCommentMethod>
+            {modalData === COMMENT_METHOD && (
+              <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
+                {modalData[0].options[2]}
+                <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+              </ChooseCommentMethod>
+            )}
           </CommentMethod>
         </CommentMethodContainer>
       )}
@@ -72,8 +79,8 @@ const CommentModalBackground = styled.div`
 `;
 
 const CommentMethodContainer = styled.ul`
-  ${variables.widthHeight("335px", "288px")}
   ${variables.position("fixed", "405px", "20px", "105px", "20px")}
+  ${variables.widthHeight("335px", "auto")}
   margin : auto;
   background: ${(props) => props.theme.style.white};
   box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.05);
@@ -84,14 +91,16 @@ const CommentMethodContainer = styled.ul`
 const CommentMethodTitle = styled.div`
   ${variables.fontStyle("24px", 600)};
   ${variables.widthHeight("fit-content", "66px")};
-  margin: 20px;
+  margin: 20px 0 9px 20px;
+  height: 30%;
   color: ${(props) => props.theme.style.black};
   line-height: 33px;
 `;
 
 const CommentMethod = styled.div`
   ${variables.flex("column", "center", "center")}
-  gap: 32px;
+  height: 50%;
+  gap: 35px;
 `;
 
 const ChooseCommentMethod = styled.li`

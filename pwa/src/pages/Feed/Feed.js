@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import * as S from "../Word/Word.style.js";
 import variables from "../../styles/variables";
 import useStore from "../../state/store";
 
@@ -8,7 +9,7 @@ const Feed = () => {
   const [myFeed, setMyFeed] = useState([]);
   const [friendsFeed, setFriendsFeed] = useState([]);
   const { feedDetailData } = useStore((state) => state);
-  const [currentMemory, setCurrentMemory] = useState(1);
+  const [currentMemory, setCurrentMemory] = useState(0);
 
   const navigate = useNavigate();
 
@@ -64,10 +65,14 @@ const Feed = () => {
       <FeedPageHeader
         style={{ backgroundImage: getBackgroundImage(currentMemory) }}
       >
-        <UserInfo>내정보</UserInfo>
+        <UserInfo>내 정보</UserInfo>
         <FeedSection>
-          <Section onClick={MyMemory}>나의 추억</Section>
-          <Section onClick={FriendsMemory}>친구의 추억</Section>
+          <MyMemorySection value={currentMemory} onClick={MyMemory}>
+            나의 추억
+          </MyMemorySection>
+          <FriendsMemorySection value={currentMemory} onClick={FriendsMemory}>
+            친구의 추억
+          </FriendsMemorySection>
         </FeedSection>
       </FeedPageHeader>
       <FeedFrameContainer>
@@ -79,7 +84,7 @@ const Feed = () => {
             <FeedFrame key={data.id}>
               <FeedInfo>
                 <FeedOwnerInfo>
-                  <FeedOwnerImg></FeedOwnerImg>
+                  <FeedOwnerImg src={data.profileImageUrl} />
                   <FeedOwnerName>{data.author}</FeedOwnerName>
                 </FeedOwnerInfo>
                 <FeedUploadDate>
@@ -111,6 +116,22 @@ const Feed = () => {
           );
         })}
       </FeedFrameContainer>
+      <S.NavBar>
+        <S.NavButton onClick={() => navigate("/word")}>
+          <S.NavButtonIcon
+            src="/icons/icon_reminisce_off.png"
+            alt="추억하기 아이콘"
+          />
+          <S.NabButtonText>추억하기</S.NabButtonText>
+        </S.NavButton>
+        <S.NavButton onClick={() => navigate("/feed")}>
+          <S.NavButtonIcon
+            src="/icons/icon_feed_on.png"
+            alt="모아보기 아이콘"
+          />
+          <S.NabButtonText>모아보기</S.NabButtonText>
+        </S.NavButton>
+      </S.NavBar>
     </>
   );
 };
@@ -134,25 +155,39 @@ const FeedPageHeader = styled.div`
 `;
 
 const UserInfo = styled.div`
+  ${variables.fontStyle("19px", 500)};
   position: relative;
   padding: 61px 19px 0 0;
+  color: ${(props) => props.theme.style.gray5};
   text-align: right;
+  line-height: 29px;
+  letter-spacing: -0.03em;
 `;
 
 const FeedSection = styled.div`
-  ${variables.flex("row", "null", "center")}
+  ${variables.flex("row", "null", "baseline")}
   ${variables.widthHeight("100%", "57px")};
 `;
 
-const Section = styled.div`
+const MyMemorySection = styled.div`
   ${variables.fontStyle("19px", 600)};
   width: 50%;
+  color: ${(props) => (props.value === 0 ? "#2f2f2f" : " #7d7d7d")};
+  text-align: center;
+  letter-spacing: -0.03em;
+`;
+
+const FriendsMemorySection = styled.div`
+  ${variables.fontStyle("19px", 600)};
+  width: 50%;
+  color: ${(props) => (props.value === 1 ? "#2f2f2f" : " #7d7d7d")};
   line-height: 29px;
   text-align: center;
+  letter-spacing: -0.03em;
 `;
 
 const FeedFrameContainer = styled.div`
-  margin: 167px calc(-20px) 0;
+  margin: 169px calc(-20px) 168px;
 
   @media (min-width: 769px) {
     margin-top: 22px;
@@ -165,7 +200,6 @@ const FeedFrame = styled.div`
   overflow: hidden;
   display: grid;
   justify-items: center;
-  border-bottom: 1px solid #e2e2e2;
 `;
 
 const FeedInfo = styled.div`
@@ -175,10 +209,10 @@ const FeedInfo = styled.div`
 
 const FeedOwnerInfo = styled.div`
   ${variables.flex()}
-  gap : 5px;
+  gap : 8px;
 `;
 
-const FeedOwnerImg = styled.div`
+const FeedOwnerImg = styled.img`
   ${variables.widthHeight("32px", "32px")}
   background-color: ${(props) => props.theme.style.gray1};
   border-radius: 50%;
@@ -186,10 +220,17 @@ const FeedOwnerImg = styled.div`
 
 const FeedOwnerName = styled.div`
   ${variables.fontStyle("19px", 600)};
+  line-height: 29px;
+  letter-spacing: -0.03em;
+  color: ${(props) => props.theme.style.black};
 `;
 
 const FeedUploadDate = styled.div`
   ${variables.fontStyle("19px", 500)};
+  line-height: 29px;
+  text-align: right;
+  letter-spacing: -0.03em;
+  color: ${(props) => props.theme.style.gray3};
 `;
 
 const FeedImg = styled.img`
@@ -216,5 +257,7 @@ const FeedDetailButton = styled.div`
 const FeedText = styled.div`
   ${variables.widthHeight("335px", "62px")}
   ${variables.fontStyle("22px", 500)};
-  line-height: 31px;
+  line-height: 32px;
+  letter-spacing: -0.03em;
+  color: ${(props) => props.theme.style.gray5};
 `;

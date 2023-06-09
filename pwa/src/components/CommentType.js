@@ -19,7 +19,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
   const [voiceFile, setVoiceFile] = useState({});
   const [recording, setRecording] = useState(0);
   const [textComment, setTextComment] = useState("");
-  const ColesModal = () => {
+  const CloseModal = () => {
     setIsOpenModal(false);
     removeCommentType();
   };
@@ -45,6 +45,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
       console.error(error);
     }
   };
+  const formData = new FormData();
 
   const stopRecording = async () => {
     try {
@@ -59,7 +60,6 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
         return;
       }
 
-      const formData = new FormData();
       formData.append("diaryId", detailData.id);
       formData.append("audioReply", file);
       console.log("formData:", ...formData);
@@ -100,7 +100,9 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
     }
   };
 
-  const VoiceComment = () => {};
+  const VoiceComment = () => {
+    CloseModal();
+  };
 
   const accessToken = localStorage.getItem("accessToken");
 
@@ -118,7 +120,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
     })
       .then((response) => response.json())
       .then(() => {
-        ColesModal();
+        CloseModal();
       });
   };
 
@@ -154,7 +156,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
               <CommentValue>아름다워요</CommentValue>
             </ChooseBlessingComment>
           </BlessingComment>
-          <CancelMakeComment onClick={ColesModal}>뒤로가기</CancelMakeComment>
+          <CancelMakeComment onClick={CloseModal}>뒤로가기</CancelMakeComment>
         </CommentModal>
       )}
       {type[0] === "voice" && (
@@ -187,7 +189,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
               <StopRecording onClick={handleButtonClick}>
                 말 시작하기
               </StopRecording>
-              <CancelMakeComment onClick={ColesModal}>
+              <CancelMakeComment onClick={CloseModal}>
                 취소하기
               </CancelMakeComment>
             </>
@@ -201,7 +203,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
           {recording === 2 && (
             <>
               <MakeComment onClick={VoiceComment}>답장 남기기</MakeComment>
-              <CorrectComment onClick={ColesModal}>
+              <CorrectComment onClick={CloseModal}>
                 답장 수정하기
               </CorrectComment>
             </>
@@ -218,7 +220,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
           />
 
           <MakeComment> 답글 남기기</MakeComment>
-          <CancelMakeComment onClick={ColesModal}>취소하기</CancelMakeComment>
+          <CancelMakeComment onClick={CloseModal}>취소하기</CancelMakeComment>
         </CommentModal>
       )}
     </>

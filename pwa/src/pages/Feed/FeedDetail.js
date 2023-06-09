@@ -4,13 +4,16 @@ import CommentModal from "../../components/CommentModal";
 import styled from "styled-components";
 import variables from "../../styles/variables";
 import useStore from "../../state/store";
+import { COMMENT_METHOD } from "../../components/Modal/modalData";
 
 const FeedDetail = () => {
   const navigate = useNavigate();
-  const { feedDetailData, removeFeedDetailData } = useStore((state) => state);
+  const { feedDetailData, removeFeedDetailData, modalData, setModalData } =
+    useStore((state) => state);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const OpenCommentModal = () => {
     setIsOpenModal(true);
+    setModalData(COMMENT_METHOD);
   };
   const [detailData, setDetailData] = useState();
   const accessToken = localStorage.getItem("accessToken");
@@ -25,7 +28,7 @@ const FeedDetail = () => {
     })
       .then((response) => response.json())
       .then((data) => setDetailData(data));
-  }, [feedDetailData, accessToken]);
+  }, [isOpenModal]);
 
   const sliceData = (a, b) => {
     return detailData?.createdAt?.slice(a, b);
@@ -38,6 +41,8 @@ const FeedDetail = () => {
   const allRepliesSort = allReplies.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
+
+  console.log(feedDetailData[0]?.profileImageUrl);
 
   return (
     <>
@@ -53,7 +58,7 @@ const FeedDetail = () => {
         <FeedFrame key={detailData?.id}>
           <FeedInfo>
             <FeedOwnerInfo>
-              <FeedOwnerImg></FeedOwnerImg>
+              <FeedOwnerImg src={feedDetailData[0]?.profileImageUrl} />
               <FeedOwnerName>{detailData?.author}</FeedOwnerName>
             </FeedOwnerInfo>
             <FeedUploadDate>
@@ -61,7 +66,7 @@ const FeedDetail = () => {
                 ${sliceData(8, 10)}일`}
             </FeedUploadDate>
           </FeedInfo>
-          <FeedImg></FeedImg>
+          <FeedImg src={detailData?.pictureDiary} />
           <FeedContent>
             <FeedWord>{detailData?.keyword}</FeedWord>
             <ListenToVoice>
@@ -80,7 +85,7 @@ const FeedDetail = () => {
           let displayText;
 
           if (secondsDifference < 60) {
-            displayText = `${secondsDifference}초 전`;
+            displayText = `방금 전`;
           } else if (secondsDifference < 3600) {
             const minutesDifference = Math.floor(secondsDifference / 60);
             displayText = `${minutesDifference}분 전`;
@@ -100,7 +105,7 @@ const FeedDetail = () => {
                     <ProfileImag src={reply?.profileImageUrl} alt="no" />
                     <div>{reply?.author}</div>
                   </CommentAuthorInfo>
-                  <div>{displayText}</div>
+                  <CommentCreatedAt>{displayText}</CommentCreatedAt>
                 </CommentInfo>
                 {reply?.emojiReply && (
                   <div>
@@ -117,22 +122,26 @@ const FeedDetail = () => {
                     )}
                   </div>
                 )}
-                {reply?.textReply && <div>{reply?.textReply}</div>}
+                {reply?.textReply && (
+                  <VoiceReply>{reply?.textReply}</VoiceReply>
+                )}
               </CommentFrame>
             </CommentSection>
           );
         })}
-
-        {isOpenModal && (
-          <CommentModal
-            setIsOpenModal={setIsOpenModal}
-            detailData={detailData}
-          />
-        )}
       </FeedDetailContainer>
-      <MakeComment value={allReplies.length} onClick={OpenCommentModal}>
-        답장 남기기
-      </MakeComment>
+
+      <MakeComment onClick={OpenCommentModal}>답글 남기기</MakeComment>
+
+      {isOpenModal && (
+        <CommentModal
+          setIsOpenModal={setIsOpenModal}
+          feedDetailData={feedDetailData}
+          modalData={modalData}
+          setModalData={setModalData}
+          detailData={detailData}
+        />
+      )}
     </>
   );
 };
@@ -179,17 +188,16 @@ const FeedFrame = styled.div`
 `;
 
 const FeedInfo = styled.div`
-  ${variables.flex("", "space-between", "center")}
+  ${variables.flex("row", "space-between", "center")}
 `;
 
 const FeedOwnerInfo = styled.div`
   ${variables.flex()}
-  gap : 5px;
+  gap : 8px;
 `;
 
-const FeedOwnerImg = styled.div`
+const FeedOwnerImg = styled.img`
   ${variables.widthHeight("32px", "32px")}
-  background-color: ${(props) => props.theme.style.gray1};
   border-radius: 50%;
 `;
 
@@ -205,10 +213,9 @@ const FeedUploadDate = styled.div`
   letter-spacing: -0.03em;
 `;
 
-const FeedImg = styled.div`
+const FeedImg = styled.img`
   ${variables.widthHeight("335px", "242px")}
   margin : 20px auto 0;
-  background-color: ${(props) => props.theme.style.gray1};
 `;
 
 const FeedContent = styled.div`
@@ -278,6 +285,7 @@ const CommentFrame = styled.div`
 
 const CommentAuthorInfo = styled.div`
   ${variables.flex("row", "center", "center")}
+  gap: 8px;
 `;
 
 const ProfileImag = styled.img`
@@ -287,9 +295,32 @@ const ProfileImag = styled.img`
 
 const CommentInfo = styled.div`
   ${variables.flex("row", "space-between", "null")}
-  margin-bottom : 16px;
+  margin-bottom : 14px;
 `;
 
 const EmojiReply = styled.img`
   ${variables.widthHeight("114px", "114px")}
+`;
+
+const CommentCreatedAt = styled.div`
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 29px;
+  /* identical to box height, or 153% */
+
+  text-align: right;
+  letter-spacing: -0.03em;
+
+  color: ${(props) => props.theme.style.gray3};
+`;
+
+const VoiceReply = styled.div`
+  ${variables.fontStyle("22px", 500)}
+
+  line-height: 32px;
+  /* identical to box height, or 145% */
+
+  letter-spacing: -0.03em;
+
+  color: ${(props) => props.theme.style.gray5};
 `;

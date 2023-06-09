@@ -27,8 +27,12 @@ const useStore = create((set) => ({
 
   commentType: [],
   removeCommentType: () => set({ commentType: [] }),
+
   isOpen: false,
   setIsOpen: () => set((state) => ({ isOpen: !state.isOpen })),
+
+  isOpenModal: false,
+  setIsOpenModal: () => set((state) => ({ isOpenModal: !state.isOpenModal })),
 
   voiceRecordData: RECORD_AUDIO,
   setVoiceRecordData: (state) => set({ voiceRecordData: state }),
