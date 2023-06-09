@@ -94,7 +94,6 @@ const Signup = () => {
       {!signup && (
         <SignupContainer>
           <WelcomeContainer>
-            <SymbolMark src="./images/saeroksaerok_symbolmark.png" alt="none" />
             <WelcomeTitle>
               새록새록에 오신 것을 <br />
               환영해요
@@ -200,14 +199,9 @@ const WelcomeContainer = styled.div`
   margin: -40px 0 40px 0;
 `;
 
-const SymbolMark = styled.img`
-  width: 86px;
-  margin-bottom: 28px;
-`;
-
 const WelcomeTitle = styled.h1`
   ${variables.fontStyle("32px", 600)}
-  margin: -10px 0 10px 0;
+  margin: 20px 0 40px 0;
   line-height: 45px;
   letter-spacing: -0.03em;
   color: #212121;
@@ -241,7 +235,7 @@ const SignupForm = styled.div`
 `;
 
 const FormContainer = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 35px;
 `;
 
 const FormTitle = styled.div`
@@ -277,7 +271,7 @@ const FormInput = styled.input`
 `;
 
 const GoToLogin = styled.div`
-  margin-top: 5%;
+  margin-top: 80px;
   white-space: nowrap;
 `;
 
