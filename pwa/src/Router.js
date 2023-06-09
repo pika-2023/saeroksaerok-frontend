@@ -1,6 +1,5 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Splash from "./pages/Splash/Splash";
 import Login from "./pages/Account/Login";
 import Signup from "./pages/Account/Signup";
 import Feed from "./pages/Feed/Feed";
@@ -18,9 +17,9 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Splash />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        {/* MARK: 시연을 위해 /signup을 main url로 설정 */}
+        <Route path="/" element={<Signup />} />
         <Route path="/feed" element={<Feed />} />
         <Route path="/feedDetail" element={<FeedDetail />} />
         <Route path="/word" element={<Word />} />

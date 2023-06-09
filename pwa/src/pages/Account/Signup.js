@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import variables from "../../styles/variables";
 
@@ -70,21 +71,21 @@ const Signup = () => {
   const createProfile = () => {
     console.log(userInfo, basicProfileImg);
     const formData = new FormData();
-    formData.append("file", basicProfileImg); // FormData에 파일 추가
+    formData.append("file", basicProfileImg);
     formData.append("email", email);
-    formData.append("password", password);
-    formData.append("checkPassword", checkPassword);
     formData.append("nickname", nickname);
 
-    fetch("http://13.124.76.165:8080/profiles", {
-      method: "POST",
-      body: formData, // FormData를 요청의 body로 전달
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.nickname === nickname) {
-          navigate("/login");
-        }
+    axios
+      .post("http://13.124.76.165:8080/profiles", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("프로필 생성 성공 ✨", response.data);
+      })
+      .catch((error) => {
+        console.error("프로필 생성 실패:", error);
       });
   };
 
@@ -128,6 +129,12 @@ const Signup = () => {
               />
             </FormContainer>
           </SignupForm>
+          <GoToLogin>
+            <GoToLoginText>이미 계정이 있으신가요?</GoToLoginText>
+            <GoToLoginButton onClick={() => navigate("/login")}>
+              로그인
+            </GoToLoginButton>
+          </GoToLogin>
           <SignupButton onClick={handleSignup} value={0}>
             다음으로
           </SignupButton>
@@ -226,6 +233,31 @@ const UploadMyProfileImg = styled.div`
 
 const SignupForm = styled.div`
   width: 100%;
+`;
+
+const GoToLogin = styled.div`
+  ${variables.position("absolute", "null", "50%", "120px", "null")}
+  transform: translate(50%, 0);
+  white-space: nowrap;
+`;
+
+const GoToLoginText = styled.span`
+  ${variables.fontStyle("19px", 500)}
+  line-height: 29px;
+  text-align: center;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.style.gray3};
+`;
+
+const GoToLoginButton = styled.button`
+  ${variables.fontStyle("19px", 500)}
+  line-height: 29px;
+  text-align: center;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.style.gray5};
+  background: none;
+  border: none;
+  cursor: pointer;
 `;
 
 const FormContainer = styled.div`
