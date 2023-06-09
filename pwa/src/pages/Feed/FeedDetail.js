@@ -4,13 +4,16 @@ import CommentModal from "../../components/CommentModal";
 import styled from "styled-components";
 import variables from "../../styles/variables";
 import useStore from "../../state/store";
+import { COMMENT_METHOD } from "../../components/Modal/modalData";
 
 const FeedDetail = () => {
   const navigate = useNavigate();
-  const { feedDetailData, removeFeedDetailData } = useStore((state) => state);
+  const { feedDetailData, removeFeedDetailData, modalData, setModalData } =
+    useStore((state) => state);
   const [isOpenModal, setIsOpenModal] = useState(false);
   const OpenCommentModal = () => {
     setIsOpenModal(true);
+    setModalData(COMMENT_METHOD);
   };
 
   return (
@@ -61,6 +64,8 @@ const FeedDetail = () => {
         <CommentModal
           setIsOpenModal={setIsOpenModal}
           feedDetailData={feedDetailData}
+          modalData={modalData}
+          setModalData={setModalData}
         />
       )}
     </>

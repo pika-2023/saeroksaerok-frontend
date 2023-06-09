@@ -3,8 +3,9 @@ import CommentType from "./CommentType";
 import styled from "styled-components";
 import variables from "../styles/variables";
 import useStore from "../state/store";
+import { COMMENT_METHOD } from "./Modal/modalData";
 
-const CommentModal = ({ setIsOpenModal }) => {
+const CommentModal = ({ setIsOpenModal, modalData, setModalData }) => {
   const { commentType, removeCommentType } = useStore((state) => state);
 
   const CloseCommentModal = () => {
@@ -27,22 +28,23 @@ const CommentModal = ({ setIsOpenModal }) => {
       {!commentTypeModal && (
         <CommentMethodContainer>
           <CommentMethodTitle>
-            어떤 방식으로
-            <br /> 답글을 남길까요?
+            {modalData[0].title[0]} <br /> {modalData[0].title[1]}
           </CommentMethodTitle>
           <CommentMethod>
             <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
-              덕담 카드 보내기
+              {modalData[0].options[0]}
               <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
             </ChooseCommentMethod>
             <ChooseCommentMethod data-value="voice" onClick={ClickMethod}>
-              목소리로 답글 달기
+              {modalData[0].options[1]}
               <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
             </ChooseCommentMethod>
-            <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
-              키보드로 답글 달기
-              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-            </ChooseCommentMethod>
+            {modalData === COMMENT_METHOD && (
+              <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
+                {modalData[0].options[2]}
+                <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+              </ChooseCommentMethod>
+            )}
           </CommentMethod>
         </CommentMethodContainer>
       )}
