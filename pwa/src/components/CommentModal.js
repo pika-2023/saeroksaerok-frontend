@@ -72,8 +72,8 @@ const CommentModalBackground = styled.div`
 `;
 
 const CommentMethodContainer = styled.ul`
-  ${variables.widthHeight("335px", "288px")}
   ${variables.position("fixed", "405px", "20px", "105px", "20px")}
+  ${variables.widthHeight("335px", "auto")}
   margin : auto;
   padding: 20px;
   background: ${(props) => props.theme.style.white};
@@ -85,14 +85,16 @@ const CommentMethodContainer = styled.ul`
 const CommentMethodTitle = styled.div`
   ${variables.fontStyle("24px", 600)};
   ${variables.widthHeight("fit-content", "66px")};
-  margin: 4px 0 2px 0px;
+  margin: 4px 0 25px 0px;
+  height: 30%;
   color: ${(props) => props.theme.style.black};
   line-height: 33px;
 `;
 
 const CommentMethod = styled.div`
   ${variables.flex("column", "center", "center")}
-  gap: 32px;
+  height: 50%;
+  gap: 35px;
 `;
 
 const ChooseCommentMethod = styled.li`
