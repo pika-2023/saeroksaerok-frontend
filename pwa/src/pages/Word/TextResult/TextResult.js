@@ -4,9 +4,19 @@ import useStore from "../../../state/store";
 import styled from "styled-components";
 import variables from "../../../styles/variables";
 import * as S from "../Word.style";
+import CommentModal from "../../../components/CommentModal";
+import modalData, { EDIT_MEMORY } from "../../../components/Modal/modalData";
 
 const TextResult = () => {
-  const { keyword, textDiary } = useStore((state) => state);
+  const {
+    keyword,
+    textDiary,
+    isOpenModal,
+    setIsOpenModal,
+    modalData,
+    setModalData,
+  } = useStore((state) => state);
+
   const navigate = useNavigate();
 
   return (
@@ -23,7 +33,21 @@ const TextResult = () => {
       <S.MemoryButton onClick={() => navigate("/pictureResult")}>
         추억 그리기
       </S.MemoryButton>
-      <ModifyButton onClick={() => navigate("/")}>추억 수정하기</ModifyButton>
+      <ModifyButton
+        onClick={() => {
+          setIsOpenModal(true);
+          setModalData(EDIT_MEMORY);
+        }}
+      >
+        추억 수정하기
+      </ModifyButton>
+      {isOpenModal && (
+        <CommentModal
+          setIsOpenModal={setIsOpenModal}
+          modalData={modalData}
+          setModalData={setModalData}
+        />
+      )}
     </TextResultContainer>
   );
 };
