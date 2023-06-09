@@ -12,8 +12,8 @@ export const RecordModal = styled.div`
 export const ModalBackground = styled.div`
   ${variables.position("absolute", "0", "null", "null", "0")}
   ${variables.widthHeight("100vw", "100vh")}
-  margin: calc(-20px);
-  background: rgba(255, 255, 255, 0.6);
+  margin: calc(0px) -20px;
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(45px);
   overflow: hidden;
   z-index: -1;

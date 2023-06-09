@@ -7,14 +7,14 @@ export const WordContainer = styled.div`
   ${variables.widthHeight("null", "100vh")}
   position: relative;
   margin: calc(-20px);
-  background: url("./images/bg_reminisce_home.png") no-repeat center;
+  background: url("./images/bg_reminisce_final.png") no-repeat center;
   background-size: cover;
   overflow: hidden;
 
   @media (min-width: 769px) {
     ${variables.widthHeight("375px", "685px")}
     margin: calc(-20px);
-    background: url("./images/bg_reminisce_home.png");
+    background: url("./images/bg_reminisce_final.png");
     background-size: cover;
     overflow: hidden;
   }
@@ -47,13 +47,21 @@ export const TodayWord = styled.div`
 `;
 
 export const TodayWordTitle = styled.h4`
-  ${variables.fontStyle("24px", 500)};
+  ${variables.position("absolute", "212px", "null", "null", "139px")}
+  ${variables.widthHeight("98px", "32px")}
+  ${variables.fontStyle("22px", 500)};
   margin-bottom: 20px;
   color: #7d7d7d;
+  line-height: 32px;
+  text-align: center;
+  letter-spacing: -0.03em;
 `;
 
 export const TodayWordContent = styled.img`
   width: 146px;
+  position: absolute;
+  left: 115px;
+  top: 110px;
 `;
 
 export const MemoryGuideText = styled.h3`
