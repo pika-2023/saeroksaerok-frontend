@@ -1,10 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import variables from "../../styles/variables";
+import Splash from "../../components/Splash/Splash";
+import useStore from "../../state/store";
 
 const Signup = () => {
+  const { isSplashOpen, setIsSplashOpen } = useStore();
   const navigate = useNavigate();
   const [basicProfileImg, setBasicProfileImg] = useState(
     "./images/saeroksaerok_profile.png"
@@ -89,8 +92,16 @@ const Signup = () => {
       });
   };
 
+  useEffect(() => {
+    setTimeout(function () {
+      setIsSplashOpen(false);
+    }, 5000);
+  }, []);
+
   return (
     <>
+      {isSplashOpen && <Splash />}
+
       {!signup && (
         <SignupContainer>
           <WelcomeContainer>

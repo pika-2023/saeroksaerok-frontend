@@ -74,7 +74,7 @@ export const MemoryButton = styled.button`
   background: #ffe380;
   color: ${({ theme }) => theme.style.black};
   border: none;
-  border-radius: 24px;
+  border-radius: 20px;
   transform: translate(-50%, -50%);
   white-space: nowrap;
   cursor: pointer;

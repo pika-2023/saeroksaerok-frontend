@@ -25,7 +25,7 @@ export const ModalContents = styled.div`
   padding: 15px 20px;
   background: ${({ theme }) => theme.style.white};
   border: 1px solid #e9e9e9;
-  border-radius: 24px;
+  border-radius: 20px;
   box-shadow: 0px 8px 100px rgba(47, 47, 47, 0.08);
 
   @media (min-width: 769px) {
