@@ -4,11 +4,11 @@ import * as W from "../../pages/Word/VoiceRecord/VoiceRecord.style";
 import useStore from "../../state/store";
 
 const Recall = (e) => {
-  const { keyword } = useStore((state) => state);
+  // const { keyword } = useStore((state) => state);
 
   return (
-    <W.VoiceRecordContainer>
-      <S.TodayWordContainer>
+    <>
+      {/* <S.TodayWordContainer>
         <S.TodayWord>
           {(function () {
             if (keyword === "가족")
@@ -19,9 +19,9 @@ const Recall = (e) => {
               return <S.TodayWordContent src="/icons/text_travel.png" />;
           })()}
         </S.TodayWord>
-      </S.TodayWordContainer>
+      </S.TodayWordContainer> */}
       <W.VoiceRecordTitle>추억을 돌이켜보아요</W.VoiceRecordTitle>
-    </W.VoiceRecordContainer>
+    </>
   );
 };
 

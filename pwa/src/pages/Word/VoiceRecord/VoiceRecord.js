@@ -10,7 +10,7 @@ const VoiceRecord = (e) => {
 
   return (
     <W.VoiceRecordContainer>
-      <S.TodayWordContainer>
+      {/* <S.TodayWordContainer>
         <S.TodayWord>
           {(function () {
             if (keyword === "가족")
@@ -24,7 +24,7 @@ const VoiceRecord = (e) => {
       </S.TodayWordContainer>
       <W.VoiceRecordTitle onClick={() => navigate("/question-1")}>
         추억을 돌이켜보아요
-      </W.VoiceRecordTitle>
+      </W.VoiceRecordTitle> */}
     </W.VoiceRecordContainer>
   );
 };
