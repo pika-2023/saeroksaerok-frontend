@@ -95,7 +95,7 @@ const Signup = () => {
   useEffect(() => {
     setTimeout(function () {
       setIsSplashOpen(false);
-    }, 2000);
+    }, 3000);
   }, []);
 
   return (

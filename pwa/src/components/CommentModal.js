@@ -4,6 +4,7 @@ import styled from "styled-components";
 import variables from "../styles/variables";
 import useStore from "../state/store";
 import { COMMENT_METHOD } from "./Modal/modalData";
+import { useNavigate } from "react-router-dom";
 
 const CommentModal = ({
   setIsOpenModal,
@@ -12,6 +13,8 @@ const CommentModal = ({
   detailData,
 }) => {
   const { commentType, removeCommentType } = useStore((state) => state);
+
+  const navigate = useNavigate();
 
   const CloseCommentModal = () => {
     setIsOpenModal(false);
@@ -35,19 +38,32 @@ const CommentModal = ({
             {modalData[0].title[0]} <br /> {modalData[0].title[1]}
           </CommentMethodTitle>
           <CommentMethod>
-            <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
-              {modalData[0].options[0]}
-              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-            </ChooseCommentMethod>
-            <ChooseCommentMethod data-value="voice" onClick={ClickMethod}>
-              {modalData[0].options[1]}
-              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-            </ChooseCommentMethod>
-            {modalData === COMMENT_METHOD && (
-              <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
-                {modalData[0].options[2]}
-                <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-              </ChooseCommentMethod>
+            {modalData === COMMENT_METHOD ? (
+              <>
+                <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
+                  {modalData[0].options[0]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+                <ChooseCommentMethod data-value="voice" onClick={ClickMethod}>
+                  {modalData[0].options[1]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+                <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
+                  {modalData[0].options[2]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+              </>
+            ) : (
+              <>
+                <ChooseCommentMethod onClick={ClickMethod}>
+                  {modalData[0].options[0]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+                <ChooseCommentMethod onClick={() => navigate("/word")}>
+                  {modalData[0].options[1]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+              </>
             )}
           </CommentMethod>
         </CommentMethodContainer>
@@ -83,7 +99,7 @@ const CommentMethodContainer = styled.ul`
   ${variables.widthHeight("335px", "auto")}
   margin : auto;
   background: ${(props) => props.theme.style.white};
-  box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 8px 100px rgba(47, 47, 47, 0.08);
   border-radius: 20px;
   z-index: 10;
 `;
@@ -115,10 +131,11 @@ const CommentMethodArrowRight = styled.div`
 `;
 
 const CancelMakeComment = styled.div`
-  ${variables.position("fixed", "null", "156px", "12px", "156px")}
+  ${variables.position("fixed", "null", "156px", "32px", "156px")}
   ${variables.widthHeight("64px", "29px")}
   margin :  auto;
   color: ${(props) => props.theme.style.gray4};
   text-align: center;
   z-index: 9999;
+  cursor: pointer;
 `;
