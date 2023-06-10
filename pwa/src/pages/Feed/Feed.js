@@ -162,6 +162,7 @@ const UserInfo = styled.div`
   text-align: right;
   line-height: 29px;
   letter-spacing: -0.03em;
+  cursor: pointer;
 `;
 
 const FeedSection = styled.div`
@@ -175,6 +176,7 @@ const MyMemorySection = styled.div`
   color: ${(props) => (props.value === 0 ? "#2f2f2f" : " #7d7d7d")};
   text-align: center;
   letter-spacing: -0.03em;
+  cursor: pointer;
 `;
 
 const FriendsMemorySection = styled.div`
@@ -184,6 +186,7 @@ const FriendsMemorySection = styled.div`
   line-height: 29px;
   text-align: center;
   letter-spacing: -0.03em;
+  cursor: pointer;
 `;
 
 const FeedFrameContainer = styled.div`
@@ -252,6 +255,7 @@ const FeedWord = styled.div`
 const FeedDetailButton = styled.div`
   ${variables.fontStyle("19px", 500)};
   color: #828282;
+  cursor: pointer;
 `;
 
 const FeedText = styled.div`
