@@ -6,7 +6,7 @@ export const VoiceRecordContainer = styled.div`
   ${variables.widthHeight("100vw", "100vh")}
   position: relative;
   margin: calc(-20px);
-  background: url("./images/bg_reminisce.png") no-repeat;
+  background: url("./images/bg_reminisce_final.png") no-repeat;
   background-size: cover;
   overflow: hidden;
 
