@@ -19,6 +19,8 @@ const RcFirst = (e) => {
     setRecorder,
     isSplashOpen,
     setIsSplashOpen,
+    isOpen,
+    setIsOpen,
   } = useStore((state) => state);
 
   const startRecording = async () => {
@@ -70,15 +72,20 @@ const RcFirst = (e) => {
     }
   };
 
-  useEffect(() => {
+  const recordTextAnimation = () => {
     setTimeout(function () {
       setIsSplashOpen(false);
-    }, 2000);
+      setIsOpen(true);
+    }, 3000);
+  };
+
+  useEffect(() => {
+    recordTextAnimation();
+    setIsOpen(true);
   }, []);
 
   return (
     <>
-      {isSplashOpen && <Recall />}
       <W.VoiceRecordContainer>
         <S.TodayWordContainer>
           <S.TodayWord>
@@ -92,20 +99,25 @@ const RcFirst = (e) => {
             })()}
           </S.TodayWord>
         </S.TodayWordContainer>
-        <W.QuestionText>언제 있었던 일인가요?</W.QuestionText>
-        {isRecording ? (
+        {isSplashOpen && <Recall />}
+        {isOpen && (
           <>
-            <W.ListeningText>귀기울여 듣고 있어요</W.ListeningText>
-            <W.RecordBtn onClick={handleButtonClick}>말 끝내기</W.RecordBtn>
+            <W.QuestionText>언제 있었던 일인가요?</W.QuestionText>
+            {isRecording ? (
+              <>
+                <W.ListeningText>귀기울여 듣고 있어요</W.ListeningText>
+                <W.RecordBtn onClick={handleButtonClick}>말 끝내기</W.RecordBtn>
+              </>
+            ) : (
+              <W.RecordBtn onClick={handleButtonClick} value={"start"}>
+                말 시작하기
+              </W.RecordBtn>
+            )}
+            <W.CancelBtn onClick={() => navigate("/word")} value={"start"}>
+              취소하기
+            </W.CancelBtn>
           </>
-        ) : (
-          <W.RecordBtn onClick={handleButtonClick} value={"start"}>
-            말 시작하기
-          </W.RecordBtn>
         )}
-        <W.CancelBtn onClick={() => navigate("/word")} value={"start"}>
-          취소하기
-        </W.CancelBtn>
       </W.VoiceRecordContainer>
     </>
   );

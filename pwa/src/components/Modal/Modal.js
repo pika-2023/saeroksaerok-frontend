@@ -26,7 +26,7 @@ const Modal = ({ setIsOpen, modalData, setModalData }) => {
               <S.ModalOptionTitle>{modalData[0].options[0]}</S.ModalOptionTitle>
             </S.ModalOption>
             <S.ModalOption
-              onClick={() => navigate("/voiceRecord")}
+              onClick={() => navigate("/question-1")}
               value={1}
               style={{ marginLeft: "10px" }}
             >

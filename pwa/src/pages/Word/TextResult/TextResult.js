@@ -25,7 +25,7 @@ const TextResult = () => {
   useEffect(() => {
     setTimeout(function () {
       setIsSplashOpen(false);
-    }, 10000);
+    }, 12000);
   }, []);
 
   return (
@@ -44,14 +44,16 @@ const TextResult = () => {
         <S.MemoryButton onClick={() => navigate("/pictureResult")}>
           추억 그리기
         </S.MemoryButton>
-        <ModifyButton
-          onClick={() => {
-            setIsOpenModal(true);
-            setModalData(EDIT_MEMORY);
-          }}
-        >
-          추억 수정하기
-        </ModifyButton>
+        {!isOpenModal && (
+          <ModifyButton
+            onClick={() => {
+              setIsOpenModal(true);
+              setModalData(EDIT_MEMORY);
+            }}
+          >
+            추억 수정하기
+          </ModifyButton>
+        )}
         {isOpenModal && (
           <CommentModal
             setIsOpenModal={setIsOpenModal}
@@ -127,6 +129,6 @@ const ModifyButton = styled.button`
   background: none;
   border: none;
   transform: translate(-50%, -50%);
-  cursor: pointer;
   z-index: 100;
+  cursor: pointer;
 `;
