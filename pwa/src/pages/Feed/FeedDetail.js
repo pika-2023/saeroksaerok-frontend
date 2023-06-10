@@ -47,14 +47,17 @@ const FeedDetail = () => {
   return (
     <>
       <FeedDetailContainer isOpenModal={isOpenModal}>
-        <FeedReturnButton
-          onClick={() => {
-            navigate("/feed");
-            removeFeedDetailData();
-          }}
-        >
-          {"<"} 뒤로가기
-        </FeedReturnButton>
+        <FeedDetailTab>
+          <FeedReturnButton
+            onClick={() => {
+              navigate("/feed");
+              removeFeedDetailData();
+            }}
+          >
+            {"<"} 뒤로가기
+          </FeedReturnButton>
+        </FeedDetailTab>
+
         <FeedFrame key={detailData?.id}>
           <FeedInfo>
             <FeedOwnerInfo>
@@ -98,35 +101,36 @@ const FeedDetail = () => {
           }
 
           return (
-            <CommentSection>
-              <CommentFrame>
-                <CommentInfo>
-                  <CommentAuthorInfo>
-                    <ProfileImag src={reply?.profileImageUrl} alt="no" />
-                    <div>{reply?.author}</div>
-                  </CommentAuthorInfo>
-                  <CommentCreatedAt>{displayText}</CommentCreatedAt>
-                </CommentInfo>
-                {reply?.emojiReply && (
-                  <div>
-                    {reply?.emojiReply === "HAPPY" ? (
-                      <EmojiReply
-                        src="./images/card_blessing_happy.png"
-                        alt="none"
-                      />
-                    ) : (
-                      <EmojiReply
-                        src="./images/card_blessing_beautiful.png"
-                        alt="none"
-                      />
-                    )}
-                  </div>
-                )}
-                {reply?.textReply && (
+            <CommentFrame>
+              <CommentInfo>
+                <CommentAuthorInfo>
+                  <ProfileImag src={reply?.profileImageUrl} alt="no" />
+                  <div>{reply?.author}</div>
+                </CommentAuthorInfo>
+                <CommentCreatedAt>{displayText}</CommentCreatedAt>
+              </CommentInfo>
+              {reply?.emojiReply && (
+                <div>
+                  {reply?.emojiReply === "HAPPY" ? (
+                    <EmojiReply
+                      src="./images/card_blessing_happy.png"
+                      alt="none"
+                    />
+                  ) : (
+                    <EmojiReply
+                      src="./images/card_blessing_beautiful.png"
+                      alt="none"
+                    />
+                  )}
+                </div>
+              )}
+              {reply?.textReply && (
+                <VoiceReplyContainer>
                   <VoiceReply>{reply?.textReply}</VoiceReply>
-                )}
-              </CommentFrame>
-            </CommentSection>
+                  <VoiceButton></VoiceButton>
+                </VoiceReplyContainer>
+              )}
+            </CommentFrame>
           );
         })}
       </FeedDetailContainer>
@@ -156,11 +160,23 @@ const FeedDetailContainer = styled.div`
   }
 `;
 
-const FeedReturnButton = styled.div`
+const FeedDetailTab = styled.div`
   ${variables.widthHeight("100%", "96px")}
   ${variables.position("fixed", "0", "null", "null", "0")}
+  ${variables.fontStyle("19px", 500)}
   padding: 61px 0 0 20px;
   background-color: ${(props) => props.theme.style.white};
+`;
+
+const FeedReturnButton = styled.div`
+  ${variables.widthHeight("fit-content", "29px")}
+  ${variables.position("fixed", "0", "null", "null", "0")}
+  ${variables.fontStyle("19px", 500)}
+  padding: 61px 0 0 20px;
+  background-color: ${(props) => props.theme.style.white};
+  line-height: 29px;
+  letter-spacing: -0.03em;
+  color: #4c4c4c;
   cursor: pointer;
 
   @media (min-width: 769px) {
@@ -232,6 +248,7 @@ const ListenToVoice = styled.div`
   ${variables.fontStyle("19px", 500)};
   gap: 8px;
   color: #828282;
+  cursor: pointer;
 `;
 
 const VoiceButton = styled.button`
@@ -239,6 +256,7 @@ const VoiceButton = styled.button`
   border:none;
   background: url(icons/icon_voice.png);
   background-size: 100% 100%;
+  cursor: pointer;
 `;
 
 const FeedText = styled.div`
@@ -257,6 +275,7 @@ const MakeComment = styled.button`
   color: ${(props) => props.theme.style.black};
   background-color: ${(props) => props.theme.style.yellow2};
   border: none;
+  cursor: pointer;
 
   @media (min-width: 769px) {
     ${variables.widthHeight("375px", "82px")};
@@ -273,10 +292,6 @@ const MakeComment = styled.button`
     border: none;
   }
 `;
-
-//TODO : 스타일 작업 필요
-const CommentSection = styled.div``;
-//
 
 const CommentFrame = styled.div`
   width: 100%;
@@ -306,7 +321,6 @@ const CommentCreatedAt = styled.div`
   font-weight: 500;
   font-size: 19px;
   line-height: 29px;
-  /* identical to box height, or 153% */
 
   text-align: right;
   letter-spacing: -0.03em;
@@ -314,11 +328,14 @@ const CommentCreatedAt = styled.div`
   color: ${(props) => props.theme.style.gray3};
 `;
 
+const VoiceReplyContainer = styled.div`
+  ${variables.flex("row", "space-between", "center")}
+`;
+
 const VoiceReply = styled.div`
   ${variables.fontStyle("22px", 500)}
 
   line-height: 32px;
-  /* identical to box height, or 145% */
 
   letter-spacing: -0.03em;
 

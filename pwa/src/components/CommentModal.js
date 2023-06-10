@@ -108,6 +108,7 @@ const ChooseCommentMethod = styled.li`
   ${variables.widthHeight("295px", "31px")}
   ${variables.fontStyle("22px", 500)}
   color: ${(props) => props.theme.style.black};
+  cursor: pointer;
 `;
 
 const CommentMethodArrowRight = styled.div`
@@ -120,5 +121,6 @@ const CancelMakeComment = styled.div`
   margin :  auto;
   color: ${(props) => props.theme.style.gray4};
   text-align: center;
+  cursor: pointer;
   z-index: 9999;
 `;

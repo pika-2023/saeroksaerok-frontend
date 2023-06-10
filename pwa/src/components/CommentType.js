@@ -14,6 +14,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
     setIsRecording,
     recorder,
     setRecorder,
+    feedDetailData,
   } = useStore((state) => state);
 
   const [voiceFile, setVoiceFile] = useState({});
@@ -128,7 +129,10 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
     <>
       <Post>
         <OwnerInfo>
-          <PostOwnerProfileImg src={detailData?.profile} alt="" />
+          <PostOwnerProfileImg
+            src={feedDetailData[0]?.profileImageUrl}
+            alt="새록새록"
+          />
           <PostOwner>{detailData?.author}</PostOwner>
         </OwnerInfo>
         <PostText>{detailData?.textDiary}</PostText>
@@ -181,8 +185,7 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
             </ListenCarefully>
           )}
           {recording === 2 && (
-            //TODO : 기능 먼저 구현하고 <div> 없애고 스타일링 하겠습니다!!
-            <div>{voiceFile.textReply}</div>
+            <SpeechToText>{voiceFile.textReply}</SpeechToText>
           )}
           {recording === 0 && (
             <>
@@ -254,9 +257,11 @@ const PostOwner = styled.div`
 `;
 
 const PostText = styled.div`
+  ${variables.widthHeight("100%", "129px")}
   ${variables.fontStyle("22px", 500)};
   margin: 24px 0px 32px;
   line-height: 31px;
+  overflow: scroll;
 `;
 
 const CommentModal = styled.ul`
@@ -313,6 +318,16 @@ const ListenCarefully = styled.div`
   letter-spacing: -0.03em;
 `;
 
+const SpeechToText = styled.div`
+  ${variables.position("absolute", "130px", "null", "null", "20px")};
+  ${variables.fontStyle("24px", 500)};
+  ${variables.widthHeight("293px", "35px")};
+  line-height: 35px;
+  letter-spacing: -0.03em;
+  color: #4c4c4c;
+  text-align: center;
+`;
+
 const StopRecording = styled.div`
   ${variables.flex("row", "center", "center")}
   ${variables.position("fixed", "605px", "20px", "85px", "20px")}
@@ -322,6 +337,7 @@ const StopRecording = styled.div`
   margin: auto;
   background-color: ${(props) => props.theme.style.yellow1};
   border-radius: 0 0 24px 24px;
+  cursor: pointer;
 `;
 
 const MakeComment = styled.div`
@@ -335,6 +351,7 @@ const MakeComment = styled.div`
   color: ${(props) => props.theme.style.black};
   background-color: ${(props) => props.theme.style.yellow2};
   border-radius: 0 0 24px 24px;
+  cursor: pointer;
 `;
 
 const BlessingComment = styled.div`
@@ -357,6 +374,7 @@ const ChooseBlessingComment = styled.div`
   color: ${(props) => props.theme.style.gray5};
   background-color: ${(props) => props.theme.style.gray1};
   border-radius: 12px;
+  cursor: pointer;
 `;
 
 const CancelMakeComment = styled.div`
@@ -371,6 +389,7 @@ const CancelMakeComment = styled.div`
   letter-spacing: -0.03em;
   transform: translate(-50%, 0%);
   z-index: 10;
+  cursor: pointer;
 `;
 
 const CorrectComment = styled.div`
@@ -385,4 +404,5 @@ const CorrectComment = styled.div`
   letter-spacing: -0.03em;
   transform: translate(-50%, 0%);
   z-index: 10;
+  cursor: pointer;
 `;
