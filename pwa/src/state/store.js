@@ -6,10 +6,17 @@ import { RECORD_METHOD } from "../components/Modal/modalData";
 // MARK: 기본 사용법
 
 const useStore = create((set) => ({
+  // MARK: sample state
   bears: 0,
   increasePopulation: () => set((state) => ({ bears: state.bears + 1 })),
   removeAllBears: () => set({ bears: 0 }),
 
+  // MARK: Splash
+  isSplashOpen: true,
+  setIsSplashOpen: () =>
+    set((state) => ({ isSplashOpen: !state.isSplashOpen })),
+
+  // MARK: Feed
   myFeed: [],
   myFeedData: async () => {
     const result = await axios("/data/myFeedData.json");
@@ -28,6 +35,7 @@ const useStore = create((set) => ({
   commentType: [],
   removeCommentType: () => set({ commentType: [] }),
 
+  // MARK: Word
   isOpen: false,
   setIsOpen: () => set((state) => ({ isOpen: !state.isOpen })),
 
@@ -40,7 +48,7 @@ const useStore = create((set) => ({
   modalData: RECORD_METHOD,
   setModalData: (state) => set({ modalData: state }),
 
-  // MARK: 녹음 state
+  // MARK: VoiceRecord
   audioUrl: null,
   setAudioUrl: (state) => set({ audioUrl: state }),
 
@@ -59,7 +67,7 @@ const useStore = create((set) => ({
   recorder: "",
   setRecorder: (state) => set({ recorder: state }),
 
-  // MARK: 결과 state
+  // MARK: Result
   textDiary: "",
   setTextDiary: (state) => set({ textDiary: state }),
 

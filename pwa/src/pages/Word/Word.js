@@ -35,6 +35,7 @@ const Word = () => {
 
   return (
     <S.WordContainer>
+      <S.TodayWordTitle>오늘의 추억</S.TodayWordTitle>
       <S.MyInfoContainer>
         <S.MyInfo>내 정보</S.MyInfo>
       </S.MyInfoContainer>

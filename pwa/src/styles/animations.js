@@ -32,11 +32,11 @@ const animations = {
     bottom: 35%;
     opacity: 0;
   }
-  50% {
+  80% {
     bottom: 35%;
     opacity: 1;
   }
-  70% {
+  100% {
     bottom: 50%;
     opacity: 1;
   }

@@ -12,8 +12,8 @@ export const RecordModal = styled.div`
 export const ModalBackground = styled.div`
   ${variables.position("absolute", "0", "null", "null", "0")}
   ${variables.widthHeight("100vw", "100vh")}
-  margin: calc(-20px);
-  background: rgba(255, 255, 255, 0.6);
+  margin: calc(0px) -20px;
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(45px);
   overflow: hidden;
   z-index: -1;
@@ -25,7 +25,7 @@ export const ModalContents = styled.div`
   padding: 15px 20px;
   background: ${({ theme }) => theme.style.white};
   border: 1px solid #e9e9e9;
-  border-radius: 24px;
+  border-radius: 20px;
   box-shadow: 0px 8px 100px rgba(47, 47, 47, 0.08);
 
   @media (min-width: 769px) {

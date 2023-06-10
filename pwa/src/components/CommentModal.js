@@ -78,7 +78,7 @@ const CommentMethodContainer = styled.ul`
   padding: 20px;
   background: ${(props) => props.theme.style.white};
   box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.05);
-  border-radius: 24px;
+  border-radius: 20px;
   z-index: 10;
 `;
 

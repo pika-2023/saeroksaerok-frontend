@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useStore from "../../../state/store";
 import styled from "styled-components";
 import variables from "../../../styles/variables";
 import * as S from "../Word.style";
 import CommentModal from "../../../components/CommentModal";
-import modalData, { EDIT_MEMORY } from "../../../components/Modal/modalData";
+import Loading from "../../../components/Loading/Loading";
+import { EDIT_MEMORY } from "../../../components/Modal/modalData";
 
 const TextResult = () => {
   const {
@@ -15,40 +16,51 @@ const TextResult = () => {
     setIsOpenModal,
     modalData,
     setModalData,
+    isSplashOpen,
+    setIsSplashOpen,
   } = useStore((state) => state);
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setTimeout(function () {
+      setIsSplashOpen(false);
+    }, 10000);
+  }, []);
+
   return (
-    <TextResultContainer>
-      <TextResultTitle>
-        추억을 <br />
-        글로 적었어요
-      </TextResultTitle>
-      <TextResultContent>
-        <TextResultContentTitle>{keyword}</TextResultContentTitle>
-        <TextResultContentText>{textDiary}</TextResultContentText>
-      </TextResultContent>
-      <GradationBox></GradationBox>
-      <S.MemoryButton onClick={() => navigate("/pictureResult")}>
-        추억 그리기
-      </S.MemoryButton>
-      <ModifyButton
-        onClick={() => {
-          setIsOpenModal(true);
-          setModalData(EDIT_MEMORY);
-        }}
-      >
-        추억 수정하기
-      </ModifyButton>
-      {isOpenModal && (
-        <CommentModal
-          setIsOpenModal={setIsOpenModal}
-          modalData={modalData}
-          setModalData={setModalData}
-        />
-      )}
-    </TextResultContainer>
+    <>
+      {isSplashOpen && <Loading />}
+      <TextResultContainer>
+        <TextResultTitle>
+          추억을 <br />
+          글로 적었어요
+        </TextResultTitle>
+        <TextResultContent>
+          <TextResultContentTitle>{keyword}</TextResultContentTitle>
+          <TextResultContentText>{textDiary}</TextResultContentText>
+        </TextResultContent>
+        <GradationBox></GradationBox>
+        <S.MemoryButton onClick={() => navigate("/pictureResult")}>
+          추억 그리기
+        </S.MemoryButton>
+        <ModifyButton
+          onClick={() => {
+            setIsOpenModal(true);
+            setModalData(EDIT_MEMORY);
+          }}
+        >
+          추억 수정하기
+        </ModifyButton>
+        {isOpenModal && (
+          <CommentModal
+            setIsOpenModal={setIsOpenModal}
+            modalData={modalData}
+            setModalData={setModalData}
+          />
+        )}
+      </TextResultContainer>
+    </>
   );
 };
 
