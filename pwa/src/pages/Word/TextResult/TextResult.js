@@ -18,50 +18,67 @@ const TextResult = () => {
     setModalData,
     isSplashOpen,
     setIsSplashOpen,
+    isOpen,
+    setIsOpen,
   } = useStore((state) => state);
 
   const navigate = useNavigate();
 
   useEffect(() => {
+    setIsSplashOpen(true);
     setTimeout(function () {
       setIsSplashOpen(false);
     }, 12000);
   }, []);
 
+  // const recordTextAnimation = () => {
+  //   setTimeout(function () {
+  //     setIsSplashOpen(false);
+  //   }, 2000);
+  // };
+
+  // useEffect(() => {
+  //   setIsSplashOpen(true);
+  //   recordTextAnimation();
+  //   setIsOpen(true);
+  // }, []);
+
   return (
     <>
       {isSplashOpen && <Loading />}
-      <TextResultContainer>
-        <TextResultTitle>
-          추억을 <br />
-          글로 적었어요
-        </TextResultTitle>
-        <TextResultContent>
-          <TextResultContentTitle>{keyword}</TextResultContentTitle>
-          <TextResultContentText>{textDiary}</TextResultContentText>
-        </TextResultContent>
-        <GradationBox></GradationBox>
-        <S.MemoryButton onClick={() => navigate("/pictureResult")}>
-          추억 그리기
-        </S.MemoryButton>
-        {!isOpenModal && (
-          <ModifyButton
-            onClick={() => {
-              setIsOpenModal(true);
-              setModalData(EDIT_MEMORY);
-            }}
-          >
-            추억 수정하기
-          </ModifyButton>
-        )}
-        {isOpenModal && (
-          <CommentModal
-            setIsOpenModal={setIsOpenModal}
-            modalData={modalData}
-            setModalData={setModalData}
-          />
-        )}
-      </TextResultContainer>
+      {isOpen && (
+        <TextResultContainer>
+          <TextResultTitle>
+            추억을 <br />
+            글로 적었어요
+          </TextResultTitle>
+          <TextResultContent>
+            <TextResultContentTitle>{keyword}</TextResultContentTitle>
+            <TextResultContentText>{textDiary}</TextResultContentText>
+          </TextResultContent>
+          <GradationBox></GradationBox>
+          <S.MemoryButton onClick={() => navigate("/pictureResult")}>
+            추억 그리기
+          </S.MemoryButton>
+          {!isOpenModal && (
+            <ModifyButton
+              onClick={() => {
+                setIsOpenModal(true);
+                setModalData(EDIT_MEMORY);
+              }}
+            >
+              추억 수정하기
+            </ModifyButton>
+          )}
+          {isOpenModal && (
+            <CommentModal
+              setIsOpenModal={setIsOpenModal}
+              modalData={modalData}
+              setModalData={setModalData}
+            />
+          )}
+        </TextResultContainer>
+      )}
     </>
   );
 };
