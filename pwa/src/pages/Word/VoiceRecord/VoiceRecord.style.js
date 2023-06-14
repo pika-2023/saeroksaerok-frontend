@@ -45,7 +45,6 @@ export const StartRecordButton = styled.button`
   ${variables.flex("row", "center", "center")}
   ${variables.widthHeight("90%", "68px")}
   ${variables.fontStyle("22px", 600)}
-  background: ${(props) => (props.value === "start" ? "#FFF4CC" : "#FFE380")};
   color: ${({ theme }) => theme.style.gray5};
   line-height: 32px;
   text-align: center;
