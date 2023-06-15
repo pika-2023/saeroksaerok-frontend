@@ -16,16 +16,21 @@ const useStore = create((set) => ({
 
   // MARK: Feed
   myFeed: [],
+  setMyFeed: (state) => set({ myFeed: state }),
   myFeedData: async () => {
     const result = await axios("/data/myFeedData.json");
     return result;
   },
 
   friendsFeed: [],
+  setFriendsFeed: (state) => set({ friendsFeed: state }),
   friendsFeedData: async () => {
     const result = await axios("/data/friendsFeedData.json");
     return result;
   },
+
+  currentMemory: 0,
+  setCurrentMemory: (state) => set({ currentMemory: state }),
 
   detailData: "",
   setDetailData: (state) => set({ detailData: state }),

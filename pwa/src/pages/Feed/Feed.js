@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useStore from "../../state/store";
 import * as F from "./Feed.style.js";
 import * as S from "../Word/Word.style.js";
 
 const Feed = () => {
-  const [myFeed, setMyFeed] = useState([]);
-  const [friendsFeed, setFriendsFeed] = useState([]);
-  const { feedDetailData } = useStore((state) => state);
-  const [currentMemory, setCurrentMemory] = useState(0);
+  const {
+    feedDetailData,
+    myFeed,
+    setMyFeed,
+    friendsFeed,
+    setFriendsFeed,
+    currentMemory,
+    setCurrentMemory,
+  } = useStore((state) => state);
 
   const navigate = useNavigate();
 
   const accessToken = localStorage.getItem("accessToken");
+  const searchALLApiUrl = "http://13.124.76.165:8080/diaries?searchType=ALL";
+  const searchMYApiUrl = "http://13.124.76.165:8080/diaries?searchType=MY";
 
   useEffect(() => {
     if (accessToken && currentMemory === 1) {
-      fetch("http://13.124.76.165:8080/diaries?searchType=ALL", {
-        method: "GET",
+      fetch(searchALLApiUrl, {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
           Authorization: ` Bearer ${accessToken}`,
@@ -28,8 +34,7 @@ const Feed = () => {
           setFriendsFeed(data.data);
         });
     } else if (accessToken && currentMemory === 0) {
-      fetch("http://13.124.76.165:8080/diaries?searchType=MY", {
-        method: "GET",
+      fetch(searchMYApiUrl, {
         headers: {
           "Content-Type": "application/json;charset=utf-8",
           Authorization: ` Bearer ${accessToken}`,
@@ -93,7 +98,7 @@ const Feed = () => {
                   )}일`}
                 </F.FeedUploadDate>
               </F.FeedInfo>
-              <F.FeedImg src={data.pictureDiary} alt="새록새록" />
+              <F.FeedImg src={data.pictureDiary} alt="새록새록 feed image" />
 
               <F.FeedContent>
                 <F.FeedWord>{data.keyWord}</F.FeedWord>
@@ -119,15 +124,12 @@ const Feed = () => {
         <S.NavButton onClick={() => navigate("/word")}>
           <S.NavButtonIcon
             src="/icons/icon_reminisce_off.png"
-            alt="추억하기 아이콘"
+            alt="추억하기 icon"
           />
           <S.NabButtonText>추억하기</S.NabButtonText>
         </S.NavButton>
         <S.NavButton onClick={() => navigate("/feed")}>
-          <S.NavButtonIcon
-            src="/icons/icon_feed_on.png"
-            alt="모아보기 아이콘"
-          />
+          <S.NavButtonIcon src="/icons/icon_feed_on.png" alt="모아보기 icon" />
           <S.NabButtonText>모아보기</S.NabButtonText>
         </S.NavButton>
       </S.NavBar>
