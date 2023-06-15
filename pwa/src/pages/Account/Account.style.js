@@ -148,10 +148,10 @@ export const FormInput = styled.input`
   background: ${({ theme }) => theme.style.gray1};
   border: 1px solid #e5e5e5;
   border-radius: 12px;
+  text-align: left;
 
   &::placeholder {
     color: ${({ theme }) => theme.style.gray3};
-    text-align: left;
   }
 
   &:focus {
