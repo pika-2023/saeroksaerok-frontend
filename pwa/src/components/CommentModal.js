@@ -3,15 +3,23 @@ import CommentType from "./CommentType";
 import styled from "styled-components";
 import variables from "../styles/variables";
 import useStore from "../state/store";
+import { COMMENT_METHOD } from "./Modal/modalData";
+import { useNavigate } from "react-router-dom";
 
-const CommentModal = ({ setIsOpenModal }) => {
+const CommentModal = ({
+  setIsOpenModal,
+  modalData,
+  setModalData,
+  detailData,
+}) => {
   const { commentType, removeCommentType } = useStore((state) => state);
+
+  const navigate = useNavigate();
 
   const CloseCommentModal = () => {
     setIsOpenModal(false);
     removeCommentType();
   };
-
   const [commentTypeModal, setCommentTypeModal] = useState(false);
 
   const ClickMethod = (e) => {
@@ -27,22 +35,36 @@ const CommentModal = ({ setIsOpenModal }) => {
       {!commentTypeModal && (
         <CommentMethodContainer>
           <CommentMethodTitle>
-            어떤 방식으로
-            <br /> 답글을 남길까요?
+            {modalData[0].title[0]} <br /> {modalData[0].title[1]}
           </CommentMethodTitle>
           <CommentMethod>
-            <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
-              덕담 카드 보내기
-              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-            </ChooseCommentMethod>
-            <ChooseCommentMethod data-value="voice" onClick={ClickMethod}>
-              목소리로 답글 달기
-              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-            </ChooseCommentMethod>
-            <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
-              키보드로 답글 달기
-              <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
-            </ChooseCommentMethod>
+            {modalData === COMMENT_METHOD ? (
+              <>
+                <ChooseCommentMethod data-value="card" onClick={ClickMethod}>
+                  {modalData[0].options[0]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+                <ChooseCommentMethod data-value="voice" onClick={ClickMethod}>
+                  {modalData[0].options[1]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+                <ChooseCommentMethod data-value="text" onClick={ClickMethod}>
+                  {modalData[0].options[2]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+              </>
+            ) : (
+              <>
+                <ChooseCommentMethod onClick={ClickMethod}>
+                  {modalData[0].options[0]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+                <ChooseCommentMethod onClick={() => navigate("/word")}>
+                  {modalData[0].options[1]}
+                  <CommentMethodArrowRight>{">"}</CommentMethodArrowRight>
+                </ChooseCommentMethod>
+              </>
+            )}
           </CommentMethod>
         </CommentMethodContainer>
       )}
@@ -51,11 +73,12 @@ const CommentModal = ({ setIsOpenModal }) => {
           type={commentType}
           setCommentTypeModal={setCommentTypeModal}
           setIsOpenModal={setIsOpenModal}
+          detailData={detailData}
         />
       )}
       {!commentTypeModal && (
         <CancelMakeComment onClick={CloseCommentModal}>
-          취소하기
+          뒤로가기
         </CancelMakeComment>
       )}
     </>
@@ -66,31 +89,34 @@ export default CommentModal;
 
 const CommentModalBackground = styled.div`
   ${variables.position("fixed", "0", "0", "0", "0")}
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(45px);
+  z-index: 10;
 `;
 
 const CommentMethodContainer = styled.ul`
-  ${variables.widthHeight("335px", "288px")}
   ${variables.position("fixed", "405px", "20px", "105px", "20px")}
+  ${variables.widthHeight("335px", "auto")}
   margin : auto;
-  padding: 20px;
   background: ${(props) => props.theme.style.white};
-  box-shadow: 0px 4px 100px rgba(0, 0, 0, 0.05);
-  border-radius: 24px;
+  box-shadow: 0px 8px 100px rgba(47, 47, 47, 0.08);
+  border-radius: 20px;
   z-index: 10;
 `;
 
 const CommentMethodTitle = styled.div`
   ${variables.fontStyle("24px", 600)};
   ${variables.widthHeight("fit-content", "66px")};
-  margin: 4px 0 2px 0px;
+  margin: 20px 0 9px 20px;
+  height: 30%;
   color: ${(props) => props.theme.style.black};
   line-height: 33px;
 `;
 
 const CommentMethod = styled.div`
   ${variables.flex("column", "center", "center")}
-  gap: 32px;
+  height: 50%;
+  gap: 35px;
 `;
 
 const ChooseCommentMethod = styled.li`
@@ -98,6 +124,7 @@ const ChooseCommentMethod = styled.li`
   ${variables.widthHeight("295px", "31px")}
   ${variables.fontStyle("22px", 500)}
   color: ${(props) => props.theme.style.black};
+  cursor: pointer;
 `;
 
 const CommentMethodArrowRight = styled.div`
@@ -105,10 +132,12 @@ const CommentMethodArrowRight = styled.div`
 `;
 
 const CancelMakeComment = styled.div`
+  ${variables.position("fixed", "null", "156px", "32px", "156px")}
   ${variables.widthHeight("64px", "29px")}
-  ${variables.position("fixed", "null", "156px", "12px", "156px")}
   margin :  auto;
+  color: ${(props) => props.theme.style.gray4};
   text-align: center;
-  color: ${(props) => props.theme.style.white};
+  cursor: pointer;
   z-index: 9999;
+  cursor: pointer;
 `;

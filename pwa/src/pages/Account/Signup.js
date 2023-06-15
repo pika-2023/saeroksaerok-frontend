@@ -1,9 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
 import variables from "../../styles/variables";
+import Splash from "../../components/Splash/Splash";
+import useStore from "../../state/store";
 
 const Signup = () => {
+  const { isSplashOpen, setIsSplashOpen } = useStore();
   const navigate = useNavigate();
   const [basicProfileImg, setBasicProfileImg] = useState(
     "./images/saeroksaerok_profile.png"
@@ -70,30 +74,37 @@ const Signup = () => {
   const createProfile = () => {
     console.log(userInfo, basicProfileImg);
     const formData = new FormData();
-    formData.append("file", basicProfileImg); // FormData에 파일 추가
+    formData.append("file", basicProfileImg);
     formData.append("email", email);
-    formData.append("password", password);
-    formData.append("checkPassword", checkPassword);
     formData.append("nickname", nickname);
 
-    fetch("http://13.124.76.165:8080/profiles", {
-      method: "POST",
-      body: formData, // FormData를 요청의 body로 전달
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.nickname === nickname) {
-          navigate("/login");
-        }
+    axios
+      .post("http://13.124.76.165:8080/profiles", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((response) => {
+        console.log("프로필 생성 성공 ✨", response.data);
+      })
+      .catch((error) => {
+        console.error("프로필 생성 실패:", error);
       });
   };
 
+  useEffect(() => {
+    setTimeout(function () {
+      setIsSplashOpen(false);
+    }, 3000);
+  }, []);
+
   return (
     <>
+      {isSplashOpen && <Splash />}
+
       {!signup && (
         <SignupContainer>
           <WelcomeContainer>
-            <SymbolMark src="./images/saeroksaerok_symbolmark.png" alt="none" />
             <WelcomeTitle>
               새록새록에 오신 것을 <br />
               환영해요
@@ -128,6 +139,12 @@ const Signup = () => {
               />
             </FormContainer>
           </SignupForm>
+          <GoToLogin>
+            <GoToLoginText>이미 계정이 있으신가요?</GoToLoginText>
+            <GoToLoginButton onClick={() => navigate("/login")}>
+              로그인
+            </GoToLoginButton>
+          </GoToLogin>
           <SignupButton onClick={handleSignup} value={0}>
             다음으로
           </SignupButton>
@@ -181,6 +198,11 @@ export default Signup;
 const SignupContainer = styled.div`
   ${variables.flex("column", "center", "center")}
   padding-top: 25%;
+  margin-bottom: 82px;
+
+  @media (min-width: 769px) {
+    margin-bottom: 0px;
+  }
 `;
 
 const WelcomeContainer = styled.div`
@@ -188,14 +210,9 @@ const WelcomeContainer = styled.div`
   margin: -40px 0 40px 0;
 `;
 
-const SymbolMark = styled.img`
-  width: 86px;
-  margin-bottom: 28px;
-`;
-
 const WelcomeTitle = styled.h1`
   ${variables.fontStyle("32px", 600)}
-  margin: -10px 0 10px 0;
+  margin: 20px 0 40px 0;
   line-height: 45px;
   letter-spacing: -0.03em;
   color: #212121;
@@ -229,7 +246,7 @@ const SignupForm = styled.div`
 `;
 
 const FormContainer = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 35px;
 `;
 
 const FormTitle = styled.div`
@@ -264,6 +281,30 @@ const FormInput = styled.input`
   }
 `;
 
+const GoToLogin = styled.div`
+  margin-top: 80px;
+  white-space: nowrap;
+`;
+
+const GoToLoginText = styled.span`
+  ${variables.fontStyle("19px", 500)}
+  line-height: 29px;
+  text-align: center;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.style.gray3};
+`;
+
+const GoToLoginButton = styled.button`
+  ${variables.fontStyle("19px", 500)}
+  line-height: 29px;
+  text-align: center;
+  letter-spacing: -0.03em;
+  color: ${({ theme }) => theme.style.gray5};
+  background: none;
+  border: none;
+  cursor: pointer;
+`;
+
 const SignupButton = styled.button`
   ${variables.position("fixed", "null", "null", "0", "0")}
   ${variables.widthHeight("100%", "82px")}
@@ -272,4 +313,11 @@ const SignupButton = styled.button`
   color: ${({ theme }) => theme.style.black};
   border: none;
   cursor: pointer;
+
+  @media (min-width: 769px) {
+    position: sticky;
+    width: 375px;
+    bottom: 0px;
+    transform: translate(0px, 20px);
+  }
 `;

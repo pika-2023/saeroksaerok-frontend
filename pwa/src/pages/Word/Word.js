@@ -1,23 +1,55 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import * as S from "./Word.style";
 import Modal from "../../components/Modal/Modal";
 import useStore from "../../state/store";
+import axios from "axios";
 
 const Word = () => {
-  const { isOpen, setIsOpen, modalData } = useStore((state) => state);
+  const { isOpen, setIsOpen, modalData, keyword, setKeyword } = useStore(
+    (state) => state
+  );
   const navigate = useNavigate();
+
+  const accessToken = localStorage.getItem("accessToken");
+  const randomWordUrl = "http://13.124.76.165:8080/diaries/keyword/draw";
+
+  useEffect(() => {
+    if (accessToken) {
+      axios
+        .get(randomWordUrl, {
+          headers: {
+            contentType: "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+        .then((response) => {
+          console.log("success", response.data);
+          setKeyword(response.data.keyword);
+        })
+        .catch((error) => {
+          console.log("error occured!", error);
+        });
+    }
+  }, []);
 
   return (
     <S.WordContainer>
+      <S.TodayWordTitle>오늘의 추억</S.TodayWordTitle>
       <S.MyInfoContainer>
         <S.MyInfo>내 정보</S.MyInfo>
       </S.MyInfoContainer>
 
       <S.TodayWordContainer>
         <S.TodayWord>
-          <S.TodayWordTitle>오늘의 단어</S.TodayWordTitle>
-          <S.TodayWordContent src="/icons/text_family.png" />
+          {(function () {
+            if (keyword === "가족")
+              return <S.TodayWordContent src="/images/text_family.png" />;
+            if (keyword === "친구")
+              return <S.TodayWordContent src="/images/text_friend.png" />;
+            if (keyword === "여행")
+              return <S.TodayWordContent src="/icons/text_travel.png" />;
+          })()}
         </S.TodayWord>
       </S.TodayWordContainer>
       <S.MemoryGuideText>
