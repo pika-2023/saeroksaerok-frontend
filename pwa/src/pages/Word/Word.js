@@ -1,14 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import useStore from "../../state/store";
 import * as S from "./Word.style";
 import Modal from "../../components/Modal/Modal";
-import useStore from "../../state/store";
-import axios from "axios";
 
 const Word = () => {
-  const { isOpen, setIsOpen, modalData, keyword, setKeyword } = useStore(
-    (state) => state
-  );
+  const { isOpen, setIsOpen, keyword, setKeyword } = useStore((state) => state);
   const navigate = useNavigate();
 
   const accessToken = localStorage.getItem("accessToken");
@@ -43,12 +41,19 @@ const Word = () => {
       <S.TodayWordContainer>
         <S.TodayWord>
           {(function () {
-            if (keyword === "가족")
-              return <S.TodayWordContent src="/images/text_family.png" />;
-            if (keyword === "친구")
-              return <S.TodayWordContent src="/images/text_friend.png" />;
-            if (keyword === "여행")
-              return <S.TodayWordContent src="/icons/text_travel.png" />;
+            switch (keyword) {
+              case "가족":
+                return <S.TodayWordContent src="/images/text_family.png" />;
+
+              case "친구":
+                return <S.TodayWordContent src="/images/text_friend.png" />;
+
+              case "여행":
+                return <S.TodayWordContent src="/icons/text_travel.png" />;
+
+              default:
+                return <S.TodayWordContent src="/images/text_family.png" />;
+            }
           })()}
         </S.TodayWord>
       </S.TodayWordContainer>
@@ -63,20 +68,17 @@ const Word = () => {
         추억하러 가기
       </S.MemoryButton>
 
-      {isOpen && <Modal setIsOpen={setIsOpen} modalData={modalData} />}
+      {isOpen && <Modal />}
       <S.NavBar>
         <S.NavButton onClick={() => navigate("/word")}>
           <S.NavButtonIcon
             src="/icons/icon_reminisce_on.png"
-            alt="추억하기 아이콘"
+            alt="추억하기 icon"
           />
           <S.NabButtonText>추억하기</S.NabButtonText>
         </S.NavButton>
         <S.NavButton onClick={() => navigate("/feed")}>
-          <S.NavButtonIcon
-            src="/icons/icon_feed_off.png"
-            alt="모아보기 아이콘"
-          />
+          <S.NavButtonIcon src="/icons/icon_feed_off.png" alt="모아보기 icon" />
           <S.NabButtonText>모아보기</S.NabButtonText>
         </S.NavButton>
       </S.NavBar>

@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import useStore from "../../state/store";
 import * as S from "./Modal.style";
 
-const Modal = ({ setIsOpen, modalData, setModalData }) => {
+const Modal = () => {
+  const { setIsOpen, modalData } = useStore((state) => state);
   const navigate = useNavigate();
 
   return (

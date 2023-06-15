@@ -1,16 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import reset from "styled-reset";
-import MBC1961GulimOTF from "../styles/fonts/MBC1961GulimOTFM.otf";
 
 const GlobalStyle = createGlobalStyle`
-
-  @font-face {
-        font-family: "MBC1961GulimOTFM";
-        src: local("MBC1961GulimOTFM"),
-        url(${MBC1961GulimOTF}) format('otf');
-        font-weight: 400;
-        font-style: normal;
-  }
 
   ${reset}
 
