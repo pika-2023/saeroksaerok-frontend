@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import variables from "../../styles/variables";
+import font from "../../styles/fontStyle";
 
 export const FeedPageHeader = styled.div`
   ${variables.position("fixed", 0, "null", "null", 0)};
@@ -17,13 +18,11 @@ export const FeedPageHeader = styled.div`
 `;
 
 export const UserInfo = styled.div`
-  ${variables.fontStyle("19px", 500)};
+  ${font.t7};
   position: relative;
   padding: 61px 19px 0 0;
   color: ${(props) => props.theme.style.gray5};
   text-align: right;
-  line-height: 29px;
-  letter-spacing: -0.03em;
   cursor: pointer;
 `;
 
@@ -33,21 +32,16 @@ export const FeedSection = styled.div`
 `;
 
 export const MyMemorySection = styled.div`
-  ${variables.fontStyle("19px", 600)};
+  ${font.t6};
   width: 50%;
   color: ${(props) => (props.value === 0 ? "#2f2f2f" : " #7d7d7d")};
-  text-align: center;
-  letter-spacing: -0.03em;
   cursor: pointer;
 `;
 
 export const FriendsMemorySection = styled.div`
-  ${variables.fontStyle("19px", 600)};
+  ${font.t6};
   width: 50%;
   color: ${(props) => (props.value === 1 ? "#2f2f2f" : " #7d7d7d")};
-  line-height: 29px;
-  text-align: center;
-  letter-spacing: -0.03em;
   cursor: pointer;
 `;
 
@@ -61,10 +55,10 @@ export const FeedFrameContainer = styled.div`
 
 export const FeedFrame = styled.div`
   ${variables.widthHeight("100%", "430px")}
-  margin : 0  auto 42px;
-  overflow: hidden;
   display: grid;
   justify-items: center;
+  margin: 0 auto 42px;
+  overflow: hidden;
 `;
 
 export const FeedInfo = styled.div`
@@ -73,7 +67,7 @@ export const FeedInfo = styled.div`
 `;
 
 export const FeedOwnerInfo = styled.div`
-  ${variables.flex()}
+  ${variables.flex}
   gap : 8px;
 `;
 
@@ -84,17 +78,13 @@ export const FeedOwnerImg = styled.img`
 `;
 
 export const FeedOwnerName = styled.div`
-  ${variables.fontStyle("19px", 600)};
-  line-height: 29px;
-  letter-spacing: -0.03em;
+  ${font.t6};
   color: ${(props) => props.theme.style.black};
 `;
 
 export const FeedUploadDate = styled.div`
-  ${variables.fontStyle("19px", 500)};
-  line-height: 29px;
+  ${font.t7};
   text-align: right;
-  letter-spacing: -0.03em;
   color: ${(props) => props.theme.style.gray3};
 `;
 
@@ -122,8 +112,7 @@ export const FeedDetailButton = styled.div`
 
 export const FeedText = styled.div`
   ${variables.widthHeight("335px", "62px")}
-  ${variables.fontStyle("22px", 500)};
-  line-height: 32px;
-  letter-spacing: -0.03em;
+  ${font.t5};
+  text-align: left;
   color: ${(props) => props.theme.style.gray5};
 `;

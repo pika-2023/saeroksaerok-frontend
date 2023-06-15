@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import variables from "../../../styles/variables";
+import font from "../../../styles/fontStyle";
 
 export const TextResultContainer = styled.div`
   ${variables.widthHeight("100vw", "100vh")}
@@ -18,10 +19,9 @@ export const TextResultContainer = styled.div`
 `;
 
 export const TextResultTitle = styled.h1`
-  ${variables.fontStyle("32px", 600)}
+  ${font.t1}
   grid-row: 3;
-  line-height: 45px;
-  letter-spacing: -0.03em;
+  text-align: left;
 `;
 
 export const TextResultContent = styled.div`
@@ -29,18 +29,17 @@ export const TextResultContent = styled.div`
 `;
 
 export const TextResultContentTitle = styled.h2`
-  ${variables.fontStyle("24px", 600)}
+  ${font.t2}
   margin-bottom: 40px;
 `;
 
 export const TextResultContentText = styled.p`
   ${variables.widthHeight("100%", "30vh")}
-  ${variables.fontStyle("22px", 500)}
+  ${font.t5}
   color: ${({ theme }) => theme.style.gray5};
-  line-height: 32px;
-  letter-spacing: -0.03em;
-  overflow: scroll;
+  text-align: left;
   word-break: keep-all;
+  overflow: scroll;
 `;
 
 export const GradationBox = styled.div`
@@ -57,7 +56,7 @@ export const GradationBox = styled.div`
 export const ModifyButton = styled.button`
   ${variables.position("absolute", "null", "null", "5%", "50%")}
   ${variables.flex("row", "center", "center")}
-  ${variables.fontStyle("19px", 500)}
+  ${font.t7}
   color: ${({ theme }) => theme.style.gray4};
   background: none;
   border: none;

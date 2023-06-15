@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import variables from "../../../styles/variables";
+import font from "../../../styles/fontStyle";
 
 export const PictureResultContainer = styled.div`
   ${variables.widthHeight("null", "100vh")}
@@ -18,17 +19,16 @@ export const PictureResultContainer = styled.div`
 `;
 
 export const PictureResultTitle = styled.h1`
-  ${variables.fontStyle("32px", 600)}
+  ${font.t1}
   grid-row: 3;
-  line-height: 45px;
-  letter-spacing: -0.03em;
+  text-align: left;
 `;
 
 export const PictureResultImage = styled.img`
   ${variables.flex("row", "center", "center")}
   ${variables.widthHeight("100%", "242px")}
-  margin-top: 10px;
   grid-row: 6;
+  margin-top: 10px;
 `;
 
 export const PictureResultContent = styled.div`
@@ -36,7 +36,7 @@ export const PictureResultContent = styled.div`
 `;
 
 export const PictureResultContentTitle = styled.h2`
-  ${variables.fontStyle("24px", 600)}
+  ${font.t2}
   margin-bottom: 40px;
 
   @media (min-width: 769px) {
@@ -46,11 +46,10 @@ export const PictureResultContentTitle = styled.h2`
 
 export const PictureResultContentText = styled.p`
   ${variables.widthHeight("100%", "120px")}
-  ${variables.fontStyle("22px", 500)}
-  line-height: 31px;
-  letter-spacing: -0.04em;
-  overflow: scroll;
+  ${font.t5}
+  text-align: left;
   word-break: keep-all;
+  overflow: scroll;
 
   @media (min-width: 769px) {
     margin-top: -20px;
@@ -73,7 +72,7 @@ export const GradationBox = styled.div`
 export const ShareButton = styled.button`
   ${variables.position("fixed", "null", "null", "0", "0")}
   ${variables.widthHeight("100%", "82px")}
-  ${variables.fontStyle("22px", 600)}
+  ${font.t4}
   background: ${({ theme }) => theme.style.yellow2};
   color: ${({ theme }) => theme.style.black};
   border: none;
