@@ -64,6 +64,9 @@ const useStore = create((set) => ({
 
   commentTypeModal: false,
   setCommentTypeModal: (state) => set({ commentTypeModal: state }),
+
+  isVisible: true,
+  setIsVisible: () => set((state) => ({ isVisible: !state.isVisible })),
 }));
 
 export default useStore;
