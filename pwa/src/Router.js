@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Account/Login";
 import Signup from "./pages/Account/Signup";
 import Feed from "./pages/Feed/Feed";
-import FeedDetail from "./pages/Feed/FeedDetail";
+import FeedDetail from "./pages/Feed/FeedDetail/FeedDetail";
 import Word from "./pages/Word/Word";
 import TextResult from "./pages/Word/TextResult/TextResult";
 import PictureResult from "./pages/Word/PictureResult/PictureResult";
