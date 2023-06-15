@@ -1,24 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import CommentModal from "../../../components/CommentModal";
-import * as D from "./FeedDetail.style";
 import useStore from "../../../state/store";
+import * as D from "./FeedDetail.style";
+import CommentModal from "../../../components/CommentModal";
 import { COMMENT_METHOD } from "../../../components/Modal/modalData";
 
 const FeedDetail = () => {
+  const {
+    feedDetailData,
+    removeFeedDetailData,
+    setModalData,
+    isOpenModal,
+    setIsOpenModal,
+    detailData,
+    setDetailData,
+  } = useStore((state) => state);
+
   const navigate = useNavigate();
-  const { feedDetailData, removeFeedDetailData, modalData, setModalData } =
-    useStore((state) => state);
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const OpenCommentModal = () => {
-    setIsOpenModal(true);
-    setModalData(COMMENT_METHOD);
-  };
-  const [detailData, setDetailData] = useState();
+
   const accessToken = localStorage.getItem("accessToken");
+  const feedDetailApiUrl = `http://13.124.76.165:8080/diaries/${feedDetailData[0]?.id}`;
 
   useEffect(() => {
-    fetch(`http://13.124.76.165:8080/diaries/${feedDetailData[0]?.id}`, {
+    fetch(feedDetailApiUrl, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -28,6 +32,11 @@ const FeedDetail = () => {
       .then((response) => response.json())
       .then((data) => setDetailData(data));
   }, [isOpenModal]);
+
+  const OpenCommentModal = () => {
+    setIsOpenModal(true);
+    setModalData(COMMENT_METHOD);
+  };
 
   const sliceData = (a, b) => {
     return detailData?.createdAt?.slice(a, b);
@@ -41,18 +50,16 @@ const FeedDetail = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
-  console.log(feedDetailData[0]?.profileImageUrl);
+  const returnToFeed = () => {
+    navigate("/feed");
+    removeFeedDetailData();
+  };
 
   return (
     <>
       <D.FeedDetailContainer isOpenModal={isOpenModal}>
         <D.FeedDetailTab>
-          <D.FeedReturnButton
-            onClick={() => {
-              navigate("/feed");
-              removeFeedDetailData();
-            }}
-          >
+          <D.FeedReturnButton onClick={returnToFeed}>
             {"<"} 뒤로가기
           </D.FeedReturnButton>
         </D.FeedDetailTab>
@@ -74,6 +81,7 @@ const FeedDetail = () => {
           </D.FeedContent>
           <D.FeedText>{detailData?.textDiary}</D.FeedText>
         </D.FeedFrame>
+
         {allRepliesSort?.map((reply) => {
           const createdAt = reply?.createdAt;
           const createdAtDate = new Date(createdAt);
@@ -95,30 +103,29 @@ const FeedDetail = () => {
             const daysDifference = Math.floor(secondsDifference / 86400);
             displayText = `${daysDifference}일 전`;
           }
-
           return (
             <D.CommentFrame>
               <D.CommentInfo>
                 <D.CommentAuthorInfo>
                   <D.ProfileImag src={reply?.profileImageUrl} alt="no" />
-                  <div>{reply?.author}</div>
+                  {reply?.author}
                 </D.CommentAuthorInfo>
                 <D.CommentCreatedAt>{displayText}</D.CommentCreatedAt>
               </D.CommentInfo>
               {reply?.emojiReply && (
-                <div>
+                <>
                   {reply?.emojiReply === "HAPPY" ? (
                     <D.EmojiReply
                       src="./images/card_blessing_happy.png"
-                      alt="none"
+                      alt="happy image card"
                     />
                   ) : (
                     <D.EmojiReply
                       src="./images/card_blessing_beautiful.png"
-                      alt="none"
+                      alt="beautiful image card"
                     />
                   )}
-                </div>
+                </>
               )}
               {reply?.textReply && (
                 <D.VoiceReplyContainer>
@@ -132,16 +139,7 @@ const FeedDetail = () => {
       </D.FeedDetailContainer>
 
       <D.MakeComment onClick={OpenCommentModal}>답글 남기기</D.MakeComment>
-
-      {isOpenModal && (
-        <CommentModal
-          setIsOpenModal={setIsOpenModal}
-          feedDetailData={feedDetailData}
-          modalData={modalData}
-          setModalData={setModalData}
-          detailData={detailData}
-        />
-      )}
+      {isOpenModal && <CommentModal />}
     </>
   );
 };

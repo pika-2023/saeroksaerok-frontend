@@ -27,11 +27,17 @@ const useStore = create((set) => ({
     return result;
   },
 
+  detailData: "",
+  setDetailData: (state) => set({ detailData: state }),
+
   feedDetailData: [],
   removeFeedDetailData: () => set({ feedDetailData: [] }),
 
   commentType: [],
   removeCommentType: () => set({ commentType: [] }),
+
+  commentTypeModal: false,
+  setCommentTypeModal: (state) => set({ commentTypeModal: state }),
 
   // MARK: Word
   isOpen: false,
