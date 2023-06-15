@@ -25,16 +25,16 @@ const PhoneFrame = styled.div`
   /* TODO: background image 교체 필요 */
 
   @media (min-width: 769px) {
-    ${variables.widthHeight("426px", "90%")}
+    ${variables.widthHeight("415px", "90%")}
     ${variables.position("relative", "50%", "null", "null", "70%")};
-    background: url(images/web_phone.webp);
+    background: url(images/saeroksaerok_frame.png);
     background-size: 100% 100%;
     transform: translate(-50%, -50%);
 
     @media (min-width: 1000px) {
-      ${variables.widthHeight("426px", "90%")}
+      ${variables.widthHeight("415px", "90%")}
       ${variables.position("relative", "50%", "null", "null", "75%")};
-      background: url(images/web_phone.webp);
+      background: url(images/saeroksaerok_frame.png);
       background-size: 100% 100%;
       transform: translate(-50%, -50%);
     }
@@ -56,6 +56,8 @@ const WebViewLayout = styled.div`
   }
 
   @media (min-width: 769px) {
+    ${variables.widthHeight("375px", "97%")}
+
     width: 375px;
     top: 50%;
     left: 50%;
