@@ -72,9 +72,6 @@ const FeedDetail = () => {
           <FeedImg src={detailData?.pictureDiary} />
           <FeedContent>
             <FeedWord>{detailData?.keyword}</FeedWord>
-            {/* <ListenToVoice>
-              목소리 듣기 <VoiceButton></VoiceButton>
-            </ListenToVoice> */}
           </FeedContent>
           <FeedText>{detailData?.textDiary}</FeedText>
         </FeedFrame>

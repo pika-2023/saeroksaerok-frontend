@@ -67,6 +67,9 @@ const useStore = create((set) => ({
   recorder: "",
   setRecorder: (state) => set({ recorder: state }),
 
+  page: "first",
+  setPage: (state) => set({ page: state }),
+
   // MARK: Result
   textDiary: "",
   setTextDiary: (state) => set({ textDiary: state }),

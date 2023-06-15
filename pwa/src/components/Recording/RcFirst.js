@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useStore from "../../../state/store";
+import useStore from "../../state/store";
 import MicRecorder from "mic-recorder-to-mp3";
-import * as S from "../Word.style";
-import * as W from "./VoiceRecord.style";
-import Recall from "../../../components/Recall/Recall";
+import * as S from "../../pages/Word/Word.style";
+import * as W from "../../pages/Word/VoiceRecord/VoiceRecord.style";
+import Recall from "../Recall/Recall";
 
 const RcFirst = (e) => {
   const navigate = useNavigate();
@@ -21,6 +21,7 @@ const RcFirst = (e) => {
     setIsSplashOpen,
     isOpen,
     setIsOpen,
+    setPage,
   } = useStore((state) => state);
 
   const startRecording = async () => {
@@ -66,7 +67,7 @@ const RcFirst = (e) => {
   const handleButtonClick = () => {
     if (isRecording) {
       stopRecording();
-      navigate("/question-2");
+      setPage("second");
     } else {
       startRecording();
     }

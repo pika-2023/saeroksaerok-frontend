@@ -1,9 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import useStore from "../../../state/store";
+import useStore from "../../state/store";
 import MicRecorder from "mic-recorder-to-mp3";
-import * as S from "../Word.style";
-import * as W from "./VoiceRecord.style";
+import * as S from "../../pages/Word/Word.style";
+import * as W from "../../pages/Word/VoiceRecord/VoiceRecord.style";
 
 const RcSecond = (e) => {
   const navigate = useNavigate();
@@ -17,6 +17,7 @@ const RcSecond = (e) => {
     recorder,
     setRecorder,
     setAudioUrl,
+    setPage,
   } = useStore((state) => state);
 
   const startRecording = async () => {
@@ -58,7 +59,7 @@ const RcSecond = (e) => {
   const handleButtonClick = () => {
     if (isRecording) {
       stopRecording();
-      navigate("/question-3");
+      setPage("third");
     } else {
       startRecording();
     }

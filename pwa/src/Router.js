@@ -8,9 +8,7 @@ import Word from "./pages/Word/Word";
 import TextResult from "./pages/Word/TextResult/TextResult";
 import PictureResult from "./pages/Word/PictureResult/PictureResult";
 import Sample from "./state/Sample";
-import RcFirst from "./pages/Word/VoiceRecord/RcFirst";
-import RcSecond from "./pages/Word/VoiceRecord/RcSecond";
-import RcThird from "./pages/Word/VoiceRecord/RcThird";
+import VoiceRecord from "./pages/Word/VoiceRecord/VoiceRecord";
 
 const Router = () => {
   return (
@@ -22,9 +20,7 @@ const Router = () => {
         <Route path="/feed" element={<Feed />} />
         <Route path="/feedDetail" element={<FeedDetail />} />
         <Route path="/word" element={<Word />} />
-        <Route path="/question-1" element={<RcFirst />} />
-        <Route path="/question-2" element={<RcSecond />} />
-        <Route path="/question-3" element={<RcThird />} />
+        <Route path="/voiceRecord" element={<VoiceRecord />} />
         <Route path="/textResult" element={<TextResult />} />
         <Route path="/pictureResult" element={<PictureResult />} />
         <Route path="*" element={<h1>해당 주소는 없는 페이지입니다.</h1>} />

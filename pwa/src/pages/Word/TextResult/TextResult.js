@@ -19,7 +19,6 @@ const TextResult = () => {
     isSplashOpen,
     setIsSplashOpen,
     isOpen,
-    setIsOpen,
   } = useStore((state) => state);
 
   const navigate = useNavigate();
@@ -30,18 +29,6 @@ const TextResult = () => {
       setIsSplashOpen(false);
     }, 12000);
   }, []);
-
-  // const recordTextAnimation = () => {
-  //   setTimeout(function () {
-  //     setIsSplashOpen(false);
-  //   }, 2000);
-  // };
-
-  // useEffect(() => {
-  //   setIsSplashOpen(true);
-  //   recordTextAnimation();
-  //   setIsOpen(true);
-  // }, []);
 
   return (
     <>
