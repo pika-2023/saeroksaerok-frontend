@@ -13,6 +13,7 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
+    // 메인 페이지 login으로 변경
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/word" element={<Word />} />
