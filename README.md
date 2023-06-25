@@ -1,18 +1,19 @@
 # 새록새록 🍀
 
+![PRODUCT OVERVIEW](https://github.com/pika-2023/.github/assets/90823532/b476ae4b-262d-47ec-aec4-1811d2770ceb)
+
+> 본 프로젝트는 2023년 05월 14일 일요일부터 06월 16일 금요일까지 구름 그리고 서울경제진흥원에서 주최하여 진행한 제 1회 새싹톤(SeSACTHON) 출품작입니다. <br />
+
 회상 요법을 통해 치매를 예방하는 서비스 '새록새록'입니다. <br />
 STT, AI image generator를 활용해 음성만으로 손쉽게 추억을 기록하고 그림으로 남길 수 있습니다.<br />
 새록새록 떠올린 그날의 추억을 그림으로 간직하거나 친구와 공유하며 나눠보세요. <br /> <br />
-더 자세한 소개는 [초록초록 팀 리드미](https://github.com/pika-2023)에서 확인하실 수 있습니다!<br />
-실행 화면이 궁금하다면? 👉 [데모 영상 보러가기](https://youtu.be/1UAefrn8aKo) 
+
+- 더 자세한 소개는 [초록초록 팀 리드미](https://github.com/pika-2023)에서 확인하실 수 있습니다!
+- 실행 화면이 궁금하다면? 👉 [데모 영상 보러가기](https://youtu.be/1UAefrn8aKo) 
 
  <br />
 
 # 서비스 살펴보기
-
-![PRODUCT OVERVIEW](https://github.com/pika-2023/.github/assets/90823532/b476ae4b-262d-47ec-aec4-1811d2770ceb)
-
-> 본 프로젝트는 2023년 05월 14일 일요일부터 06월 16일 금요일까지 구름 그리고 서울경제진흥원에서 주최하여 진행한 제 1회 새싹톤(SeSACTHON) 출품작입니다.
 
 ## 목차 :books:
 
@@ -27,15 +28,14 @@ STT, AI image generator를 활용해 음성만으로 손쉽게 추억을 기록�
   - [Backend-Dev](#Backend-Dev)
 - [Licence :scroll:](#Licence-scroll)
 
-### 도입 :tada:
+ <br />
+ 
+## 도입 :tada:
 
-#### Team
-
-안녕하세요! **팀 초록초록**입니다.
-
-저희는 기획자 1명, 디자이너 1명, 프론트엔드 2명, 백엔드 1명으로 구성되어 있습니다.
-
-각 팀원에 대한 정보는 아래 이미지 혹은 텍스트를 클릭하여 확인 가능합니다.
+### Team
+안녕하세요! **팀 초록초록**입니다🌱 <br />
+저희는 *기획자 1명, 디자이너 1명, 프론트엔드 2명, 백엔드 1명*으로 구성되어 있습니다.  <br />
+> 각 팀원에 대한 정보는 아래 이미지 혹은 텍스트를 클릭하여 확인 가능합니다.
 
 <table>
 <tr>
@@ -48,28 +48,30 @@ STT, AI image generator를 활용해 음성만으로 손쉽게 추억을 기록�
 </tr>
 </table>
 
-#### Background
+ <br />
 
-<b>노인 우울증과 치매 간의 상관관계</b>
+### Background
+
+[노인 우울증과 치매 간의 상관관계]
 
 노인 우울증으로 인한 인지 저하에 따라 치매 발병 위험이 12배에서 46배로 증가하며, 노인 우울증 조기 발견 후 치료시 완치율이 80%에 달하는 것으로 파악되었습니다. 또한, 연령에 따른 우울 증상 조사의 결과 노년층의 대부분을 차지하는 증상이 **기억력 저하**와 **외로움**인 것을 확인할 수 있었습니다.
 
 ![BACKGROUND](https://github.com/pika-2023/.github/assets/90823532/e887692b-7306-47b3-9b6e-3228e1eaf0c7)
 ![BACKGROUND (1)](https://github.com/pika-2023/.github/assets/90823532/b8e0b103-0646-4999-8796-259ee1dfa3a5)
 
-<b>인지중재피료법의 한계점</b>
+[인지중재요법의 한계점]
 
 위와 같은 사회적 현상을 해소하기 위한 대표적인 방안인 인지중재치료는 30% 이상의 감소효과를 가지지만, **개인 맞춤화된 치료 필요** 및 **일상 속 지속적인 치료의 어려움** 등의 한계점을 동시에 가지는 것으로 나타났습니다.
 
 ![BACKGROUND (2)](https://github.com/pika-2023/.github/assets/90823532/7ecdcf40-8ee1-42bd-96d5-c5b627afdefb)
 
-<b>외로움</b>
+[외로움]
 
 뿐만 아니라 고연령층의 특성에 따른 낮은 사회활동과 소통 횟수는 노인의 우울증을 야기하는데 비해 **소통 기반 서비스**의 사용으로 개인적 만족도와 자아존중감을 높일 수 있는 것으로 확인되었습니다.
 
 ![BACKGROUND (3)](https://github.com/pika-2023/.github/assets/90823532/105b2dd4-3342-442a-8eae-c04a0ae3390b)
 
-#### Service
+### Service
 
 이에 저의 초록초록팀은 **회상요법**을 통한 **치매예방**서비스 **새록새록**을 그에 대한 솔루션으로 제시합니다.
 
@@ -78,11 +80,11 @@ STT, AI image generator를 활용해 음성만으로 손쉽게 추억을 기록�
 ![SOLUTION (1)](https://github.com/pika-2023/.github/assets/90823532/d8e0c4bf-968e-4498-a622-708453befdc4)
 ![DISTINCTION](https://github.com/pika-2023/.github/assets/90823532/fb18d103-1d8d-4d61-8c63-cbf76adc5150)
 
-#### Demo 
+### Demo 
 
 전체 서비스 시연 영상은 [여기](https://youtu.be/1UAefrn8aKo)를 클릭하여 확인하실 수 있습니다.
 
-#### 구현 기능
+### 구현 기능
 
 구현된 기능은 아래와 같습니다.
 
@@ -92,31 +94,23 @@ STT, AI image generator를 활용해 음성만으로 손쉽게 추억을 기록�
 
 ![USER JOURNEY MAP](https://github.com/pika-2023/.github/assets/90823532/522fa784-eb88-4657-8acd-a1f1534b949e)
 
-### Architecture :rocket:
+## Architecture :rocket:
 
-#### Design
+### 전체 아키텍쳐
 
-> 더 자세한 UI 작업물은 [피그마](https://www.figma.com/file/vv0OYNixPv2pL1pFThJ9Ad/%EC%83%88%EB%A1%9D%EC%83%88%EB%A1%9D?type=design&node-id=0-1&t=Gst40xWQ0W1mBxBF-0)에서 확인 가능합니다.
+![TECHNOLOGY ARCHITECTURE (1)](https://github.com/pika-2023/saeroksaerok-frontend/assets/71865277/60ed8a85-f1aa-4562-976b-dc11a7c22627)
 
-#### Frontend-Dev
+### Design
 
-> 더 자세한 소스코드는 [FRONTEND 디렉토리](https://github.com/pika-2023/saeroksaerok-frontend) 파일에서 확인 가능합니다.
+더 자세한 UI 작업물은 아래 링크에서 확인 가능합니다.
+> [피그마 바로가기](https://www.figma.com/file/vv0OYNixPv2pL1pFThJ9Ad/%EC%83%88%EB%A1%9D%EC%83%88%EB%A1%9D?type=design&node-id=0-1&t=Gst40xWQ0W1mBxBF-0)
 
-사용한 기술 스택은 아래와 같습니다.
+### 소스코드
 
-- 기술스택
+더 자세한 소스코드는 각 디렉토리에서 확인 가능합니다.
+> [FRONTEND 디렉토리](https://github.com/pika-2023/saeroksaerok-frontend) <br />
+> [BACKEND 디렉토리](https://github.com/pika-2023/saeroksaerok-backend)
 
-#### Backend-Dev
-
-> 더 자세한 소스코드는 [BACKEND 디렉토리](https://github.com/pika-2023/saeroksaerok-backend) 파일에서 확인 가능합니다.
-
-사용한 기술 스택은 아래와 같습니다.
-
-- Laguage/Framework: Java/Spring Framework
-- Database: MySql, Redis, AWS S3, ElasticSearch
-- API: OpenAi API
-- Server: Apache Tomcat
-- Deploy: Github Actions, AWS EC2, AWS S3, AWS CodeDeploy
 
 ### Licence :scroll:
 
