@@ -13,9 +13,8 @@ const Router = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* MARK: 시연을 위해 /signup을 main url로 설정 */}
-        <Route path="/" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/word" element={<Word />} />
         <Route path="/voiceRecord" element={<VoiceRecord />} />
         <Route path="/textResult" element={<TextResult />} />
