@@ -1,18 +1,21 @@
-import React, { useState } from "react";
-import CommentType from "./CommentType";
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import useStore from "../state/store";
 import styled from "styled-components";
 import variables from "../styles/variables";
-import useStore from "../state/store";
+import CommentType from "./CommentType";
 import { COMMENT_METHOD } from "./Modal/modalData";
-import { useNavigate } from "react-router-dom";
 
-const CommentModal = ({
-  setIsOpenModal,
-  modalData,
-  setModalData,
-  detailData,
-}) => {
-  const { commentType, removeCommentType } = useStore((state) => state);
+const CommentModal = () => {
+  const {
+    commentType,
+    removeCommentType,
+    setIsOpenModal,
+    modalData,
+    detailData,
+    commentTypeModal,
+    setCommentTypeModal,
+  } = useStore((state) => state);
 
   const navigate = useNavigate();
 
@@ -20,7 +23,6 @@ const CommentModal = ({
     setIsOpenModal(false);
     removeCommentType();
   };
-  const [commentTypeModal, setCommentTypeModal] = useState(false);
 
   const ClickMethod = (e) => {
     commentType.push(e.currentTarget.dataset.value);
@@ -29,9 +31,7 @@ const CommentModal = ({
 
   return (
     <>
-      <CommentModalBackground
-        onClick={CloseCommentModal}
-      ></CommentModalBackground>
+      <CommentModalBackground onClick={CloseCommentModal} />
       {!commentTypeModal && (
         <CommentMethodContainer>
           <CommentMethodTitle>

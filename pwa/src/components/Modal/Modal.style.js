@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import variables from "../../styles/variables";
+import font from "../../styles/fontStyle";
 
 export const RecordModal = styled.div`
   ${variables.flex("row", "center", "center")}
-  ${variables.widthHeight("90%", "100%")}
   ${variables.absoluteCenter}
+  ${variables.widthHeight("90%", "100%")}
   white-space: nowrap;
   z-index: 100;
 `;
@@ -34,9 +35,8 @@ export const ModalContents = styled.div`
 `;
 
 export const ModalTitle = styled.h1`
-  ${variables.fontStyle("24px", 600)}
+  ${font.t2}
   margin-top: 20px;
-  line-height: 33px;
 `;
 
 export const ModalOptionContainer = styled.div`
@@ -59,14 +59,14 @@ export const ModalOptionIcon = styled.img`
 `;
 
 export const ModalOptionTitle = styled.h2`
-  ${variables.fontStyle("19px", 600)}
+  ${font.t6}
   background: none;
   border: none;
 `;
 
 export const ModalCancelButton = styled.button`
   ${variables.position("fixed", "null", "40%", "40px", "null")}
-  ${variables.fontStyle("19px", 500)}
+  ${font.t7}
   background: none;
   border: none;
   z-index: 100;

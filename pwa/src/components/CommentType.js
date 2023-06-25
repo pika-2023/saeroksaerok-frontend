@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
+import useStore from "../state/store";
 import axios from "axios";
 import styled, { keyframes } from "styled-components";
-import MicRecorder from "mic-recorder-to-mp3";
 import variables from "../styles/variables";
-import useStore from "../state/store";
+import MicRecorder from "mic-recorder-to-mp3";
 
-const CommentType = ({ setIsOpenModal, type, detailData }) => {
-  const [isVisible, setIsVisible] = useState(true);
+const CommentType = () => {
   const {
     removeCommentType,
     setAudioUrl,
@@ -15,11 +14,17 @@ const CommentType = ({ setIsOpenModal, type, detailData }) => {
     recorder,
     setRecorder,
     feedDetailData,
+    setIsOpenModal,
+    type,
+    detailData,
+    isVisible,
+    setIsVisible,
   } = useStore((state) => state);
 
   const [voiceFile, setVoiceFile] = useState({});
   const [recording, setRecording] = useState(0);
   const [textComment, setTextComment] = useState("");
+
   const CloseModal = () => {
     setIsOpenModal(false);
     removeCommentType();

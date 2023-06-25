@@ -1,8 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import useStore from "../../state/store";
 import * as S from "./Modal.style";
 
-const Modal = ({ setIsOpen, modalData, setModalData }) => {
+const Modal = () => {
+  const { setIsOpen, modalData } = useStore((state) => state);
   const navigate = useNavigate();
 
   return (
@@ -26,7 +28,7 @@ const Modal = ({ setIsOpen, modalData, setModalData }) => {
               <S.ModalOptionTitle>{modalData[0].options[0]}</S.ModalOptionTitle>
             </S.ModalOption>
             <S.ModalOption
-              onClick={() => navigate("/question-1")}
+              onClick={() => navigate("/voiceRecord")}
               value={1}
               style={{ marginLeft: "10px" }}
             >

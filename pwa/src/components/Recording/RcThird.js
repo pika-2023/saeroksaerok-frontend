@@ -1,10 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import useStore from "../../../state/store";
+import useStore from "../../state/store";
 import MicRecorder from "mic-recorder-to-mp3";
-import * as S from "../Word.style";
-import * as W from "./VoiceRecord.style";
+import * as S from "../../pages/Word/Word.style";
+import * as W from "../../pages/Word/VoiceRecord/VoiceRecord.style";
 
 const RcThird = (e) => {
   const navigate = useNavigate();
