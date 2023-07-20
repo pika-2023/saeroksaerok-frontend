@@ -2,8 +2,6 @@ import styled from "styled-components";
 import variables from "../../styles/variables";
 import font from "../../styles/fontStyle";
 
-// ---------- MARK: Word.js 첫 화면 ----------
-
 export const WordContainer = styled.div`
   ${variables.widthHeight("null", "100vh")}
   position: relative;

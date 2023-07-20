@@ -34,11 +34,9 @@ const Signup = () => {
     if (e.target.files[0]) {
       setBasicProfileImg(URL.createObjectURL(e.target.files[0]));
     } else {
-      //MARK : 업로드 취소할 시
       setBasicProfileImg("./images/saeroksaerok_profile.png");
       return;
     }
-    // MARK : 화면에 프로필 사진 표시
     const reader = new FileReader();
     reader.onload = () => {
       if (reader.readyState === 2) {
