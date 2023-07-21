@@ -67,8 +67,6 @@ export const CancelButton = styled.button`
   cursor: pointer;
 `;
 
-// MARK: Questions
-
 export const QuestionText = styled.div`
   ${variables.position("absolute", "null", "null", "50%", "50%")};
   ${variables.flex("row", "center", "center")};
